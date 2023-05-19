@@ -1,0 +1,20 @@
+{
+    "twrnc className": {
+        "prefix": "className",
+        "body": [
+            "style={tw('$1')}"
+        ]
+    },
+    "React Native Component Boilerplate": {
+        "prefix": "nc",
+        "body": [
+            "import { Text } from 'react-native';",
+            "",
+            "export default function $TM_FILENAME_BASE() {",
+            "    return (",
+            "        <Text>$TM_FILENAME_BASE</Text>",
+            "    );",
+            "}"
+        ]
+    }
+}
