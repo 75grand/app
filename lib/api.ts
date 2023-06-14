@@ -1,10 +1,5 @@
 import { get } from './http';
 import { CalendarEvent } from './models/calendar';
 
-export async function fetchEvents() {
-    return await get<CalendarEvent[]>('events');
-}
-
-export async function fetchEvent(id: number) {
-    return await get<CalendarEvent>(`events/${id}`);
-}
+export const fetchEvents = async () => await get<CalendarEvent[]>('events');
+export const fetchEvent = async (id: number) => await get<CalendarEvent>(`events/${id}`);
