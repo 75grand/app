@@ -1,18 +1,19 @@
+import { useQuery } from '@tanstack/react-query';
 import { Stack } from 'expo-router';
 import { DateTime } from 'luxon';
-import { useEffect, useMemo, useState } from 'react';
-import { RefreshControl, SafeAreaView, ScrollView, View } from 'react-native';
+import { useMemo, useState } from 'react';
+import { ActivityIndicator, SafeAreaView, ScrollView, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Card from '../../../components/Card';
 import CardHeader from '../../../components/CardHeader';
+import EmptyState from '../../../components/EmptyState';
 import Grid from '../../../components/Grid';
 import CalendarFilters from '../../../components/calendar/CalendarFilters';
 import CalendarItem from '../../../components/calendar/CalendarItem';
+import { fetchEvents } from '../../../lib/api';
 import { CalendarFilter, filters } from '../../../lib/calendar-filters';
 import { CalendarEvent } from '../../../lib/models/calendar';
-import tw, { color } from '../../../lib/tailwind';
-import EmptyState from '../../../components/EmptyState';
-import { fetchEvents } from '../../../lib/api';
+import tw from '../../../lib/tailwind';
 
 function groupEvents(events: CalendarEvent[]): Map<string, CalendarEvent[]> {
     const groupedEvents = new Map<string, CalendarEvent[]>;
@@ -29,36 +30,16 @@ function groupEvents(events: CalendarEvent[]): Map<string, CalendarEvent[]> {
 }
 
 export default function() {
-    const [events, setEvents] = useState([] as CalendarEvent[]);
-    const [refreshing, setRefreshing] = useState(false);
     const [activeFilter, setActiveFilter] = useState(null as CalendarFilter);
-
-    function fetchData() {
-        setRefreshing(true);
-
-        fetchEvents()
-            .then(setEvents)
-            .catch(() => {})
-            .finally(() => setRefreshing(false));
-    }
-
-    useEffect(fetchData, []);
+    const { data = [], isLoading } = useQuery<CalendarEvent[]>(['events'], fetchEvents);
 
     const groupedEvents = useMemo(() => {
         if(activeFilter) {
-            return groupEvents(events.filter(activeFilter.filter));
+            return groupEvents(data.filter(activeFilter.filter));
         } else {
-            return groupEvents(events);
+            return groupEvents(data);
         }
-    }, [events, activeFilter]);
-
-    const refreshControl = (
-        <RefreshControl
-            onRefresh={fetchData}
-            refreshing={refreshing}
-            colors={[color('accent')]}
-        />
-    );
+    }, [data, activeFilter]);
 
     return (
         <>
@@ -74,11 +55,13 @@ export default function() {
                 </View>
             </SafeAreaView>
 
-            <ScrollView style={tw('h-full bg-gray-100')} refreshControl={refreshControl}>
+            <ScrollView style={tw('h-full bg-gray-100')}>
+                {isLoading && <ActivityIndicator style={tw('p-3')}/>}
+
                 {Object.entries(groupedEvents).length !== 0 &&
                     <CalendarEvents events={groupedEvents}/>}
 
-                {(Object.entries(groupedEvents).length === 0 && !refreshing) &&
+                {(Object.entries(groupedEvents).length === 0 && !isLoading) &&
                     <EmptyState title="No Events Found" subtitle="Try another filter" icon="calendar"/>}
             </ScrollView>
         </>
