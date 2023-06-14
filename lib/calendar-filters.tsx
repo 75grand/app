@@ -40,7 +40,7 @@ export const filters: CalendarFilter[] = [
         filter: ({ calendar_name }) => calendar_name !== 'Sports'
     },
     {
-        name: 'Career',
+        name: 'Job Fairs',
         icon: 'person',
         tint: 'brown',
         filter: ({ calendar_name }) => calendar_name === 'Career'
