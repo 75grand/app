@@ -1,7 +1,7 @@
 import { FontAwesome, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { DateTime } from 'luxon';
-import React, { useState } from 'react';
+import React from 'react';
 import { Text, View } from 'react-native';
 import { CalendarEvent } from '../../lib/models/calendar';
 import tw, { color } from '../../lib/tailwind';
