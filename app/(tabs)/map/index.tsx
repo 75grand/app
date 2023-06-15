@@ -1,9 +1,9 @@
+import { useQuery } from '@tanstack/react-query';
 import * as Location from 'expo-location';
 import { Stack } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import MapView, { Marker, Region } from 'react-native-maps';
-import { get } from '../../../lib/http';
-import { MapLayer } from '../../../lib/models/map';
+import { fetchMap } from '../../../lib/api';
 import tw, { color } from '../../../lib/tailwind';
 
 export default function() {
@@ -15,15 +15,11 @@ export default function() {
     }
 
     const [location, setLocation] = useState(null as Location.LocationObject);
-    const [layers, setLayers] = useState([] as MapLayer[]);
+    const { data: layers = [] } = useQuery(['map'], fetchMap);
 
     const mapRef = useRef<MapView>(null);
 
     useEffect(() => {
-        get<MapLayer[]>('map')
-            .then(setLayers)
-            .catch(() => alert('Error loading map data'));
-
         Location.requestForegroundPermissionsAsync()
             .then(permission => {
                 if(permission.granted) {
