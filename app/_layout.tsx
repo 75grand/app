@@ -2,9 +2,18 @@ import { ThemeProvider } from '@react-navigation/native';
 import { Slot } from 'expo-router';
 import { color } from '../lib/tailwind';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import * as Sentry from '@sentry/react-native';
 
-export default function() {
-    const queryClient = new QueryClient();
+export default Sentry.wrap(App);
+
+function App() {
+    const queryClient = new QueryClient({
+        defaultOptions: {
+            queries: {
+                cacheTime: 1000 * 60 * 60 * 24
+            }
+        }
+    });
 
     const theme = {
         dark: false,
