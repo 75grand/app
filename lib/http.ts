@@ -2,7 +2,8 @@ import { isDevice } from 'expo-device';
 import { Platform } from 'react-native';
 import { getToken } from './token';
 
-export const BASE = isDevice || Platform.OS === 'android' ? 'https://api.75grand.net' : 'http://localhost:8000';
+// export const BASE = isDevice || Platform.OS === 'android' ? 'https://api.75grand.net' : 'http://localhost:8000';
+export const BASE = 'https://api.75grand.net';
 export const API_BASE = BASE + '/api/';
 
 export async function get<T extends object>(path: string, params: Record<string, string> = {}): Promise<T> {

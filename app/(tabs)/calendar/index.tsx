@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import { DateTime } from 'luxon';
 import { useMemo, useState } from 'react';
 import { ActivityIndicator, SafeAreaView, ScrollView, View } from 'react-native';
@@ -31,15 +31,17 @@ function groupEvents(events: CalendarEvent[]): Map<string, CalendarEvent[]> {
 
 export default function() {
     const [activeFilter, setActiveFilter] = useState(null as CalendarFilter);
-    const { data = [], isLoading } = useQuery<CalendarEvent[]>(['events'], fetchEvents);
+
+    // TODO: Is it possible to cache each CalendarEvent under its ID to make visits to the detail page faster?
+    const { data: events = [], isLoading } = useQuery<CalendarEvent[]>(['events'], fetchEvents);
 
     const groupedEvents = useMemo(() => {
         if(activeFilter) {
-            return groupEvents(data.filter(activeFilter.filter));
+            return groupEvents(events.filter(activeFilter.filter));
         } else {
-            return groupEvents(data);
+            return groupEvents(events);
         }
-    }, [data, activeFilter]);
+    }, [events, activeFilter]);
 
     return (
         <>
@@ -69,6 +71,8 @@ export default function() {
 }
 
 function CalendarEvents({ events }: { events: Map<string, CalendarEvent[]> }) {
+    const router = useRouter();
+
     return (
         <Grid columns={1} style={tw('p-3 h-full')}>
             {Object.entries(events).map(([date, events]) => {
@@ -78,8 +82,12 @@ function CalendarEvents({ events }: { events: Map<string, CalendarEvent[]> }) {
 
                         <View style={tw('gap-3')}>
                             {events.map(event => {
+                                function openEventDetails() {
+                                    router.push(`/calendar/${event.id}`);
+                                }
+
                                 return (
-                                    <TouchableOpacity key={event.id}>
+                                    <TouchableOpacity onPress={openEventDetails} key={event.id}>
                                         <CalendarItem {...event}/>
                                     </TouchableOpacity>
                                 );

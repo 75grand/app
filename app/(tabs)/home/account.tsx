@@ -3,6 +3,7 @@ import { Alert, Text } from 'react-native';
 import { useState } from 'react';
 import Button from '../../../components/Button';
 import { logout } from '../../../lib/login';
+import * as Sentry from '@sentry/react-native';
 
 export default function() {
     const [logoutLoading, setLogoutLoading] = useState(false);
@@ -37,6 +38,18 @@ export default function() {
             }}/>
 
             <Text>account</Text>
+
+            <Button
+                text="Trigger Native Crash"
+                color="red"
+                onPress={Sentry.nativeCrash}
+            />
+
+            <Button
+                text="Trigger Exception"
+                color="red"
+                onPress={() => { throw new Error('Error for testing Sentry') }}
+            />
         </>
     );
 }

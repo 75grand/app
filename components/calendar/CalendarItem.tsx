@@ -44,7 +44,7 @@ export default function CalendarItem(event: CalendarEvent) {
                 </View>}
             </View>
 
-            {event.image_url && <Image source={event.image_url}
+            {event.image_url && <Image source={event.image_url} contentFit={event.calendar_name === 'Sports' ? 'contain' : 'cover'}
                 style={tw('w-16 rounded-lg aspect-square bg-black/5')}/>}
         </View>
     );
