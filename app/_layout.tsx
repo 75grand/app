@@ -1,6 +1,6 @@
 import { ThemeProvider } from '@react-navigation/native';
 import { Slot } from 'expo-router';
-import { color } from '../lib/tailwind';
+import { color } from '../src/helpers/tailwind';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import * as Sentry from '@sentry/react-native';
 

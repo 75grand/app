@@ -5,14 +5,14 @@ import { useEffect, useState } from 'react';
 import { RefreshControl, SafeAreaView, ScrollView, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import Grid from '../../../components/Grid';
-import FoodAlertsPromo from '../../../components/menu/FoodAlertsPromo';
-import MenuSection from '../../../components/menu/MenuSection';
-import { get } from '../../../lib/http';
-import tw, { color } from '../../../lib/tailwind';
-import { Menu } from '../../../lib/models/menu';
-import FutureMenuWarning from '../../../components/menu/FutureMenuWarning';
-import EmptyState from '../../../components/EmptyState';
+import Grid from '../../../src/components/Grid';
+import FoodAlertsPromo from '../../../src/components/menu/FoodAlertsPromo';
+import MenuSection from '../../../src/components/menu/MenuSection';
+import { GET } from '../../../src/helpers/api/http';
+import tw, { color } from '../../../src/helpers/tailwind';
+import { Menu } from '../../../src/helpers/models/menu';
+import FutureMenuWarning from '../../../src/components/menu/FutureMenuWarning';
+import EmptyState from '../../../src/components/EmptyState';
 
 export default function() {
     const [showPromo, setShowPromo] = useState(true);
@@ -26,7 +26,7 @@ export default function() {
             onRefresh={() => {
                 setRefreshing(true);
 
-                get<Menu>('menu/' + date.toISODate())
+                GET<Menu>('menu/' + date.toISODate())
                     .then(setMenu)
                     .catch(() => {})
                     .finally(() => setRefreshing(false));
@@ -40,7 +40,7 @@ export default function() {
         setMenu({});
         setRefreshing(true);
 
-        get('menu/' + date.toISODate())
+        GET('menu/' + date.toISODate())
             .then(setMenu)
             .catch(() => {})
             .finally(() => setRefreshing(false));

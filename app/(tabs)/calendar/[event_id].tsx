@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { Linking, ScrollView, Text, View } from 'react-native';
-import { fetchEvent } from '../../../lib/api';
+import { fetchEvent } from '../../../src/helpers/api/api';
 import { Stack, useSearchParams } from 'expo-router';
 import { Image } from 'expo-image';
-import tw, { color } from '../../../lib/tailwind';
-import Card from '../../../components/Card';
+import tw, { color } from '../../../src/helpers/tailwind';
+import Card from '../../../src/components/Card';
 import { Ionicons } from '@expo/vector-icons';
 import { DateTime } from 'luxon';
-import Button from '../../../components/Button';
+import Button from '../../../src/components/Button';
 
 export default function() {
     const { event_id } = useSearchParams();
@@ -36,13 +36,13 @@ export default function() {
                 {event.image_url && (
                     event.calendar_name === 'Sports' ? (
                         <View style={tw('flex flex-row items-center justify-center gap-3 p-3 pb-0')}>
-                            <View style={tw('bg-gray-200 p-4 rounded-lg')}>
+                            <View style={tw('bg-gray-200 p-3 rounded-lg')}>
                                 <Image contentFit="contain" style={tw('w-18 h-18')} source={require('../../../assets/macalester-shield.png')}/>
                             </View>
 
                             <Text style={tw('font-semibold text-base')}>vs</Text>
 
-                            <View style={tw('bg-gray-200 p-4 rounded-lg')}>
+                            <View style={tw('bg-gray-200 p-3 rounded-lg')}>
                                 <Image contentFit="contain" style={tw('w-18 h-18')} source={event.image_url}/>
                             </View>
                         </View>
@@ -54,7 +54,7 @@ export default function() {
 
                 <View style={tw('p-3')}>
                     <Card>
-                        <View style={tw('flex flex-row items-center gap-4')}>
+                        <View style={tw('flex flex-row items-center gap-3')}>
                             <View style={tw('flex items-center gap-0.5 p-2')}>
                                 <Text style={tw('uppercase text-xs text-accent leading-none')}>{startDate.toFormat('MMM')}</Text>
                                 <Text style={tw('text-2xl leading-none')}>{startDate.day}</Text>

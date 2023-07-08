@@ -1,8 +1,8 @@
 import { Stack, useRouter } from 'expo-router';
 import { Alert, Text } from 'react-native';
 import { useState } from 'react';
-import Button from '../../../components/Button';
-import { logout } from '../../../lib/login';
+import Button from '../../../src/components/Button';
+import { logout } from '../../../src/helpers/api/login';
 import * as Sentry from '@sentry/react-native';
 
 export default function() {

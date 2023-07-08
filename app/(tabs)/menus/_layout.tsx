@@ -1,3 +1,3 @@
-import DefaultStackLayout from '../../../components/DefaultStackLayout';
+import DefaultStackLayout from '../../../src/components/DefaultStackLayout';
 
 export default DefaultStackLayout;

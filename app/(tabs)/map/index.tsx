@@ -3,8 +3,8 @@ import * as Location from 'expo-location';
 import { Stack } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import MapView, { Marker, Region } from 'react-native-maps';
-import { fetchMap } from '../../../lib/api';
-import tw, { color } from '../../../lib/tailwind';
+import { fetchMap } from '../../../src/helpers/api/api';
+import tw, { color } from '../../../src/helpers/tailwind';
 
 export default function() {
     const initialRegion: Region = {

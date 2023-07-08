@@ -2,15 +2,15 @@ import { Stack, useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { ScrollView, View, Text, SafeAreaView } from 'react-native';
 import { useDeviceContext } from 'twrnc';
-import HoursCard from '../../../components/home/HoursCard';
-import IconCard from '../../../components/home/IconCard';
-import RedditCard from '../../../components/home/RedditCard';
-import tw, { twBase } from '../../../lib/tailwind';
-import Logo from '../../../components/Logo';
-import Button from '../../../components/Button';
-import Grid from '../../../components/Grid';
-import QuickAccess from '../../../components/home/QuickAccess';
-import User from '../../../components/User';
+import HoursCard from '../../../src/components/home/HoursCard';
+import IconCard from '../../../src/components/home/IconCard';
+import RedditCard from '../../../src/components/home/RedditCard';
+import tw, { twBase } from '../../../src/helpers/tailwind';
+import Logo from '../../../src/components/Logo';
+import Button from '../../../src/components/Button';
+import Grid from '../../../src/components/Grid';
+import QuickAccess from '../../../src/components/home/QuickAccess';
+import UserButton from '../../../src/components/UserButton';
 
 export default function App() {
     useDeviceContext(twBase);
@@ -45,7 +45,7 @@ export default function App() {
                 title: '75grand',
                 headerLeft: () => <Logo/>,
                 headerTitle: () => <></>,
-                headerRight: () => <User/>,
+                headerRight: () => <UserButton/>,
             }}/>
 
             <SafeAreaView>
