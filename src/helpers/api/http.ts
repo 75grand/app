@@ -44,7 +44,7 @@ async function request<T>(
             'User-Agent': `75grand/${Platform.select({
                 android: 'Android',
                 ios: 'iOS'
-            })} ${Constants.manifest.version}`
+            })} ${Constants.expoConfig.version}`
         }
     }
 
