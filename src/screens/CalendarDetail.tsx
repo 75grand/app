@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useStore } from '@nanostores/react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
@@ -6,11 +7,10 @@ import { Image } from 'expo-image';
 import * as WebBrowser from 'expo-web-browser';
 import { DateTime } from 'luxon';
 import { useLayoutEffect } from 'react';
-import { Linking, Platform, Text, TouchableOpacity, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { Linking, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Button from '../components/Button';
 import EmptyState from '../components/EmptyState';
-import HeaderButton from '../components/HeaderButton';
 import AvatarStack from '../components/calendar/AvatarStack';
 import { fetchAttendees, fetchEvent, postRsvp } from '../helpers/api/api';
 import { formatDuration, formatLocation, shareEvent } from '../helpers/calendar/utils';
@@ -78,10 +78,23 @@ export default function CalendarDetail() {
         // This is required so we can use toggleNotifications() in the header without having to duplicate the mutation
         navigation.setOptions({
             headerRight: () => (
-                <View style={tw('flex flex-row gap-4')}>
-                    <HeaderButton icon={attending ? 'bookmark' : 'bookmark-outline'} onPress={toggleNotifications}/>
-                    <HeaderButton icon="share-outline" onPress={() => shareEvent(event)}/>
-                </View>
+                <HeaderButtons>
+                    <Item
+                        title="Save Event"
+                        IconComponent={Ionicons}
+                        iconSize={25}
+                        iconName={attending ? 'bookmark' : 'bookmark-outline'}
+                        onPress={toggleNotifications}
+                    />
+
+                    <Item
+                        title="Share Event"
+                        IconComponent={Ionicons}
+                        iconSize={25}
+                        iconName="share-outline"
+                        onPress={() => shareEvent(event)}
+                    />
+                </HeaderButtons>
             )
         });
     }, [attending, event]);

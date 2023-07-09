@@ -11,7 +11,6 @@ import tw from '../helpers/tailwind';
 export const screenOptions: NativeStackNavigationOptions = {
     presentation: 'modal',
     headerShown: false,
-    headerBackground: undefined,
     gestureEnabled: false
 }
 

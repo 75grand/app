@@ -12,8 +12,6 @@ export const screenOptions: NativeStackNavigationOptions = {
 
 export default function Home() {
     return (
-        <>
-            <Text>Home</Text>
-        </>
+        <Text>Home</Text>
     );
 }

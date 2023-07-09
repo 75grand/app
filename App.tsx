@@ -9,6 +9,7 @@ import 'react-native-url-polyfill/auto';
 import Routing from './src/Routing';
 import { registerAndroidNotifChannel as registerNotifChannel, setNotifHandler, syncNotifToken } from './src/helpers/notifications';
 import { color } from './src/helpers/tailwind';
+import { HeaderButtonsProvider } from 'react-navigation-header-buttons';
 
 setNotifHandler();
 
@@ -50,7 +51,9 @@ export default function App() {
 
             <PersistQueryClientProvider client={queryClient} persistOptions={persistOptions}>
                 <NavigationContainer theme={theme}>
-                    <Routing/>
+                    <HeaderButtonsProvider stackType="native">
+                        <Routing/>
+                    </HeaderButtonsProvider>
                 </NavigationContainer>
             </PersistQueryClientProvider>
         </>
