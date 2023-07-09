@@ -1,20 +1,24 @@
-import { useRoute } from '@react-navigation/native';
+import { useStore } from '@nanostores/react';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Image } from 'expo-image';
+import * as WebBrowser from 'expo-web-browser';
 import { DateTime } from 'luxon';
+import { useLayoutEffect } from 'react';
 import { Linking, Platform, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Button from '../components/Button';
 import EmptyState from '../components/EmptyState';
 import HeaderButton from '../components/HeaderButton';
-import { fetchAttendees, fetchEvent, postRsvp } from '../helpers/api/api';
-import { formatDuration, formatLocation, getCalendarIcon, shareEvent } from '../helpers/calendar/utils';
-import { CalendarEvent, EventAttendee } from '../helpers/models/calendar';
-import tw, { color } from '../helpers/tailwind';
-import * as WebBrowser from 'expo-web-browser';
 import AvatarStack from '../components/calendar/AvatarStack';
+import { fetchAttendees, fetchEvent, postRsvp } from '../helpers/api/api';
+import { formatDuration, formatLocation, shareEvent } from '../helpers/calendar/utils';
+import { CalendarEvent, EventAttendee } from '../helpers/models/calendar';
+import { areNotifsGranted } from '../helpers/notifications';
+import tw, { color } from '../helpers/tailwind';
 import { pluralize } from '../helpers/text-utils';
+import { $user } from '../helpers/user/user-store';
 
 /**
  * Controls screen options dynamically
@@ -24,23 +28,14 @@ export function screenOptions({ route }): NativeStackNavigationOptions {
     return {
         headerTitle: () => <></>,
         headerBackTitle: 'Calendar',
-        title: route.params.event.title ?? 'Calendar Event',
-        headerRight: () => {
-            if(!route.params.event) return;
-
-            return (
-                <View style={tw('flex flex-row gap-4')}>
-                    <HeaderButton icon="add-circle-outline" onPress={() => true}/>
-                    <HeaderButton icon="share-outline" onPress={() => shareEvent(route.params.event)}/>
-                </View>
-            );
-        }
+        title: route.params.event.title ?? 'Calendar Event'
     }
 }
 
 export default function CalendarDetail() {
     const params = useRoute().params as any;
     const eventId = params.eventId ?? params.event.id;
+    const user = useStore($user);
 
     if(!eventId) return <EmptyState title="Event not found" subtitle="Let's take a rain check?" icon="rainy"/>;
 
@@ -58,7 +53,7 @@ export default function CalendarDetail() {
         placeholderData: []
     });
 
-    const attending = attendees.some(a => a.id === 1);
+    const attending = attendees.some(a => a.id === user.id);
 
     const rsvp = useMutation({
         mutationFn: () => postRsvp(eventId, !attending),
@@ -67,6 +62,29 @@ export default function CalendarDetail() {
             newAttendees
         )
     });
+
+    async function toggleNotifications() {
+        rsvp.mutate();
+
+        if(!attending && !(await areNotifsGranted())) {
+            // @ts-expect-error
+            navigation.navigate('ApproveNotifications');
+        }
+    }
+
+    const navigation = useNavigation();
+
+    useLayoutEffect(() => {
+        // This is required so we can use toggleNotifications() in the header without having to duplicate the mutation
+        navigation.setOptions({
+            headerRight: () => (
+                <View style={tw('flex flex-row gap-4')}>
+                    <HeaderButton icon={attending ? 'bookmark' : 'bookmark-outline'} onPress={toggleNotifications}/>
+                    <HeaderButton icon="share-outline" onPress={() => shareEvent(event)}/>
+                </View>
+            )
+        });
+    }, [attending, event]);
 
     const startDate = DateTime.fromISO(event.start_date);
     const startDateText = startDate.toLocaleString(DateTime.DATE_HUGE);
@@ -97,8 +115,8 @@ export default function CalendarDetail() {
 
                     {attendees.length > 0 && <CalendarDetailRow label="Who">
                         <View style={tw('flex flex-row items-center gap-3')}>
-                            <AvatarStack avatars={attendees.map(e => e.avatar)} placeholderCount={event.attendee_count}/>
-                            <Text style={tw('text-gray-500 mt-0.5')}>{attendees.length} {pluralize(attendees.length, 'user has', 'users have')} RSVP’d</Text>
+                            <AvatarStack avatars={attendees.map(e => e.avatar)} count={event.attendee_count}/>
+                            <Text style={tw('text-gray-500 mt-0.5')}>Saved by {attendees.length} {pluralize(attendees.length, 'person', 'people')}</Text>
                         </View>
                     </CalendarDetailRow>}
 
@@ -112,10 +130,10 @@ export default function CalendarDetail() {
 
             <View style={tw('p-3 bg-white pt-0')}>
                 <Button
-                    text={attending ? 'I’m no longer going' : 'I’m going!'}
+                    text={attending ? 'Don’t Remind Me Anymore' : 'Remind Me About Event'}
                     size="mega"
                     color={attending ? 'gray' : 'accent'}
-                    onPress={rsvp.mutate}
+                    onPress={toggleNotifications}
                     loading={rsvp.isLoading}
                 />
             </View>

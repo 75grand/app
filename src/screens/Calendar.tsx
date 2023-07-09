@@ -17,9 +17,8 @@ import tw from '../helpers/tailwind';
  * @see https://github.com/react-navigation/react-navigation/issues/11375#issuecomment-1620505642
  */
 export const screenOptions: NativeStackNavigationOptions = {
-    // headerShown: false,
-    // headerBackground: undefined,
-    header: () => <></>
+    headerShown: false,
+    headerBackground: undefined
 }
 
 export default function Calendar() {

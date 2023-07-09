@@ -15,6 +15,5 @@ export type CalendarEvent = {
 
 export type EventAttendee = {
     id: number,
-    name: string,
     avatar: string
 }

@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NativeStackNavigationOptions, createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View } from 'react-native';
 import tw from './helpers/tailwind';
+import * as ApproveNotifications from './screens/ApproveNotifications';
 import * as Calendar from './screens/Calendar';
 import * as CalendarDetail from './screens/CalendarDetail';
 import * as Home from './screens/Home';
@@ -13,13 +14,15 @@ import Settings from './screens/Settings';
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
 
+const initialRoute = 'CalendarTab';
+
 export default function Routing() {
     return (
         <Tabs.Navigator screenOptions={{
             headerShown: false,
             // tabBarShowLabel: false,
             tabBarStyle: tw('border-t border-t-black/10')
-        }} initialRouteName="HomeTab">
+        }} initialRouteName={initialRoute}>
             <Tabs.Screen
                 name="HomeTab"
                 component={HomeRouting}
@@ -87,6 +90,7 @@ function CalendarRouting() {
         <Stack.Navigator screenOptions={stackOptions}>
             <Stack.Screen name="Calendar" component={Calendar.default} options={Calendar.screenOptions}/>
             <Stack.Screen name="CalendarDetail" component={CalendarDetail.default} options={CalendarDetail.screenOptions}/>
+            <Stack.Screen name="ApproveNotifications" component={ApproveNotifications.default} options={ApproveNotifications.screenOptions}/>
         </Stack.Navigator>
     );
 }
