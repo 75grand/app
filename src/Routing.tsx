@@ -10,6 +10,7 @@ import * as CalendarDetail from './screens/CalendarDetail';
 import * as Home from './screens/Home';
 import * as Hours from './screens/Hours';
 import * as LoginWall from './screens/LoginWall';
+// import * as Map from './screens/Map';
 import * as Menus from './screens/Menus';
 import * as ScanMacPass from './screens/ScanMacPass';
 import * as Settings from './screens/Settings';
@@ -109,7 +110,7 @@ function CalendarRouting() {
 // function MapRouting() {
 //     return (
 //         <Stack.Navigator>
-//             <Stack.Screen name="Map" component={Map.default}/>
+//             <Stack.Screen name="Map" component={Map.default} options={Map.screenOptions}/>
 //         </Stack.Navigator>
 //     );
 // }
