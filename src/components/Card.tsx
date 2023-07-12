@@ -1,4 +1,4 @@
-import { Pressable, StyleProp, TouchableOpacity, View } from 'react-native';
+import { Pressable, StyleProp, View } from 'react-native';
 import tw from '../helpers/tailwind';
 
 interface Props {

@@ -1,8 +1,8 @@
-import { atom } from 'nanostores';
-import { User } from '../models/user';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { map } from 'nanostores';
+import { User } from '../models/user';
 
-export const $user = atom<User>(null);
+export const $user = map<User>(null);
 
 // Load currently saved user
 (async () => {

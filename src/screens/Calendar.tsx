@@ -22,7 +22,7 @@ export const screenOptions: NativeStackNavigationOptions = {
 
 export default function Calendar() {
     const [filter, setFilter] = useState<CalendarFilter>(null);
-    const { data: events = [], isLoading } = useQuery<CalendarEvent[]>(['events'], fetchEvents);
+    const { data: events = [], isFetching } = useQuery<CalendarEvent[]>(['events'], fetchEvents);
 
     const filteredEvents = useMemo(() => filterEvents(events, filter), [events, filter]);
     const days = useMemo(() => groupEvents(filteredEvents), [filteredEvents]);
@@ -37,10 +37,10 @@ export default function Calendar() {
                 />
             </SafeAreaView>
 
-            {isLoading &&
+            {isFetching &&
                 <ActivityIndicator style={tw('p-6')}/>}
 
-            {filteredEvents.length === 0 && !isLoading &&
+            {filteredEvents.length === 0 && !isFetching &&
                 <EmptyState title="No Events Found" subtitle={filter && 'Try another filter'} icon="calendar"/>}
 
             <FlashList

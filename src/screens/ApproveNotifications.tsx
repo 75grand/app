@@ -49,7 +49,7 @@ export default function ApproveNotifications() {
 
                     <SellingPoint
                         icon="restaurant"
-                        title="Favorite Food"
+                        title="Favorite Food (coming soon)"
                         text="Get notified when Café Mac serves your favorite foods"
                     />
 

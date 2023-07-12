@@ -15,8 +15,9 @@ export async function logout() {
  * Fetch Google OAuth URL from the server
  * @see https://github.com/75grand/api/blob/71e740f5b493dd377761eaebadca2c9efe2a85d1/app/Http/Controllers/MobileAuthController.php
  */
-export async function getLoginUrl() {
+export async function getLoginUrl(options?: Record<string, string>) {
     const response = await GET<{ redirect_url: string }>('authentication', {
+        ...options,
         device: deviceName,
         callback_url: Linking.createURL('')
     });
@@ -24,9 +25,12 @@ export async function getLoginUrl() {
     return response.redirect_url;
 }
 
-export async function login() {
+/**
+ * @returns Whether the user's account was just created
+ */
+export async function login(referralCode: string = null) {
     // Fetch Google OAuth URL from server
-    const loginUrl = await getLoginUrl();
+    const loginUrl = await getLoginUrl({ referral_code: referralCode });
     const result = await WebBrowser.openAuthSessionAsync(loginUrl);
 
     if(result?.type === 'success') {
@@ -39,5 +43,9 @@ export async function login() {
         $user.set(user);
 
         // WebBrowser.dismissAuthSession();
+
+        return Boolean(url.queryParams?.created);
     }
+
+    return false;
 }

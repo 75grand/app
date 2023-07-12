@@ -54,6 +54,7 @@ async function request<T>(
     if(params) url += '?' + new URLSearchParams(params);
 
     const request = await fetch(url, options);
+    if(request.status === 404) return null;
     if(!request.ok) throw new Error('HTTP Error: ' + request.status);
 
     try {

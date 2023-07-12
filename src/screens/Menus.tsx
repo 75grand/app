@@ -2,31 +2,30 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
 import { DateTime } from 'luxon';
-import { useEffect, useState } from 'react';
-import { RefreshControl, SafeAreaView, ScrollView, Text, TouchableOpacity } from 'react-native';
+import { useLayoutEffect, useState } from 'react';
+import { ActivityIndicator, SafeAreaView, ScrollView, Text, TouchableOpacity } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import EmptyState from '../components/EmptyState';
 import Grid from '../components/Grid';
 import FutureMenuWarning from '../components/menu/FutureMenuWarning';
+import MenuSection from '../components/menu/MenuSection';
 import { fetchMenu } from '../helpers/api/api';
 import { Menu } from '../helpers/models/menu';
 import tw, { color } from '../helpers/tailwind';
-import FoodAlertsPromo from '../components/menu/FoodAlertsPromo';
-import EmptyState from '../components/EmptyState';
-import MenuSection from '../components/menu/MenuSection';
 
 export default function Menus() {
     const navigation = useNavigation();
 
-    const [showPromo, setShowPromo] = useState(true);
     const [date, setDate] = useState(DateTime.now());
     const [showPicker, setShowPicker] = useState(false);
-
-    const { data: menu, isLoading, refetch, isError } = useQuery<Menu>({
+    
+    const { data: menu, isError, isFetching } = useQuery<Menu>({
         queryKey: ['menu', date.toSQLDate()],
-        queryFn: async () => await fetchMenu(date)
+        queryFn: async () => await fetchMenu(date),
+        placeholderData: {}
     });
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         navigation.setOptions({
             headerTitle: () => (
                 <>
@@ -40,14 +39,6 @@ export default function Menus() {
             )
         });
     }, [date]);
-
-    const refreshControl = (
-        <RefreshControl
-            onRefresh={refetch}
-            refreshing={isLoading}
-            colors={[color('accent')]}
-        />
-    );
 
     function handleConfirmDate(newDate: Date) {
         setDate(DateTime.fromJSDate(newDate));
@@ -71,12 +62,13 @@ export default function Menus() {
             />
 
             <SafeAreaView>
-                <ScrollView style={tw('h-full')} refreshControl={refreshControl}>
+                <ScrollView style={tw('h-full')}>
                     <Grid columns={1} style={tw('p-3')}>
+                        {isFetching && <ActivityIndicator/>}
                         {date.startOf('day') > DateTime.now().startOf('day') && <FutureMenuWarning/>}
-                        {showPromo && <FoodAlertsPromo onDismiss={() => setShowPromo(false)}/>}
-                        {isError && <EmptyState title="No Menu Found" subtitle="Try another date" icon="fast-food"/>}
-                        {Object.entries(menu).map(([title, items]) => <MenuSection key={title} title={title} items={items}/>)}
+                        {/* {showPromo && <FoodAlertsPromo onDismiss={() => setShowPromo(false)}/>} */}
+                        {(isError || !menu) && <EmptyState title="No Menu Found" subtitle="Try another date" icon="fast-food"/>}
+                        {menu && Object.entries(menu).map(([title, items]) => <MenuSection key={title} title={title} items={items}/>)}
                     </Grid>
                 </ScrollView>
             </SafeAreaView>

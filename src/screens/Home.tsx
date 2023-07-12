@@ -1,8 +1,10 @@
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
-import { Text } from 'react-native';
+import { View } from 'react-native';
+import Button from '../components/Button';
 import Logo from '../components/Logo';
 import UserButton from '../components/UserButton';
 import tw from '../helpers/tailwind';
+import { useNavigation } from '@react-navigation/native';
 
 export const screenOptions: NativeStackNavigationOptions = {
     headerLeft: () => <Logo/>,
@@ -11,7 +13,16 @@ export const screenOptions: NativeStackNavigationOptions = {
 }
 
 export default function Home() {
+    const navigation = useNavigation();
+
     return (
-        <Text>Home</Text>
+        <View style={tw('p-3')}>
+            <Button
+                text="Show MacPass"
+                size="mega"
+                // @ts-expect-error
+                onPress={() => navigation.navigate('ShowMacPass')}
+            />
+        </View>
     );
 }

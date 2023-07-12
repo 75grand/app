@@ -8,7 +8,7 @@ export default function Input(props: TextInputProps & { search?: boolean }) {
             {props.search && <Ionicons style={tw('text-gray-400 pl-3')} name="search" size={18}/>}
 
             <TextInput
-                style={tw('pr-4.5 py-2 text-base leading-5 w-full', props.search || 'pl-4.5')}
+                style={tw('pr-3 py-2 text-base leading-5 w-full', props.search || 'pl-3')}
                 {...props}
             />
         </View>

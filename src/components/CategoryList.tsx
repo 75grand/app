@@ -1,7 +1,5 @@
-import { SectionList, Text, View } from 'react-native';
+import { SectionList, Text, TouchableOpacity, View } from 'react-native';
 import tw from '../helpers/tailwind';
-import Card from './Card';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export type DataItem = { label: string, value?: any };
 

@@ -1,6 +1,5 @@
-import { Alert, View } from 'react-native';
+import { Alert, TouchableOpacity, View } from 'react-native';
 import { DietaryRestriction } from '../../helpers/models/menu';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import tw from '../../helpers/tailwind';
 import { Image } from 'expo-image';
 

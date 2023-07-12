@@ -1,8 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useStore } from '@nanostores/react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NativeStackNavigationOptions, createNativeStackNavigator } from '@react-navigation/native-stack';
-import { View } from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import tw from './helpers/tailwind';
 import { $user } from './helpers/user/user-store';
 import * as ApproveNotifications from './screens/ApproveNotifications';
@@ -12,12 +11,14 @@ import * as Home from './screens/Home';
 import * as Hours from './screens/Hours';
 import * as LoginWall from './screens/LoginWall';
 import * as Menus from './screens/Menus';
+import * as ScanMacPass from './screens/ScanMacPass';
 import * as Settings from './screens/Settings';
+import * as ShowMacPass from './screens/ShowMacPass';
 
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
 
-const initialRoute = 'CalendarTab';
+const initialRoute = 'MenusTab';
 
 export default function Routing() {
     const user = useStore($user);
@@ -33,7 +34,7 @@ export default function Routing() {
     return (
         <Tabs.Navigator screenOptions={{
             headerShown: false,
-            // tabBarShowLabel: false,
+            tabBarShowLabel: false,
             tabBarStyle: tw('border-t border-t-black/10')
         }} initialRouteName={initialRoute}>
             <Tabs.Screen
@@ -89,6 +90,8 @@ function HomeRouting() {
         <Stack.Navigator>
             <Stack.Screen name="Home" component={Home.default} options={Home.screenOptions}/>
             <Stack.Screen name="Settings" component={Settings.default} options={Settings.screenOptions}/>
+            <Stack.Screen name="ScanMacPass" component={ScanMacPass.default} options={ScanMacPass.screenOptions}/>
+            <Stack.Screen name="ShowMacPass" component={ShowMacPass.default} options={ShowMacPass.screenOptions}/>
         </Stack.Navigator>
     );
 }
@@ -122,7 +125,7 @@ function MenusRouting() {
 function HoursRouting() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Hours" component={Hours.default}/>
+            <Stack.Screen name="Hours" component={Hours.default} options={Hours.screenOptions}/>
         </Stack.Navigator>
     );
 }
