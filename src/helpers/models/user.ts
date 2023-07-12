@@ -4,14 +4,13 @@ export type User = {
     email: string,
     avatar: string,
     referral_code: string,
-    referrald_by?: number,
+    referrals_count: number,
     macpass_number?: string,
     class_year?: number,
     position?: 'student'|'professor'|'staff',
     mailbox_combination?: `${number}-${number}-${number}`,
     mailbox_number?: number,
-    created_at: string,
-    updated_at: string
+    created_at: string
 }
 
 export type EditableUserFields = Partial<{
