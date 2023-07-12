@@ -1,7 +1,7 @@
 import { Stack, Tabs } from 'expo-router';
 import { View } from 'react-native';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import tw, { color } from '../../lib/tailwind';
+import tw, { color } from '../../src/helpers/tailwind';
 
 // screenOptions={{
 //     headerTintColor: color('accent'),

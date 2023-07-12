@@ -2,11 +2,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { Stack } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
-import CategoryList, { DataItem } from '../../../components/CategoryList';
-import Input from '../../../components/Input';
-import fuzzySearch from '../../../lib/fuzzy-search';
-import tw, { color } from '../../../lib/tailwind';
-import Button from '../../../components/Button';
+import CategoryList, { DataItem } from '../../../src/components/CategoryList';
+import Input from '../../../src/components/Input';
+import fuzzySearch from '../../../src/helpers/fuzzy-search';
+import tw, { color } from '../../../src/helpers/tailwind';
+import Button from '../../../src/components/Button';
 import * as Haptics from 'expo-haptics';
 
 export default function() {

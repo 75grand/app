@@ -2,8 +2,8 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Stack } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
-import Button from '../../../components/Button';
-import tw from '../../../lib/tailwind';
+import Button from '../../../src/components/Button';
+import tw from '../../../src/helpers/tailwind';
 
 export default function macpass() {
     const [hasPermission, setHasPermission] = useState(false);

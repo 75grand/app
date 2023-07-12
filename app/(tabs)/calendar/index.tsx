@@ -4,30 +4,17 @@ import { DateTime } from 'luxon';
 import { useMemo, useState } from 'react';
 import { ActivityIndicator, SafeAreaView, ScrollView, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import Card from '../../../components/Card';
-import CardHeader from '../../../components/CardHeader';
-import EmptyState from '../../../components/EmptyState';
-import Grid from '../../../components/Grid';
-import CalendarFilters from '../../../components/calendar/CalendarFilters';
-import CalendarItem from '../../../components/calendar/CalendarItem';
-import { fetchEvents } from '../../../lib/api';
-import { CalendarFilter, filters } from '../../../lib/calendar-filters';
-import { CalendarEvent } from '../../../lib/models/calendar';
-import tw from '../../../lib/tailwind';
-
-function groupEvents(events: CalendarEvent[]): Map<string, CalendarEvent[]> {
-    const groupedEvents = new Map<string, CalendarEvent[]>;
-
-    for(const event of events) {
-        let date = DateTime.fromISO(event.start_date)
-            .toLocaleString({ weekday: 'long', month: 'long', day: 'numeric' });
-
-        groupedEvents[date] = groupedEvents[date] ?? [];
-        groupedEvents[date].push(event);
-    }
-
-    return groupedEvents;
-}
+import Card from '../../../src/components/Card';
+import CardHeader from '../../../src/components/CardHeader';
+import EmptyState from '../../../src/components/EmptyState';
+import Grid from '../../../src/components/Grid';
+import CalendarFilters from '../../../src/components/calendar/CalendarFilters';
+import CalendarEventItem from '../../../src/components/calendar/CalendarEventItem';
+import { fetchEvents } from '../../../src/helpers/api/api';
+import { CalendarFilter, calendarFilters } from '../../../src/helpers/calendar/filters';
+import { CalendarEvent } from '../../../src/helpers/models/calendar';
+import tw from '../../../src/helpers/tailwind';
+import { groupEvents } from '../../../src/helpers/calendar/utils';
 
 export default function() {
     const [activeFilter, setActiveFilter] = useState(null as CalendarFilter);
@@ -50,7 +37,7 @@ export default function() {
             <SafeAreaView style={tw('bg-white')}>
                 <View style={tw('py-3 bg-white border-b border-black/10')}>
                     <CalendarFilters
-                        filters={filters}
+                        filters={calendarFilters}
                         activeFilter={activeFilter}
                         setActiveFilter={setActiveFilter}
                     />
@@ -88,7 +75,7 @@ function CalendarEvents({ events }: { events: Map<string, CalendarEvent[]> }) {
 
                                 return (
                                     <TouchableOpacity onPress={openEventDetails} key={event.id}>
-                                        <CalendarItem {...event}/>
+                                        <CalendarEventItem {...event}/>
                                     </TouchableOpacity>
                                 );
                             })}

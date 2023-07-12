@@ -1,34 +1,40 @@
 {
-  "expo": {
-    "name": "75grand",
-    "slug": "75grand",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "scheme": "grand",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#FFFFFF"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "config": {
-        "usesNonExemptEncryption": false
-      }
-    },
-    "android": {
-      "adaptiveIcon": {
-        "monochromeImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#0369A1"
-      }
-    },
-    "plugins": [
-      "sentry-expo"
-    ]
-  }
+    "expo": {
+        "name": "75grand",
+        "slug": "75grand",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/icon.png",
+        "userInterfaceStyle": "light",
+        "scheme": "grand",
+        "splash": {
+            "image": "./assets/splash.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#FFFFFF"
+        },
+        "assetBundlePatterns": [
+            "**/*"
+        ],
+        "ios": {
+            "supportsTablet": true,
+            "config": {
+                "usesNonExemptEncryption": false
+            }
+        },
+        "android": {
+            "adaptiveIcon": {
+                "monochromeImage": "./assets/adaptive-icon.png",
+                "backgroundColor": "#0369A1"
+            }
+        },
+        "plugins": [
+            [
+                "expo-notifications",
+                {
+                    "icon": "./assets/notification-icon.png",
+                    "color": "#0369A1"
+                }
+            ]
+        ]
+    }
 }
