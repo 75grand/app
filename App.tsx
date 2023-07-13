@@ -1,3 +1,6 @@
+// import 'react-native-reanimated';
+// import 'react-native-gesture-handler';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer, Theme } from '@react-navigation/native';
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister';
