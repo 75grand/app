@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { useMutation } from '@tanstack/react-query';
 import { StatusBar } from 'expo-status-bar';
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Button from '../components/Button';
@@ -14,11 +14,12 @@ import InputLabel from '../components/InputLabel';
 import PillRadioInput from '../components/PillRadioInput';
 import Profile from '../components/settings/Profile';
 import { patchUser } from '../helpers/api/api';
-import { logout } from '../helpers/api/login';
+import { logout, refreshUser } from '../helpers/api/login';
 import { User } from '../helpers/models/user';
 import tw, { color } from '../helpers/tailwind';
 import { $user } from '../helpers/user/user-store';
 import Grid from '../components/Grid';
+import ReferralCode from '../components/settings/ReferralCode';
 
 export const screenOptions: NativeStackNavigationOptions = {
     presentation: 'modal',
@@ -45,6 +46,12 @@ export default function Settings() {
             macpass_number: macPass
         })
     });
+
+    useEffect(() => {
+        (async () => {
+            await refreshUser();
+        })();
+    }, []);
 
     async function saveSettings() {
         const newUser = await mutation.mutateAsync();
@@ -89,11 +96,7 @@ export default function Settings() {
                     </Card>
 
                     <Card>
-                        <InputLabel text="Referral Code">
-                            <Text selectable style={tw('leading-none text-base self-start', { fontFamily: 'Menlo' })}>
-                                {user.referral_code}
-                            </Text>
-                        </InputLabel>
+                        <ReferralCode {...user}/>
                     </Card>
 
                     <Card style={tw('gap-3')}>

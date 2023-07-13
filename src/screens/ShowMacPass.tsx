@@ -7,7 +7,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect, useRef } from 'react';
 import { SafeAreaView, View } from 'react-native';
 import Button from '../components/Button';
-import SvgCard from '../components/macpass/SvgCard';
+import MacPass from '../components/macpass/MacPass';
 import tw from '../helpers/tailwind';
 import { $user } from '../helpers/user/user-store';
 
@@ -42,7 +42,7 @@ export default function ShowMacPass() {
                 <View style={tw('p-8 h-full justify-between')}>
                     <View/>
 
-                    <SvgCard/>
+                    <MacPass/>
 
                     <View/>
 

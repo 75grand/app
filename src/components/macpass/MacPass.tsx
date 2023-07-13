@@ -5,7 +5,7 @@ import tw from '../../helpers/tailwind';
 import { ucFirst } from '../../helpers/text-utils';
 import { $user } from '../../helpers/user/user-store';
 
-export default function SvgCard() {
+export default function MacPass() {
     const user = useStore($user);
 
     const splitNames = user.name.split(' ');

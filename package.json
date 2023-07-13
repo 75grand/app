@@ -40,6 +40,7 @@
     "luxon": "^3.3.0",
     "moti": "^0.25.3",
     "nanostores": "^0.9.3",
+    "number-to-words": "^1.2.4",
     "react": "18.2.0",
     "react-native": "0.72.3",
     "react-native-gesture-handler": "~2.12.0",

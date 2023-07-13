@@ -19,7 +19,7 @@ import * as ShowMacPass from './screens/ShowMacPass';
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
 
-const initialRoute = 'MenusTab';
+const initialRoute = 'HomeTab';
 
 export default function Routing() {
     const user = useStore($user);

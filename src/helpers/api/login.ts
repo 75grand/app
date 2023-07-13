@@ -39,8 +39,7 @@ export async function login(referralCode: string = null) {
         $token.set(url.queryParams?.token as string);
 
         // Fetch and store user profile
-        const user = await fetchUser();
-        $user.set(user);
+        await refreshUser();
 
         // WebBrowser.dismissAuthSession();
 
@@ -48,4 +47,9 @@ export async function login(referralCode: string = null) {
     }
 
     return false;
+}
+
+export async function refreshUser() {
+    const user = await fetchUser();
+    $user.set(user);
 }
