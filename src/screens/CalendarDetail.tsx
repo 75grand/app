@@ -8,6 +8,7 @@ import * as WebBrowser from 'expo-web-browser';
 import { DateTime } from 'luxon';
 import { useLayoutEffect } from 'react';
 import { Linking, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import MapView, { Callout, Marker } from 'react-native-maps';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Button from '../components/Button';
 import EmptyState from '../components/EmptyState';
@@ -191,6 +192,26 @@ function EventLocation({ location, latitude, longitude }: CalendarEvent) {
                 <Text style={tw('text-base', latitude && longitude && 'text-accent font-medium')}>
                     {formatLocation(location)}
                 </Text>
+
+                {latitude && longitude && (
+                    <MapView
+                        style={tw('w-full h-48 rounded-md mt-2 border border-black/10')}
+                        mapType="satellite"
+                        showsPointsOfInterest={false}
+                        cacheEnabled={true}
+                        pitchEnabled={false}
+                        tintColor={color('accent')}
+                        initialRegion={{
+                            latitude, longitude,
+                            latitudeDelta: 0.001, longitudeDelta: 0.001
+                        }}
+                    >
+                        <Marker
+                            coordinate={{ latitude, longitude }}
+                            pinColor={color('accent')}
+                        />
+                    </MapView>
+                )}
             </TouchableOpacity>
         </CalendarDetailRow>
     );
@@ -198,10 +219,10 @@ function EventLocation({ location, latitude, longitude }: CalendarEvent) {
 
 function CalendarDetailRow({ label, children }) {
     return (
-        <View style={tw('flex flex-row gap-4 items-center')}>
+        <View style={tw('flex flex-row gap-4')}>
             <Text style={tw('text-base text-gray-500 w-16 text-right')}>{label}</Text>
 
-            <View style={tw('shrink')}>
+            <View style={tw('shrink w-full')}>
                 {children}
             </View>
         </View>
