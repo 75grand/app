@@ -5,6 +5,7 @@ export type User = {
     avatar: string,
     referral_code: string,
     referrals_count: number,
+    referrals_per_prize: number,
     macpass_number?: string,
     class_year?: number,
     position?: 'student'|'professor'|'staff',
