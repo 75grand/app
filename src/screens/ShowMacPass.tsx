@@ -13,7 +13,7 @@ import tw, { monospace } from '../helpers/tailwind';
 import { $user } from '../helpers/user/user-store';
 
 export const screenOptions: NativeStackNavigationOptions = {
-    presentation: 'fullScreenModal',
+    presentation: 'modal',
     title: 'MacPass',
     headerShown: false
 }
