@@ -1,35 +1,10 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import { getStatus } from '../../helpers/building-hours';
-import { GET } from '../../helpers/api/http';
 import { BuildingHours } from '../../helpers/models/building-hours';
 import tw from '../../helpers/tailwind';
-import Card from '../Card';
-import CardHeader from '../CardHeader';
-import Grid from '../Grid';
 
-export default function HoursCard({ onPress = () => {} }: { onPress?: () => void }) {
-    const [hours, setHours] = useState([] as BuildingHours[]);
-
-    useEffect(() => {
-        GET<BuildingHours[]>('hours')
-            .then(setHours)
-            .catch(() => alert('Error loading hours data'));
-    }, []);
-
-    return (
-        <Card onPress={onPress}>
-            <CardHeader title="Building & Service Hours" icon="time"/>
-
-            <Grid columns={2} style={tw('items-center')}>
-                {hours.map(HoursItem)}
-            </Grid>
-        </Card>
-    );
-}
-
-export function HoursItem({ name, events }: BuildingHours) {
+export default function HoursItem({ name, events }: BuildingHours) {
     const { status, message } = getStatus(events);
 
     const dotColor = {
