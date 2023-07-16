@@ -7,15 +7,31 @@ export type BuildingHoursStatus = {
 }
 
 export function getStatus(events: BuildingHoursEvent[]): BuildingHoursStatus {
-    for(let i = 0; i < events.length; i++) {
-        const event = events[i];
+    // Events must be sorted in chronological order
+    // They are sorted on the server, so this is just in case
+    events = events.sort((e1, e2) => {
+        const d1 = new Date(e1.start_date);
+        const d2 = new Date(e2.start_date);
+        return d1.getTime() - d2.getTime();
+    });
 
-        // const now = DateTime.now();
-        const now = DateTime.now().plus({ week: 1 });
+    for(const event of events) {
+        const now = DateTime.now();
         const startDate = DateTime.fromISO(event.start_date);
         const endDate = DateTime.fromISO(event.end_date);
 
-        if(now > startDate && now < endDate) {
+        // If the first event hasn't started yet, it's clsoed
+        if(now < startDate) {
+            const time = startDate.toRelative();
+
+            return {
+                status: 'closed',
+                message: `${event.text_before_start} ${time}`
+            }
+        }
+
+        // The event is happening now, so it's open
+        if(now < endDate) {
             const time = endDate.toRelative();
             const isClosingSoon = endDate.diff(now).as('minutes') <= 15;
 
@@ -23,23 +39,11 @@ export function getStatus(events: BuildingHoursEvent[]): BuildingHoursStatus {
                 status: isClosingSoon ? 'closing-soon' : 'open',
                 message: `${event.text_before_end} ${time}`
             }
-        } else if(events.length > i + 1) {
-            const nextEvent = events[i + 1];
-            const nextStartDate = DateTime.fromISO(nextEvent.start_date);
-
-            if(now > endDate && now < nextStartDate) {
-                const time = nextStartDate.toRelative();
-    
-                return {
-                    status: 'closed',
-                    message: `${nextEvent.text_before_start} ${time}`
-                }
-            }
         }
     }
 
     return {
         status: 'error',
-        message: 'error'
+        message: 'Error'
     }
 }
