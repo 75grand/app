@@ -25,7 +25,7 @@ export default function LoginWall() {
     }
 
     async function handleReferralPress() {
-        Alert.prompt('Enter your referral code', '', async value => {
+        Alert.prompt('Enter a referral code', '', async value => {
             setReferralLoading(true);
             const created = await login(value);
             alert('User created? ' + created);
