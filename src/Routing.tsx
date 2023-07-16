@@ -15,11 +15,12 @@ import * as Menus from './screens/Menus';
 import * as ScanMacPass from './screens/ScanMacPass';
 import * as Settings from './screens/Settings';
 import * as ShowMacPass from './screens/ShowMacPass';
+import * as ShowCombination from './screens/ShowCombination';
 
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
 
-const initialRoute = 'HomeTab';
+const initialRoute = 'HoursTab';
 
 export default function Routing() {
     const user = useStore($user);
@@ -93,6 +94,7 @@ function HomeRouting() {
             <Stack.Screen name="Settings" component={Settings.default} options={Settings.screenOptions}/>
             <Stack.Screen name="ScanMacPass" component={ScanMacPass.default} options={ScanMacPass.screenOptions}/>
             <Stack.Screen name="ShowMacPass" component={ShowMacPass.default} options={ShowMacPass.screenOptions}/>
+            <Stack.Screen name="ShowCombination" component={ShowCombination.default} options={ShowCombination.screenOptions}/>
         </Stack.Navigator>
     );
 }
