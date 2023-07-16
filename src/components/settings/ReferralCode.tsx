@@ -8,7 +8,6 @@ import InputLabel from '../InputLabel';
 import { toWords } from 'number-to-words';
 
 export default function ReferralCode({ referral_code, referrals_count, referrals_per_prize }: User) {
-    referrals_count = 5;
     const numberLeft = Math.max(referrals_per_prize - referrals_count ?? 0, 0);
 
     async function shareReferral() {
