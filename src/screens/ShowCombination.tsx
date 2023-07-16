@@ -7,49 +7,63 @@ import { Circle, G, Path, Svg, Text as SvgText } from 'react-native-svg';
 import Button from '../components/Button';
 import tw, { color, monospace } from '../helpers/tailwind';
 import { $user } from '../helpers/user/user-store';
-import { MotiView } from 'moti';
+import { MotiText, MotiView } from 'moti';
 import { Easing } from 'react-native-reanimated';
-import { useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 export const screenOptions: NativeStackNavigationOptions = {
-    presentation: 'fullScreenModal',
+    presentation: 'modal',
     title: 'Mailbox Combination',
     headerShown: false
 }
 
 export default function ShowCombination() {
     const navigation = useNavigation();
+    
     const maxNumber = 50;
-    const degPerNum = 360/maxNumber;
+    const stepCount = 5;
 
     const { mailbox_combination, mailbox_number } = useStore($user);
     const [first, second, third] = mailbox_combination.split('-').map(s => Number(s));
     
     const [step, setStep] = useState(-1);
-    const rotation = {
-        0: -(360*4),
-        1: -(360*4) + -(degPerNum*first),
-        2: -(360*4) + -(degPerNum*first) + 360 + second + (degPerNum*first),
-        3: -(360*4) + -(degPerNum*first) + 360 + second + (degPerNum*first),
-        4: -(360*4) + -(degPerNum*first) + 360 + second + (degPerNum*first) + -(degPerNum*third)
-    }[step] ?? 0;
+
+    const getRotation = useCallback((step: number) => {
+        const degPerNum = 360/maxNumber;
+
+        // - = to the left
+        // + = to the right
+        const number = {
+            0: -(maxNumber*4), // Turn left four times
+            1: -(maxNumber*4) -(first), // Stop at the first number
+            2: -(maxNumber*4) -(first) +(maxNumber*2) +(first-second), // Turn right and pass the first number, stopping at the second
+            3: -(maxNumber*4) -(first) +(maxNumber*2) +(first-second) -(third-second), // Turn left and stop at the third number
+            4: -(maxNumber*4) -(first) +(maxNumber*2) +(first-second) -(third-second) // Turn right and pull to open
+        }[step] ?? 0;
+    
+        return number * degPerNum;
+    }, [first, second, third]);
+
+    const prevRotation = useRef(0);
+    const rotation = getRotation(step);
+    const duration = Math.min(Math.max(Math.abs(prevRotation.current - rotation) * 5, 1000), 5000);
+    prevRotation.current = rotation;
 
     return (
         <>
-            <StatusBar animated style="dark"/>
+            <StatusBar animated style="light"/>
 
             <SafeAreaView>
                 <View style={tw('p-8 h-full justify-between')}>
                     <View/>
 
-                    <View style={tw('relative justify-center shadow-xl')}>
+                    <View style={tw('relative justify-center')}>
                         <MotiView
                             animate={{ rotate: `${rotation}deg` }}
                             transition={{
-                                delay: 250,
                                 type: 'timing',
-                                duration: 5_000,
-                                easing: Easing.linear
+                                duration: duration,
+                                easing: Easing.out(Easing.ease)
                             }}
                         >
                             <LockWheel max={maxNumber}/>
@@ -64,21 +78,34 @@ export default function ShowCombination() {
                     <View/>
 
                     <View style={tw('gap-1')}>
-                        <Text style={step === 0 && tw('text-accent font-bold')}>1. Turn the dial left at least four times</Text>
-                        <Text style={step === 1 && tw('text-accent font-bold')}>2. Turn the dial left and stop at <Text style={tw('font-bold')}>{first}</Text></Text>
-                        <Text style={step === 2 && tw('text-accent font-bold')}>3. Turn the dial right and pass <Text style={tw('font-bold')}>{first}</Text> once</Text>
-                        <Text style={step === 3 && tw('text-accent font-bold')}>4. Stop at <Text style={tw('font-bold')}>{second}</Text></Text>
-                        <Text style={step === 4 && tw('text-accent font-bold')}>5. Turn the dial left and stop at <Text style={tw('font-bold')}>{third}</Text></Text>
-                        <Text style={step === 5 && tw('text-accent font-bold')}>6. Turn right and pull to open</Text>
+                        <Step isActive={step === 0}>1. Turn left at least four times</Step>
+                        <Step isActive={step === 1}>2. Turn left and stop at <Text style={tw('font-bold')}>{first}</Text></Step>
+                        <Step isActive={step === 2}>3. Turn right and pass <Text style={tw('font-bold')}>{first}</Text> once</Step>
+                        <Step isActive={step === 2}>4. Stop at <Text style={tw('font-bold')}>{second}</Text></Step>
+                        <Step isActive={step === 3}>5. Turn left and stop at <Text style={tw('font-bold')}>{third}</Text></Step>
+                        <Step isActive={step === 4}>6. Turn right and pull to open</Step>
                     </View>
 
                     <View/>
 
-                    <Button text="Next" size="mega" onPress={() => setStep((step + 1) % 6)}/>
-                    <Button text="Done" size="mega" onPress={navigation.goBack}/>
+                    {step < stepCount-1 && <Button text="Next" size="mega" onPress={() => setStep(step + 1)}/>}
+                    {step === stepCount-1 && <Button text="Done" size="mega" onPress={navigation.goBack}/>}
                 </View>
             </SafeAreaView>
         </>
+    );
+}
+
+function Step({ isActive, children }: { isActive: boolean, children: React.ReactNode }) {
+    const inactiveStyles = tw('leading-tight text-lg text-black');
+    const activeStyles = tw('leading-tight text-accent text-xl');
+
+    return (
+        <MotiText
+            from={inactiveStyles}
+            animate={isActive && activeStyles}
+            children={children}
+        />
     );
 }
 
@@ -89,7 +116,7 @@ function LockWheel({ max }: { max: number }) {
     const tick = 5;
 
     return (
-        <View style={{ aspectRatio: 1/1 }}>
+        <View style={tw('shadow-xl bg-white rounded-full', { aspectRatio: 1/1 })}>
             <Svg viewBox={`0 0 ${scale} ${scale}`} width="100%" height="100%">
                 <Circle
                     r={scale/2 - 1/2}
