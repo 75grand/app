@@ -28,7 +28,7 @@ export async function getLoginUrl(options?: Record<string, string>) {
 /**
  * @returns Whether the user's account was just created
  */
-export async function login(referralCode: string = null) {
+export async function login(referralCode: string = '') {
     // Fetch Google OAuth URL from server
     const loginUrl = await getLoginUrl({ referral_code: referralCode });
     const result = await WebBrowser.openAuthSessionAsync(loginUrl);
