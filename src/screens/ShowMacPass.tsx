@@ -4,11 +4,12 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import * as Brightness from 'expo-brightness';
 import { StatusBar } from 'expo-status-bar';
+import { MotiView } from 'moti';
 import { useEffect, useRef } from 'react';
 import { SafeAreaView, View } from 'react-native';
 import Button from '../components/Button';
 import MacPass from '../components/macpass/MacPass';
-import tw from '../helpers/tailwind';
+import tw, { monospace } from '../helpers/tailwind';
 import { $user } from '../helpers/user/user-store';
 
 export const screenOptions: NativeStackNavigationOptions = {
@@ -42,7 +43,14 @@ export default function ShowMacPass() {
                 <View style={tw('p-8 h-full justify-between')}>
                     <View/>
 
-                    <MacPass/>
+                    <MotiView
+                        delay={200}
+                        from={{ rotateX: '50deg', scale: 0.75 }}
+                        animate={{ rotateX: '0deg', scale: 1 }}
+                        transition={{ type: 'timing', duration: 750 }}
+                    >
+                        <MacPass/>
+                    </MotiView>
 
                     <View/>
 
@@ -51,6 +59,7 @@ export default function ShowMacPass() {
                         format="codabar"
                         background="transparent"
                         height={48}
+                        text={user.macpass_number}
                         textStyle={tw('text-xl', { fontFamily: monospace })}
                     />
 
