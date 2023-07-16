@@ -47,11 +47,7 @@ export default function Settings() {
         })
     });
 
-    useEffect(() => {
-        (async () => {
-            await refreshUser();
-        })();
-    }, []);
+    useEffect(() => { refreshUser() }, []);
 
     async function saveSettings() {
         const newUser = await mutation.mutateAsync();
