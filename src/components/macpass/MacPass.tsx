@@ -1,7 +1,7 @@
 import { useStore } from '@nanostores/react';
 import { View } from 'react-native';
 import Svg, { Image, Path, Text } from 'react-native-svg';
-import tw from '../../helpers/tailwind';
+import tw, { slabSerif } from '../../helpers/tailwind';
 import { ucFirst } from '../../helpers/text-utils';
 import { $user } from '../../helpers/user/user-store';
 
@@ -34,21 +34,21 @@ export default function MacPass() {
                     />
 
                     <Text
-                        fontFamily="Rockwell"
+                        fontFamily={slabSerif}
                         fontSize={20}
                         transform="translate(147 295)"
                         textAnchor="middle"
                     >{nameLastFirst}</Text>
 
                     <Text
-                        fontFamily="Rockwell"
+                        fontFamily={slabSerif}
                         fontSize={18}
                         transform="translate(147 320)"
                         textAnchor="middle"
                     >{user.macpass_number}</Text>
 
                     {user.position && <Text
-                        fontFamily="Rockwell"
+                        fontFamily={slabSerif}
                         fontSize={18}
                         transform="rotate(-90 127.078 62.372)"
                         textAnchor="middle"

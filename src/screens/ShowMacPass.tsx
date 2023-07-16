@@ -51,6 +51,7 @@ export default function ShowMacPass() {
                         format="codabar"
                         background="transparent"
                         height={48}
+                        textStyle={tw('text-xl', { fontFamily: monospace })}
                     />
 
                     <View/>
