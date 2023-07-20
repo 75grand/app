@@ -12,7 +12,7 @@ export default function AvatarButton() {
     return (
         // @ts-expect-error
         <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
-            <Image style={tw('w-8 h-8 rounded-full')} source={user.avatar}/>
+            <Image style={tw('w-8 h-8 rounded-lg')} source={user.avatar}/>
         </TouchableOpacity>
     );
 }
