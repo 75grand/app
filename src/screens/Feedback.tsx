@@ -26,7 +26,7 @@ export default function Feedback() {
     const mutation = useMutation({
         mutationFn: () => postFeedback(message),
         onSuccess() {
-            Alert.alert('Thanks for your feedback!');
+            Alert.alert('Thanks!', 'Your feedback has been sent.');
             navigation.goBack();
         }
     });
