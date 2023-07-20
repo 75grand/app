@@ -31,7 +31,7 @@ export default function ApproveNotifications() {
 
             <View style={tw('items-center p-6 bg-white h-full justify-between')}>
                 <View/>
-                
+
                 <View style={tw('gap-6 items-center')}>
                     <Ionicons name="notifications" style={tw('text-accent text-6xl')}/>
 

@@ -7,10 +7,13 @@ interface Props {
     onPress?: () => void,
     color?: 'accent'|'light'|'translucent'|'red'|'gray',
     loading?: boolean,
-    size?: 'small'|'mega'
+    size?: 'small'|'mega',
+    disabled?: boolean
 }
 
-export default function Button({ text, onPress, color = 'accent', loading = false, size = 'small' }: Props) {
+export default function Button({ text, onPress, color = 'accent', loading = false, size = 'small', disabled = false }: Props) {
+    disabled = disabled || loading;
+
     const textColor = {
         accent: getColor('white'),
         light: getColor('accent'),
@@ -34,10 +37,11 @@ export default function Button({ text, onPress, color = 'accent', loading = fals
 
     return (
         <TouchableOpacity
+            disabled={disabled}
             activeOpacity={0.5}
-            style={tw('relative justify-center', bgColor, sizeStyle)}
+            style={tw('relative justify-center', bgColor, sizeStyle, disabled && 'opacity-75')}
             onPress={() => {
-                if(loading) return;
+                if(disabled) return;
                 onPress();
                 Haptics.selectionAsync();
             }}

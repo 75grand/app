@@ -6,10 +6,10 @@ import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-url-polyfill/auto';
+import { HeaderButtonsProvider } from 'react-navigation-header-buttons';
 import Routing from './src/Routing';
 import { registerAndroidNotifChannel as registerNotifChannel, setNotifHandler, syncNotifToken } from './src/helpers/notifications';
 import { color } from './src/helpers/tailwind';
-import { HeaderButtonsProvider } from 'react-navigation-header-buttons';
 
 setNotifHandler();
 
@@ -47,7 +47,7 @@ export default function App() {
 
     return (
         <>
-            <StatusBar style="auto" animated={true}/>
+            <StatusBar animated style="auto"/>
 
             <PersistQueryClientProvider client={queryClient} persistOptions={persistOptions}>
                 <NavigationContainer theme={theme}>

@@ -3,6 +3,16 @@ export function pluralize(count: number, singular: string, plural?: string) {
     return count === 1 ? singular : plural;
 }
 
+export function formatPhoneNumber(digits: number|string) {
+    const string = String(digits);
+
+    const areaCode = string.substring(0, 3);
+    const firstThree = string.substring(3, 6);
+    const lastFour = string.substring(6, 10);
+
+    return `(${areaCode}) ${firstThree}-${lastFour}`;
+}
+
 export function ucFirst(string: string) {
     if(!string) return string;
 

@@ -7,29 +7,35 @@ import Button from '../components/Button';
 import AnimatedLogoIcon from '../components/login/AnimatedLogoIcon';
 import { login } from '../helpers/api/login';
 import tw from '../helpers/tailwind';
+import { useNavigation } from '@react-navigation/native';
 
 export const screenOptions: NativeStackNavigationOptions = {
-    headerShown: false
+    headerShown: false,
+    animation: 'flip'
 }
 
 export default function LoginWall() {
+    const navigation = useNavigation();
     const [loginLoading, setLoginLoading] = useState(false);
     const [referralLoading, setReferralLoading] = useState(false);
 
-    async function handleLoginPress() {
+    async function handleLoginPress(referralCode?: string) {
         setLoginLoading(true);
-        const created = await login();
-        // TODO: Go to page to configure account, etc.
-        alert('User created? ' + created);
+        const created = await login(referralCode);
         setLoginLoading(false);
+
+        if(created) {
+            // @ts-expect-error
+            navigation.navigate('AddUserDetails');
+        } else {
+            // @ts-expect-error
+            navigation.navigate('Tabs');
+        }
     }
 
     async function handleReferralPress() {
         Alert.prompt('Enter a referral code', '', async value => {
-            setReferralLoading(true);
-            const created = await login(value);
-            alert('User created? ' + created);
-            setReferralLoading(false);
+            await handleLoginPress(value);
         });
     }
 

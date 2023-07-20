@@ -2,14 +2,14 @@ import { useStore } from '@nanostores/react';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
+import { MotiText, MotiView } from 'moti';
+import { useCallback, useRef, useState } from 'react';
 import { SafeAreaView, Text, View } from 'react-native';
+import { Easing } from 'react-native-reanimated';
 import { Circle, G, Path, Svg, Text as SvgText } from 'react-native-svg';
 import Button from '../components/Button';
-import tw, { color, monospace } from '../helpers/tailwind';
-import { $user } from '../helpers/user/user-store';
-import { MotiText, MotiView } from 'moti';
-import { Easing } from 'react-native-reanimated';
-import { useCallback, useRef, useState } from 'react';
+import tw, { color } from '../helpers/tailwind';
+import { $localSettings } from '../helpers/user/settings-store';
 
 export const screenOptions: NativeStackNavigationOptions = {
     presentation: 'modal',
@@ -23,8 +23,10 @@ export default function ShowCombination() {
     const maxNumber = 50;
     const stepCount = 5;
 
-    const { mailbox_combination, mailbox_number } = useStore($user);
-    const [first, second, third] = mailbox_combination.split('-').map(s => Number(s));
+    const { mailboxCombination, mailboxNumber } = useStore($localSettings);
+    const first = Number(mailboxCombination.slice(0, 2));
+    const second = Number(mailboxCombination.slice(2, 4));
+    const third = Number(mailboxCombination.slice(4, 6));
     
     const [step, setStep] = useState(-1);
 
@@ -71,7 +73,7 @@ export default function ShowCombination() {
 
                         <View style={tw('absolute w-32 h-32 border-2 border-gray-300 rounded-full self-center gap-0.5 justify-center')}>
                             <Text style={tw('text-lg text-center leading-none font-bold uppercase')}>Box</Text>
-                            <Text style={tw('text-2xl text-center leading-none font-semibold')}>{mailbox_number}</Text>
+                            <Text style={tw('text-2xl text-center leading-none font-semibold')}>{mailboxNumber}</Text>
                         </View>
                     </View>
 

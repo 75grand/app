@@ -15,7 +15,7 @@ export default function Pill({ text, icon = null, active = true, tint }: Props) 
 
     return (
         <View style={tw(
-            'flex flex-row items-center gap-2 border px-3 py-2 rounded-full',
+            'flex flex-row items-center gap-2 border px-3 py-2 rounded-xl',
             active ? { backgroundColor: tint, borderColor: tint } : 'bg-white border-black/10'
         )}>
             {icon({ style: tw(active ? 'text-white' : { color: tint }), size: 18 })}

@@ -10,6 +10,7 @@ import Button from '../components/Button';
 import MacPass from '../components/macpass/MacPass';
 import tw, { monospace } from '../helpers/tailwind';
 import { $user } from '../helpers/user/user-store';
+import { $localSettings } from '../helpers/user/settings-store';
 
 export const screenOptions: NativeStackNavigationOptions = {
     presentation: 'fullScreenModal',
@@ -21,6 +22,7 @@ export const screenOptions: NativeStackNavigationOptions = {
 export default function ShowMacPass() {
     const navigation = useNavigation();
     const user = useStore($user);
+    const settings = useStore($localSettings);
     const initialBrightness = useRef<number>();
 
     useEffect(() => {
@@ -50,11 +52,11 @@ export default function ShowMacPass() {
                     <View/>
 
                     <Barcode
-                        value={user.macpass_number}
+                        value={settings.macPass}
                         format="codabar"
                         background="transparent"
                         height={48}
-                        text={user.macpass_number}
+                        text={settings.macPass}
                         textStyle={tw('text-xl', { fontFamily: monospace })}
                     />
 

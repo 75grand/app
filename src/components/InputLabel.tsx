@@ -10,9 +10,9 @@ interface Props {
 export default function InputLabel({ text, description, children }: Props) {
     return (
         <View style={tw('gap-2')}>
-            <View style={tw('ml-1')}>
-                <Text style={tw('font-semibold')}>{text}</Text>
-                {description && <Text style={tw('text-gray-400')}>{description}</Text>}
+            <View style={tw('flex-row gap-2 px-1')}>
+                <Text style={tw('font-semibold text-sm leading-none')}>{text}</Text>
+                {description && <Text style={tw('text-gray-400 font-normal text-sm leading-none')}>{description}</Text>}
             </View>
 
             <View>{children}</View>

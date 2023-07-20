@@ -1,14 +1,15 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
-import { useMutation } from '@tanstack/react-query';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
-import { View } from 'react-native';
+import { LogBox, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { patchUser } from '../helpers/api/api';
 import tw from '../helpers/tailwind';
-import { $user } from '../helpers/user/user-store';
+
+LogBox.ignoreLogs([
+    'Non-serializable values were found in the navigation state'
+]);
 
 export function screenOptions({ navigation }): NativeStackNavigationOptions {
     return {
@@ -24,10 +25,7 @@ export function screenOptions({ navigation }): NativeStackNavigationOptions {
 
 export default function ScanMacPass() {
     const navigation = useNavigation();
-    
-    const mutation = useMutation({
-        mutationFn: (id: string) => patchUser({ macpass_number: id })
-    });
+    const { setMacPass } = useRoute().params as any;
 
     useEffect(() => {
         (async () => {
@@ -38,8 +36,7 @@ export default function ScanMacPass() {
 
     function handleScan({ data }) {
         if(data.length === 9) {
-            $user.setKey('macpass_number', data);
-            mutation.mutate(data);
+            setMacPass(data);
             navigation.goBack();
         }
     }

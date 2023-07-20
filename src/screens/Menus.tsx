@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
 import { DateTime } from 'luxon';
 import { useLayoutEffect, useState } from 'react';
-import { ActivityIndicator, SafeAreaView, ScrollView, Text, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, RefreshControl, SafeAreaView, ScrollView, Text, TouchableOpacity } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import EmptyState from '../components/EmptyState';
 import Grid from '../components/Grid';
@@ -12,6 +12,7 @@ import MenuSection from '../components/menu/MenuSection';
 import { fetchMenu } from '../helpers/api/api';
 import { Menu } from '../helpers/models/menu';
 import tw, { color } from '../helpers/tailwind';
+import { useTanStackRefresh } from '../helpers/api/hooks';
 
 export default function Menus() {
     const navigation = useNavigation();
@@ -19,11 +20,17 @@ export default function Menus() {
     const [date, setDate] = useState(DateTime.now());
     const [showPicker, setShowPicker] = useState(false);
     
-    const { data: menu, isError, isFetching } = useQuery<Menu>({
+    const { data: menu, isError, refetch } = useQuery<Menu>({
         queryKey: ['menu', date.toSQLDate()],
         queryFn: async () => await fetchMenu(date),
         placeholderData: {}
     });
+
+    const { fixedRefetch, isRefetching } = useTanStackRefresh(refetch);
+    const refreshControl = <RefreshControl
+        refreshing={isRefetching}
+        onRefresh={fixedRefetch}
+    />;
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -62,9 +69,8 @@ export default function Menus() {
             />
 
             <SafeAreaView>
-                <ScrollView style={tw('h-full')}>
+                <ScrollView style={tw('h-full')} refreshControl={refreshControl}>
                     <Grid columns={1} style={tw('p-3')}>
-                        {isFetching && <ActivityIndicator/>}
                         {date.startOf('day') > DateTime.now().startOf('day') && <FutureMenuWarning/>}
                         {/* {showPromo && <FoodAlertsPromo onDismiss={() => setShowPromo(false)}/>} */}
                         {(isError || !menu) && <EmptyState title="No Menu Found" subtitle="Try another date" icon="fast-food"/>}

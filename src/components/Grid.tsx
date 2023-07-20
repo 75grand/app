@@ -3,7 +3,7 @@ import { StyleProp, Text, View } from 'react-native';
 import tw from '../helpers/tailwind';
 import { FlashList } from '@shopify/flash-list';
 
-interface Props {
+export interface Props {
     columns: 1|2|3|4;
     gap?: 0|1|2|3|4|8;
     children: React.ReactNode;

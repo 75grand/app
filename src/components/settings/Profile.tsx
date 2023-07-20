@@ -1,6 +1,6 @@
+import { Image } from 'expo-image';
 import { Text, View } from 'react-native';
 import { User } from '../../helpers/models/user';
-import { Image } from 'expo-image';
 import tw from '../../helpers/tailwind';
 
 export default function Profile({ name, avatar, email, id }: User) {

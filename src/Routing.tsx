@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import { useStore } from '@nanostores/react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -12,39 +12,60 @@ import * as Hours from './screens/Hours';
 import * as LoginWall from './screens/LoginWall';
 // import * as Map from './screens/Map';
 import * as Menus from './screens/Menus';
+import * as AddUserDetails from './screens/AddUserDetails';
 import * as ScanMacPass from './screens/ScanMacPass';
 import * as Settings from './screens/Settings';
 import * as ShowMacPass from './screens/ShowMacPass';
 import * as ShowCombination from './screens/ShowCombination';
+import * as Marketplace from './screens/marketplace/Marketplace';
+import * as ListingDetail from './screens/marketplace/ListingDetail';
+import * as EditListing from './screens/marketplace/EditListing';
 
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
 
-const initialRoute = 'HoursTab';
-
 export default function Routing() {
     const user = useStore($user);
 
-    if(user === null) {
-        return (
-            <Stack.Navigator>
-                <Stack.Screen name="Login" component={LoginWall.default} options={LoginWall.screenOptions}/>
-            </Stack.Navigator>
-        );
-    }
+    let initialRoute = 'Tabs';
+    if(user === null) initialRoute = 'Login';
+    else if(user.position === null) initialRoute = 'AddUserDetails';
 
+    return (
+        <Stack.Navigator initialRouteName={initialRoute}>
+            <Stack.Screen name="Login" component={LoginWall.default} options={LoginWall.screenOptions}/>
+            <Stack.Screen name="AddUserDetails" component={AddUserDetails.default} options={AddUserDetails.screenOptions}/>
+            <Stack.Screen name="ScanMacPass" component={ScanMacPass.default} options={ScanMacPass.screenOptions}/>
+
+            {user !== null &&
+                <Stack.Screen name="Tabs" component={TabRouting} options={{ headerShown: false }}/>}
+        </Stack.Navigator>
+    );
+}
+
+function TabRouting() {
     return (
         <Tabs.Navigator screenOptions={{
             headerShown: false,
             tabBarShowLabel: false,
             tabBarStyle: tw('border-t border-t-black/10')
-        }} initialRouteName={initialRoute}>
+        }} initialRouteName="MarketplaceTab">
             <Tabs.Screen
                 name="HomeTab"
                 component={HomeRouting}
                 options={{
                     title: 'Home',
                     tabBarIcon: props => <Ionicons {...props} name="home"/>
+                }}
+            />
+
+            <Tabs.Screen
+                name="MarketplaceTab"
+                component={MarketplaceRouting}
+                options={{
+                    title: 'Marketplace',
+                    // tabBarIcon: props => <Ionicons {...props} name="pricetag"/>
+                    tabBarIcon: props => <FontAwesome5 {...props} name="comments-dollar"/>
                 }}
             />
 
@@ -105,6 +126,16 @@ function CalendarRouting() {
             <Stack.Screen name="Calendar" component={Calendar.default} options={Calendar.screenOptions}/>
             <Stack.Screen name="CalendarDetail" component={CalendarDetail.default} options={CalendarDetail.screenOptions}/>
             <Stack.Screen name="ApproveNotifications" component={ApproveNotifications.default} options={ApproveNotifications.screenOptions}/>
+        </Stack.Navigator>
+    );
+}
+
+function MarketplaceRouting() {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="Marketplace" component={Marketplace.default} options={Marketplace.screenOptions}/>
+            <Stack.Screen name="ListingDetail" component={ListingDetail.default} options={ListingDetail.screenOptions}/>
+            <Stack.Screen name="EditListing" component={EditListing.default} options={EditListing.screenOptions}/>
         </Stack.Navigator>
     );
 }

@@ -4,11 +4,10 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Image } from 'expo-image';
-import * as WebBrowser from 'expo-web-browser';
 import { DateTime } from 'luxon';
 import { useLayoutEffect } from 'react';
 import { Linking, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import MapView, { Callout, Marker } from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Button from '../components/Button';
 import EmptyState from '../components/EmptyState';
@@ -20,6 +19,7 @@ import { areNotifsGranted } from '../helpers/notifications';
 import tw, { color } from '../helpers/tailwind';
 import { pluralize } from '../helpers/text-utils';
 import { $user } from '../helpers/user/user-store';
+import { openBrowser } from '../helpers/utils';
 
 /**
  * Controls screen options dynamically
@@ -76,7 +76,6 @@ export default function CalendarDetail() {
     const navigation = useNavigation();
 
     useLayoutEffect(() => {
-        // This is required so we can use toggleNotifications() in the header without having to duplicate the mutation
         navigation.setOptions({
             headerRight: () => (
                 <HeaderButtons>
@@ -111,7 +110,7 @@ export default function CalendarDetail() {
                         <SportsHeader {...event}/>
                     ) : (
                         <Image source={event.image_url}
-                            style={tw('w-full h-72 border-b border-b-black/10')}/>
+                            style={tw('w-full border-b border-b-black/10', { aspectRatio: 4/3 })}/>
                     )
                 )}
 
@@ -156,18 +155,11 @@ export default function CalendarDetail() {
 }
 
 function EventUrl({ url }: CalendarEvent) {
-    async function handlePress() {
-        await WebBrowser.openBrowserAsync(url, {
-            presentationStyle: WebBrowser.WebBrowserPresentationStyle.POPOVER,
-            controlsColor: color('accent')
-        });
-    }
-
     const formattedUrl = new URL(url).hostname.replace(/^www\./, '');
 
     return (
         <CalendarDetailRow label="Web">
-            <TouchableOpacity onPress={handlePress}>
+            <TouchableOpacity onPress={() => openBrowser(url)}>
                 <Text style={tw('text-base font-medium text-accent')} numberOfLines={1}>
                     {formattedUrl}
                 </Text>

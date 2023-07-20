@@ -1,18 +1,15 @@
-import { Pressable, StyleProp, View } from 'react-native';
+import { StyleProp, View } from 'react-native';
 import tw from '../helpers/tailwind';
 
 interface Props {
-    style?: StyleProp<any>;
-    onPress?: () => void;
-    children: React.ReactNode;
+    style?: StyleProp<any>,
+    children: React.ReactNode
 }
 
-export default function Card({ style = {}, onPress = () => {}, children }: Props) {
+export default function Card({ style = {}, children }: Props) {
     return (
-        <Pressable onPress={onPress}>
-            <View style={tw('p-3 rounded-2xl w-full border border-black/10 bg-white', style)}>
-                {children}
-            </View>
-        </Pressable>
+        <View style={tw('p-3 overflow-hidden rounded-2xl w-full border border-black/10 bg-white', style)}>
+            {children}
+        </View>
     );
 }

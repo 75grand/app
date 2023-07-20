@@ -1,14 +1,17 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { map } from 'nanostores';
 
-const DEFAULT_SETTINGS = {
-    protectMacPass: false
+export const DEFAULT_SETTINGS = {
+    macPass: '',
+    mailboxNumber: '',
+    mailboxCombination: '',
+    mostUsedActions: {} as Record<string, number>
 }
 
 export const $localSettings = map<typeof DEFAULT_SETTINGS>();
 
 (async () => {
-    const json = await AsyncStorage.getItem('user');
+    const json = await AsyncStorage.getItem('settings');
     const parsedSettings = json === null ? {} : JSON.parse(json);
 
     $localSettings.set({
@@ -17,7 +20,7 @@ export const $localSettings = map<typeof DEFAULT_SETTINGS>();
     });
 })();
 
-$localSettings.listen(async user => {
-    const json = JSON.stringify(user);
+$localSettings.listen(async settings => {
+    const json = JSON.stringify(settings);
     await AsyncStorage.setItem('settings', json);
 });

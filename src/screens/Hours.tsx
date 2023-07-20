@@ -7,9 +7,11 @@ import { fetchHours } from '../helpers/api/api';
 import tw from '../helpers/tailwind';
 import Card from '../components/Card';
 import { useEffect, useState } from 'react';
+import HoursCard from '../components/home/HoursCard';
 
 export const screenOptions: NativeStackNavigationOptions = {
-    title: 'Campus Hours'
+    title: 'Campus Hours',
+    headerLargeTitle: true
 }
 
 export default function Hours() {
@@ -37,24 +39,10 @@ export default function Hours() {
     }, []);
 
     return (
-        <SafeAreaView>
-            <ScrollView>
-                <View style={tw('p-3')}>
-                    <Card>
-                        <Grid columns={1}>
-                            {data.map(service => {
-                                return (
-                                    <HoursItem
-                                        key={service.name}
-                                        name={service.name}
-                                        events={service.events}
-                                    />
-                                );
-                            })}
-                        </Grid>
-                    </Card>
-                </View>
-            </ScrollView>
-        </SafeAreaView>
+        <ScrollView contentInsetAdjustmentBehavior="automatic">
+            <View style={tw('p-3')}>
+                <HoursCard columns={1}/>
+            </View>
+        </ScrollView>
     );
 }

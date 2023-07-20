@@ -1,6 +1,7 @@
 import { deviceName } from 'expo-device';
 import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
+import { $localSettings, DEFAULT_SETTINGS } from '../user/settings-store';
 import { $token } from '../user/token-store';
 import { $user } from '../user/user-store';
 import { fetchUser } from './api';
@@ -9,6 +10,7 @@ import { GET } from './http';
 export async function logout() {
     $token.set(null);
     $user.set(null);
+    $localSettings.set(DEFAULT_SETTINGS);
 }
 
 /**

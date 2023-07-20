@@ -1,11 +1,12 @@
-import { Text, View, Pressable, Linking, TouchableOpacity } from 'react-native';
-import Card from '../Card';
-import tw from '../../helpers/tailwind';
 import { FontAwesome, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
-import { useEffect, useState } from 'react';
 import { decode } from 'html-entities';
-import Grid from '../Grid';
+import { useEffect, useState } from 'react';
+import { Linking, Pressable, Text, TouchableOpacity, View } from 'react-native';
+import tw from '../../helpers/tailwind';
+import { openBrowser } from '../../helpers/utils';
+import Card from '../Card';
 import CardHeader from '../CardHeader';
+import Grid from '../Grid';
 
 async function fetchData() {
     const request = await fetch('https://api.reddit.com/r/macalester/hot.json?limit=5');
@@ -38,7 +39,7 @@ export default function RedditCard() {
 
 function RedditItem({ id, title, score, author, permalink, num_comments, stickied }) {
     return (
-        <TouchableOpacity key={id} onPress={() => Linking.openURL('https://www.reddit.com' + permalink)}>
+        <TouchableOpacity key={id} onPress={() => openBrowser('https://www.reddit.com' + permalink)}>
             <View style={tw('flex gap-1')}>
                 <Text numberOfLines={3}  style={tw('text-base font-semibold leading-tight')}>
                     {stickied && <MaterialIcons name="push-pin" style={tw('text-green')}/>}

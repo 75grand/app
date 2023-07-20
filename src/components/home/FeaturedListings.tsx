@@ -1,0 +1,29 @@
+import { useQuery } from '@tanstack/react-query';
+import { ScrollView, Text, View } from 'react-native';
+import { fetchListings } from '../../helpers/api/api';
+import ListingItem from '../marketplace/ListingItem';
+import tw from '../../helpers/tailwind';
+
+export default function FeaturedListings() {
+    const { data } = useQuery({
+        queryKey: ['listings'],
+        queryFn: fetchListings,
+        initialData: []
+    });
+
+    const listings = data.filter(a => a.available).slice(0, 5);
+
+    return (
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <View style={tw('flex-row gap-3 px-3')}>
+                {listings.map(listing => {
+                    return (
+                        <View key={listing.id} style={tw('w-48')}>
+                            <ListingItem titleLines={1} {...listing}/>
+                        </View>
+                    );
+                })}
+            </View>
+        </ScrollView>
+    );
+}

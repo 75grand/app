@@ -4,9 +4,11 @@ import Svg, { Image, Path, Text } from 'react-native-svg';
 import tw, { slabSerif } from '../../helpers/tailwind';
 import { ucFirst } from '../../helpers/text-utils';
 import { $user } from '../../helpers/user/user-store';
+import { $localSettings } from '../../helpers/user/settings-store';
 
 export default function MacPass() {
     const user = useStore($user);
+    const settings = useStore($localSettings);
 
     const splitNames = user.name.split(' ');
     const nameLastFirst = splitNames.pop() + ', ' + splitNames.join(' ');
@@ -45,7 +47,7 @@ export default function MacPass() {
                         fontSize={18}
                         transform="translate(147 320)"
                         textAnchor="middle"
-                    >{user.macpass_number}</Text>
+                    >{settings.macPass}</Text>
 
                     {user.position && <Text
                         fontFamily={slabSerif}

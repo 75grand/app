@@ -26,7 +26,7 @@ export default function CalendarDay({ date, events, index }: Props) {
                     {events.map(event => {
                         function openEventDetails() {
                             // @ts-expect-error
-                            navigation.navigate('CalendarDetail', { event })
+                            navigation.navigate('CalendarDetail', { event });
                         }
 
                         return (

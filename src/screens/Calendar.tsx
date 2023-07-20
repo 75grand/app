@@ -2,7 +2,7 @@ import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { FlashList } from '@shopify/flash-list';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo, useState } from 'react';
-import { ActivityIndicator, SafeAreaView } from 'react-native';
+import { ActivityIndicator, RefreshControl, SafeAreaView } from 'react-native';
 import EmptyState from '../components/EmptyState';
 import CalendarDay from '../components/calendar/CalendarDay';
 import CalendarFilters from '../components/calendar/CalendarFilters';
@@ -11,6 +11,7 @@ import { CalendarFilter, calendarFilters, filterEvents } from '../helpers/calend
 import { groupEvents } from '../helpers/calendar/utils';
 import { CalendarEvent } from '../helpers/models/calendar';
 import tw from '../helpers/tailwind';
+import { useTanStackRefresh } from '../helpers/api/hooks';
 
 /**
  * @see https://github.com/react-navigation/react-navigation/issues/11375#issuecomment-1588592971
@@ -22,10 +23,12 @@ export const screenOptions: NativeStackNavigationOptions = {
 
 export default function Calendar() {
     const [filter, setFilter] = useState<CalendarFilter>(null);
-    const { data: events = [], isFetching } = useQuery<CalendarEvent[]>(['events'], fetchEvents);
+    const { data: events = [], refetch, isFetching } = useQuery<CalendarEvent[]>(['events'], fetchEvents);
 
     const filteredEvents = useMemo(() => filterEvents(events, filter), [events, filter]);
     const days = useMemo(() => groupEvents(filteredEvents), [filteredEvents]);
+
+    const { fixedRefetch, isRefetching } = useTanStackRefresh(refetch);
 
     return (
         <>
@@ -37,13 +40,12 @@ export default function Calendar() {
                 />
             </SafeAreaView>
 
-            {isFetching &&
-                <ActivityIndicator style={tw('p-6')}/>}
-
             {filteredEvents.length === 0 && !isFetching &&
                 <EmptyState title="No Events Found" subtitle={filter && 'Try another filter'} icon="calendar"/>}
 
             <FlashList
+                refreshing={isRefetching}
+                onRefresh={fixedRefetch}
                 data={days}
                 keyExtractor={item => item.date.toString()}
                 renderItem={item => <CalendarDay {...item.item} index={item.index}/>}

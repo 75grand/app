@@ -3,11 +3,11 @@ import { isDevice } from 'expo-device';
 import { Platform } from 'react-native';
 import { $token } from '../user/token-store';
 
-const BASE = isDevice || Platform.OS === 'android'
-    ? 'https://api.75grand.net/api/'
-    : 'http://localhost:8000/api/';
+export const SITE = (isDevice || Platform.OS === 'android')
+    ? 'https://api.75grand.net'
+    : 'http://localhost:8000';
 
-// const BASE = 'http://localhost:8000/api/';
+const BASE = SITE + '/api/';
 
 export const GET =
     async <T>(path: string, params?: Record<string, string>) => await request<T>('GET', path, params);
