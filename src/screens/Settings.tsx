@@ -141,7 +141,7 @@ export default function Settings() {
 
                             <InputLabel text="Mailbox Combination">
                                 <Input
-                                    mask={[/\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/]}
+                                    mask={[/[0-4]/, /\d/, '-', /[0-4]/, /\d/, '-', /[0-4]/, /\d/]}
                                     placeholder="33-05-27"
                                     maxLength={8}
                                     inputMode="decimal"

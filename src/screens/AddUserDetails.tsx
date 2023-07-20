@@ -166,6 +166,7 @@ export default function AddUserDetails() {
                             <Input
                                 placeholder="33-05-27"
                                 maxLength={8}
+                                mask={[/[0-4]/, /\d/, '-', /[0-4]/, /\d/, '-', /[0-4]/, /\d/]}
                                 keyboardType="numbers-and-punctuation"
                                 returnKeyType="done"
                                 value={settings.mailboxCombination}
