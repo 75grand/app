@@ -16,6 +16,7 @@ import { patchListing, patchUser, postListing } from '../../helpers/api/api';
 import { Listing } from '../../helpers/models/marketplace';
 import tw from '../../helpers/tailwind';
 import { $user } from '../../helpers/user/user-store';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export const screenOptions: NativeStackNavigationOptions = {
     title: 'Edit Listing',
@@ -107,7 +108,7 @@ export default function EditListing() {
         <>
             <StatusBar animated style="light"/>
 
-            <ScrollView>
+            <KeyboardAwareScrollView>
                 <View style={tw('p-3 gap-3')}>
                     {!$user.get().phone && (
                         <Card>
@@ -191,7 +192,7 @@ export default function EditListing() {
                         </View>
                     </Card>
                 </View>
-            </ScrollView>
+            </KeyboardAwareScrollView>
         </>
     );
 }

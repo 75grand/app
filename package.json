@@ -44,6 +44,7 @@
     "react": "18.2.0",
     "react-native": "0.72.3",
     "react-native-gesture-handler": "~2.12.0",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-maps": "1.7.1",
     "react-native-mask-input": "^1.2.3",
     "react-native-modal-datetime-picker": "^15.0.1",

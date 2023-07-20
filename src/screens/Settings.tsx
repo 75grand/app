@@ -5,7 +5,7 @@ import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { useMutation } from '@tanstack/react-query';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useLayoutEffect, useState } from 'react';
-import { ActivityIndicator, ScrollView, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, TouchableOpacity, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Button from '../components/Button';
 import Card from '../components/Card';
@@ -20,6 +20,7 @@ import tw, { color } from '../helpers/tailwind';
 import { $localSettings } from '../helpers/user/settings-store';
 import { $user } from '../helpers/user/user-store';
 import { Masks } from 'react-native-mask-input';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export const screenOptions: NativeStackNavigationOptions = {
     presentation: 'modal',
@@ -85,7 +86,7 @@ export default function Settings() {
         <>
             <StatusBar animated style="light"/>
 
-            <ScrollView>
+            <KeyboardAwareScrollView>
                 <View style={tw('gap-3 p-3')}>
                     <Card>
                         <Profile {...user}/>
@@ -158,7 +159,7 @@ export default function Settings() {
                         onPress={logout}
                     />
                 </View>
-            </ScrollView>
+            </KeyboardAwareScrollView>
         </>
     );
 }
