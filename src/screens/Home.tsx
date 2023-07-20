@@ -20,7 +20,7 @@ export default function Home() {
         <>
             <StatusBar animated style="auto"/>
 
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={tw('py-3 gap-3')}>
                     <QuickAccess/>
 

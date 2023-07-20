@@ -35,7 +35,7 @@ export default function Input(props: TextInputProps & Props & MaskInputProps) {
                     style={tw(
                         shared, 'w-full',
                         props.error && 'text-red',
-                        props.multiline && 'min-h-16 max-h-48'
+                        props.multiline && 'min-h-24 max-h-48'
                     )}
                 />
 

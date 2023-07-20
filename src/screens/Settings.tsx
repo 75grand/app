@@ -154,7 +154,7 @@ export default function Settings() {
 
                     <Button
                         text="Logout & Delete Local Data"
-                        color="red"
+                        color="faint-red"
                         onPress={logout}
                     />
                 </View>

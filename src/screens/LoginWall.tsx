@@ -54,7 +54,7 @@ export default function LoginWall() {
 
                         <View style={tw('gap-2 w-full')}>
                             <Button text="Login with @macalester.edu" size="mega" onPress={handleLoginPress} loading={loginLoading}/>
-                            <Button text="Use a Referral Code" size="mega" color="translucent" onPress={handleReferralPress} loading={referralLoading}/>
+                            <Button text="Use a Referral Code" size="mega" color="faint-white" onPress={handleReferralPress} loading={referralLoading}/>
                         </View>
                     </View>
                 </SafeAreaView>

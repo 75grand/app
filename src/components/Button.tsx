@@ -5,7 +5,7 @@ import tw, { color as getColor } from '../helpers/tailwind';
 interface Props {
     text: string,
     onPress?: () => void,
-    color?: 'accent'|'light'|'translucent'|'red'|'gray',
+    color?: 'accent'|'light'|'translucent'|'red'|'gray'|'faint'|'faint-red',
     loading?: boolean,
     size?: 'small'|'mega',
     disabled?: boolean
@@ -17,7 +17,9 @@ export default function Button({ text, onPress, color = 'accent', loading = fals
     const textColor = {
         accent: getColor('white'),
         light: getColor('accent'),
-        translucent: getColor('white'),
+        'faint-white': getColor('white'),
+        faint: getColor('accent'),
+        'faint-red': getColor('red'),
         red: getColor('white'),
         gray: getColor('black')
     }[color];
@@ -25,7 +27,9 @@ export default function Button({ text, onPress, color = 'accent', loading = fals
     const bgColor = {
         accent: tw('bg-accent'),
         light: tw('bg-white'),
-        translucent: tw('bg-white/20'),
+        'faint-white': tw('bg-white/20'),
+        faint: tw('bg-accent/10'),
+        'faint-red': tw('bg-red/10'),
         red: tw('bg-red'),
         gray: tw('bg-gray-200')
     }[color];

@@ -20,6 +20,7 @@ import * as ShowCombination from './screens/ShowCombination';
 import * as Marketplace from './screens/marketplace/Marketplace';
 import * as ListingDetail from './screens/marketplace/ListingDetail';
 import * as EditListing from './screens/marketplace/EditListing';
+import * as Feedback from './screens/Feedback';
 
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -116,6 +117,7 @@ function HomeRouting() {
             <Stack.Screen name="ScanMacPass" component={ScanMacPass.default} options={ScanMacPass.screenOptions}/>
             <Stack.Screen name="ShowMacPass" component={ShowMacPass.default} options={ShowMacPass.screenOptions}/>
             <Stack.Screen name="ShowCombination" component={ShowCombination.default} options={ShowCombination.screenOptions}/>
+            <Stack.Screen name="Feedback" component={Feedback.default} options={Feedback.screenOptions}/>
         </Stack.Navigator>
     );
 }

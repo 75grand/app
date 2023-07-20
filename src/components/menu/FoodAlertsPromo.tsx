@@ -16,7 +16,7 @@ export default function FoodAlertsPromo({ onDismiss }: { onDismiss: () => void }
 
             <View style={tw('flex flex-row gap-3')}>
                 <Button onPress={() => navigation.navigate('HomeTab')} text="Add Favorite Foods" color="light"/>
-                <Button onPress={onDismiss} text="Dismiss" color="translucent"/>
+                <Button onPress={onDismiss} text="Dismiss" color="faint-white"/>
             </View>
         </Card>
     );

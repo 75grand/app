@@ -6,6 +6,7 @@ import { Menu } from '../models/menu';
 import { DateTime } from 'luxon';
 import { BuildingHours } from '../models/building-hours';
 import { EditableListingFields, Listing, Listings, NewListingFields } from '../models/marketplace';
+import { $user } from '../user/user-store';
 
 export const fetchEvents = async () => await GET<CalendarEvent[]>('events');
 export const fetchEvent = async (id) => await GET<CalendarEvent>(`events/${id}`);
@@ -16,6 +17,8 @@ export const fetchListings = async () => await GET<Listings>('listings');
 export const fetchListing = async (id) => await GET<Listing>(`listings/${id}`);
 export const patchListing = async (id, data: EditableListingFields) => await PATCH<Listing>(`listings/${id}`, data);
 export const postListing = async (data: NewListingFields) => await POST<Listing>(`listings`, data);
+
+export const postFeedback = async (message: string) => await POST('feedback', { message, email: $user.get().email });
 
 export const fetchMap = async () => await GET<MapLayer[]>('map');
 
