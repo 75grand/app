@@ -15,12 +15,12 @@ export default function HoursItem({ name, events }: BuildingHours) {
     }[status];
 
     return (
-        <View style={tw('flex flex-row gap-2')} key={name}>
+        <View style={tw('flex flex-row gap-2 pt-0.25')} key={name}>
             <MaterialCommunityIcons name="circle" style={tw('mt-[1px]', dotColor)}/>
 
-            <View style={tw('shrink')}>
+            <View style={tw('shrink gap-1')}>
                 <Text numberOfLines={1} ellipsizeMode="middle" style={tw('font-semibold text-base leading-none')}>{name}</Text>
-                <Text numberOfLines={1} ellipsizeMode="head" style={tw('text-gray-500')}>{message}</Text>
+                <Text numberOfLines={1} ellipsizeMode="head" style={tw('text-gray-500 text-sm leading-none')}>{message}</Text>
             </View>
         </View>
     );

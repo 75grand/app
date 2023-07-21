@@ -35,7 +35,7 @@ export default function QuickAccess() {
 
     function handlePress({ name, action }: typeof items[0]) {
         mostUsedActions[name] = (mostUsedActions[name] ?? 0) + 1;
-        $localSettings.setKey('mostUsedActions', mostUsedActions);
+        $localSettings.setKey('mostUsedActions', {...mostUsedActions});
         action();
     }
 

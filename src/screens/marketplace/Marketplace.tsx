@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { MasonryFlashList } from '@shopify/flash-list';
 import { useQuery } from '@tanstack/react-query';
@@ -8,7 +9,6 @@ import ListingItem from '../../components/marketplace/ListingItem';
 import { fetchListings } from '../../helpers/api/api';
 import { useTanStackRefresh } from '../../helpers/api/hooks';
 import tw from '../../helpers/tailwind';
-import { useNavigation } from '@react-navigation/native';
 
 export const screenOptions: NativeStackNavigationOptions = {
     headerLargeTitle: true
@@ -45,17 +45,17 @@ export default function Marketplace() {
                 data={[...listings]}
                 showsVerticalScrollIndicator={false}
                 numColumns={2}
-                ListEmptyComponent={!isFetching && <EmptyState
-                    icon="sad-outline"
-                    title="No Listings Found"
-                    subtitle="Be the first to post one!"
-                />}
+                estimatedItemSize={211}
                 renderItem={({ item }) => (
                     <View key={item.id} style={tw('p-1.5')}>
                         <ListingItem {...item}/>
                     </View>
                 )}
-                estimatedItemSize={211}
+                ListEmptyComponent={!isFetching && <EmptyState
+                    icon="sad-outline"
+                    title="No Listings Found"
+                    subtitle="Be the first to post one!"
+                />}
             />
         </>
     );

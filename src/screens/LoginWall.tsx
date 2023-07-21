@@ -24,9 +24,9 @@ export default function LoginWall() {
         const created = await login(referralCode);
         setLoginLoading(false);
 
-        if(created) {
+        if(created||true) {
             // @ts-expect-error
-            navigation.navigate('AddUserDetails');
+            navigation.navigate('Onboarding');
         } else {
             // @ts-expect-error
             navigation.navigate('Tabs');

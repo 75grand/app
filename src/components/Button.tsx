@@ -5,7 +5,7 @@ import tw, { color as getColor } from '../helpers/tailwind';
 interface Props {
     text: string,
     onPress?: () => void,
-    color?: 'accent'|'light'|'translucent'|'red'|'gray'|'faint'|'faint-red',
+    color?: 'accent'|'light'|'faint-white'|'faint'|'faint-red'|'red'|'gray',
     loading?: boolean,
     size?: 'small'|'mega',
     disabled?: boolean

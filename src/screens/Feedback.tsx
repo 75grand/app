@@ -1,5 +1,5 @@
 import { useStore } from '@nanostores/react';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { useMutation } from '@tanstack/react-query';
 import { StatusBar } from 'expo-status-bar';
@@ -19,8 +19,9 @@ export const screenOptions: NativeStackNavigationOptions = {
 
 export default function Feedback() {
     const navigation = useNavigation();
+    const params = useRoute().params as any;
 
-    const [message, setMessage] = useState('');
+    const [message, setMessage] = useState(params?.message ?? '');
     const user = useStore($user);
 
     const mutation = useMutation({

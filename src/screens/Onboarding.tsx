@@ -26,7 +26,7 @@ export const screenOptions: NativeStackNavigationOptions = {
     headerShown: false
 }
 
-export default function AddUserDetails() {
+export default function Onboarding() {
     const navigation = useNavigation();
 
     const settings = useStore($localSettings);

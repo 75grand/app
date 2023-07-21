@@ -5,7 +5,8 @@ export const DEFAULT_SETTINGS = {
     macPass: '',
     mailboxNumber: '',
     mailboxCombination: '',
-    mostUsedActions: {} as Record<string, number>
+    mostUsedActions: {} as Record<string, number>,
+    favoriteHours: ['Café Mac', 'The Grille', 'Mailroom', 'Library', 'ITS Help Desk', 'Leonard Center']
 }
 
 export const $localSettings = map<typeof DEFAULT_SETTINGS>();

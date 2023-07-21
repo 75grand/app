@@ -12,7 +12,7 @@ import * as Hours from './screens/Hours';
 import * as LoginWall from './screens/LoginWall';
 // import * as Map from './screens/Map';
 import * as Menus from './screens/Menus';
-import * as AddUserDetails from './screens/AddUserDetails';
+import * as Onboarding from './screens/Onboarding';
 import * as ScanMacPass from './screens/ScanMacPass';
 import * as Settings from './screens/Settings';
 import * as ShowMacPass from './screens/ShowMacPass';
@@ -30,13 +30,13 @@ export default function Routing() {
 
     let initialRoute = 'Tabs';
     if(user === null) initialRoute = 'Login';
-    else if(user.position === null) initialRoute = 'AddUserDetails';
+    else if(user.position === null) initialRoute = 'Onboarding';
 
     return (
         <Stack.Navigator initialRouteName={initialRoute}>
             <Stack.Screen name="Login" component={LoginWall.default} options={LoginWall.screenOptions}/>
-            <Stack.Screen name="AddUserDetails" component={AddUserDetails.default} options={AddUserDetails.screenOptions}/>
             <Stack.Screen name="ScanMacPass" component={ScanMacPass.default} options={ScanMacPass.screenOptions}/>
+            <Stack.Screen name="Onboarding" component={Onboarding.default} options={Onboarding.screenOptions}/>
 
             {user !== null &&
                 <Stack.Screen name="Tabs" component={TabRouting} options={{ headerShown: false }}/>}
@@ -162,6 +162,7 @@ function HoursRouting() {
     return (
         <Stack.Navigator>
             <Stack.Screen name="Hours" component={Hours.default} options={Hours.screenOptions}/>
+            <Stack.Screen name="Feedback" component={Feedback.default} options={Feedback.screenOptions}/>
         </Stack.Navigator>
     );
 }

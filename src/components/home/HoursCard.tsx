@@ -1,20 +1,16 @@
-import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
-import { fetchHours } from '../../helpers/api/api';
-import tw from '../../helpers/tailwind';
-import Card from '../Card';
-import Grid, { Props as GridProps } from '../Grid';
-import HoursItem from './HoursItem';
-import Button from '../Button';
+import { useStore } from '@nanostores/react';
 import { useNavigation } from '@react-navigation/native';
+import { useQuery } from '@tanstack/react-query';
+import { fetchHours } from '../../helpers/api/api';
+import { $localSettings } from '../../helpers/user/settings-store';
+import Card from '../Card';
+import Grid from '../Grid';
+import HoursItem from './HoursItem';
+import { TouchableOpacity } from 'react-native';
+import EmptyState from '../EmptyState';
+import tw from '../../helpers/tailwind';
 
-interface Props {
-    columns?: GridProps['columns'],
-    maxItems?: number
-}
-
-export default function HoursCard({ columns = 2, maxItems }: Props) {
+export default function HoursCard() {
     const navigation = useNavigation();
 
     const { data } = useQuery({
@@ -23,39 +19,30 @@ export default function HoursCard({ columns = 2, maxItems }: Props) {
         placeholderData: []
     });
 
-    const [,setDate] = useState(new Date);
+    const { favoriteHours } = useStore($localSettings);
 
-    useEffect(() => {
-        const interval = 5;
-        const initialDelay = (60 - new Date().getSeconds()) % interval * 1000;
+    const filteredData = data.filter(service => {
+        return favoriteHours.includes(service.name);
+    });
 
-        let timing = setTimeout(() => {
-            setDate(new Date);
-            timing = setInterval(() => {
-                setDate(new Date);
-            }, interval*1000);
-        }, initialDelay);
-
-        // clearInterval and clearTimeout are the same
-        return () => clearInterval(timing);
-    }, []);
 
     return (
-        <Card>
-            <Grid columns={columns}>
-                {data.slice(0, maxItems).map(service => (
-                    <HoursItem
-                        key={service.name}
-                        name={service.name}
-                        events={service.events} />
-                ))}
-
-                {maxItems && <Button
-                    // @ts-expect-error
-                    onPress={() => navigation.navigate('HoursTab')}
-                    color="gray" text="More Hours"
-                />}
-            </Grid>
-        </Card>
+        // @ts-expect-error
+        <TouchableOpacity onPress={() => navigation.navigate('HoursTab')}>
+            <Card>
+                {filteredData.length ? (
+                    <Grid columns={2}>
+                        {filteredData.map(service => (
+                            <HoursItem name={service.name} events={service.events}/>
+                        ))}
+                    </Grid>
+                ) : (
+                    <EmptyState
+                        icon="time"
+                        title="Tap to set your favorite hours"
+                    />
+                )}
+            </Card>
+        </TouchableOpacity>
     );
 }
