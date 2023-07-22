@@ -13,6 +13,8 @@ import { Listing } from '../../helpers/models/marketplace';
 import tw from '../../helpers/tailwind';
 import { formatPhoneNumber, pluralize, ucFirst } from '../../helpers/text-utils';
 import { $user } from '../../helpers/user/user-store';
+import { getCdnUrl, openBrowser } from '../../helpers/utils';
+import { Ionicons } from '@expo/vector-icons';
 
 export const screenOptions: NativeStackNavigationOptions = {
     headerTitle: () => <></>
@@ -62,8 +64,8 @@ export default function ListingDetail() {
     return (
         <>
             <ScrollView style={tw('h-full bg-white')}>
-                <Pressable onLongPress={() => Linking.openURL(listing.image_url)}>
-                    <Image source={listing.image_url}
+                <Pressable onLongPress={() => openBrowser(listing.image_url)}>
+                    <Image source={getCdnUrl(listing.image_url, 1000, 1000)}
                         style={tw('w-full border-b border-b-black/10', { aspectRatio: 1/1 })}/>
                 </Pressable>
 
@@ -95,11 +97,20 @@ export default function ListingDetail() {
             </ScrollView>
 
             <View style={tw('p-3 bg-white pt-0')}>
-                <Button
-                    text={'Text ' + formatPhoneNumber(listing.user.phone)}
-                    size="mega"
-                    onPress={() => Linking.openURL(`sms:${listing.user.phone}`)}
-                />
+                {listing.available ? (
+                    <Button
+                        text={'Text ' + formatPhoneNumber(listing.user.phone)}
+                        size="mega"
+                        onPress={() => Linking.openURL(`sms:${listing.user.phone}`)}
+                    />
+                ) : (
+                    <Button
+                        text="No Longer Available"
+                        size="mega"
+                        color="faint-red"
+                        onPress={() => navigation.goBack()}
+                    />
+                )}
             </View>
         </>
     );

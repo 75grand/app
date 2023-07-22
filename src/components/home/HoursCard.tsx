@@ -33,7 +33,11 @@ export default function HoursCard() {
                 {filteredData.length ? (
                     <Grid columns={2}>
                         {filteredData.map(service => (
-                            <HoursItem name={service.name} events={service.events}/>
+                            <HoursItem
+                                key={service.name}
+                                name={service.name}
+                                events={service.events}
+                            />
                         ))}
                     </Grid>
                 ) : (

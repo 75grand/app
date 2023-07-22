@@ -3,9 +3,11 @@ import { useStore } from '@nanostores/react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Image } from 'expo-image';
 import { StatusBar } from 'expo-status-bar';
 import { useLayoutEffect, useState } from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Masks } from 'react-native-mask-input';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Card from '../../components/Card';
@@ -13,10 +15,12 @@ import Input from '../../components/Input';
 import InputLabel from '../../components/InputLabel';
 import PillRadioInput from '../../components/PillRadioInput';
 import { patchListing, patchUser, postListing } from '../../helpers/api/api';
+import { base64toFile } from '../../helpers/api/http';
+import { takePhoto } from '../../helpers/camera-utils';
 import { Listing } from '../../helpers/models/marketplace';
 import tw from '../../helpers/tailwind';
 import { $user } from '../../helpers/user/user-store';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { ImagePickerAsset } from 'expo-image-picker';
 
 export const screenOptions: NativeStackNavigationOptions = {
     title: 'Edit Listing',
@@ -41,6 +45,7 @@ export default function EditListing() {
 
     const isEditing = listing !== null;
 
+    const [image, setImage] = useState<ImagePickerAsset>();
     const [title, setTitle] = useState(listing?.title ?? '');
     const [available, setAvailable] = useState(listing?.available ?? true);
     const [description, setDescription] = useState(listing?.description ?? '');
@@ -48,7 +53,7 @@ export default function EditListing() {
     const [distance, setDistance] = useState(`${listing?.miles_from_campus ?? ''}`);
 
     const listingMutation = useMutation({
-        mutationFn() {
+        async mutationFn() {
             if(isEditing) {
                 return patchListing(listing.id, {
                     title,
@@ -62,7 +67,12 @@ export default function EditListing() {
                     title,
                     description,
                     price: Number(price),
-                    miles_from_campus: Number(distance)
+                    miles_from_campus: Number(distance),
+                    image: {
+                        uri: image.uri,
+                        name: image.fileName,
+                        type: image.type
+                    }
                 });
             }
         },
@@ -79,6 +89,12 @@ export default function EditListing() {
         await listingMutation.mutateAsync();
 
         navigation.goBack();
+    }
+
+    async function handleImagePress() {
+        const image = await takePhoto();
+        if(image === null) return;
+        setImage(image);
     }
     
     useLayoutEffect(() => {
@@ -139,12 +155,23 @@ export default function EditListing() {
 
                     <Card>
                         <View style={tw('gap-4')}>
-                            {!isEditing && <InputLabel text="Image">
-                                <TouchableOpacity style={tw('w-48 h-24 border border-black/10 rounded-lg justify-center items-center')}>
-                                    <Ionicons name="camera" style={tw('text-3xl text-accent')}/>
-                                    <Text style={tw('font-semibold')}>Add Image</Text>
-                                </TouchableOpacity>
-                            </InputLabel>}
+                            {!isEditing && (
+                                <InputLabel text="Image">
+                                    <TouchableOpacity onPress={handleImagePress} style={tw('w-48 h-24 border border-black/10 rounded-lg justify-center items-center')}>
+                                        {image ? (
+                                            <Image
+                                                source={image}
+                                                style={tw('w-48 h-24 border border-black/10 rounded-lg')}
+                                            />
+                                        ) : (
+                                            <>
+                                                <Ionicons name="camera" style={tw('text-3xl text-accent')}/>
+                                                <Text style={tw('font-semibold')}>Add Image</Text>
+                                            </>
+                                        )}
+                                    </TouchableOpacity>
+                                </InputLabel>
+                            )}
 
                             <InputLabel text="Title">
                                 <Input

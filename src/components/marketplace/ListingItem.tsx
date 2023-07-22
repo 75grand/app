@@ -1,11 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { Listings } from '../../helpers/models/marketplace';
 import tw from '../../helpers/tailwind';
 import Card from '../Card';
+import { Listing } from '../../helpers/models/marketplace';
+import { getCdnUrl } from '../../helpers/utils';
 
-export default function ListingItem(listing: Listings[0] & { titleLines?: number }) {
+export default function ListingItem(listing: Listing & { titleLines?: number }) {
     const { id, title, image_url, available, price, miles_from_campus } = listing;
     const navigation = useNavigation();
 
@@ -18,10 +19,10 @@ export default function ListingItem(listing: Listings[0] & { titleLines?: number
     }
 
     return (
-        <TouchableOpacity onPress={handlePress} disabled={!available}>
+        <TouchableOpacity onPress={handlePress}>
             <Card style={tw('p-0')}>
                 <View style={tw(available || 'opacity-30')}>
-                    <Image source={image_url}
+                    <Image source={getCdnUrl(image_url, 500, 500)}
                         style={tw('w-full', { aspectRatio: 1 })}/>
 
                     <View style={tw('p-3 pt-2 gap-2 border-t border-t-black/10')}>
