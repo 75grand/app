@@ -20,7 +20,7 @@ export function getStatus(events: BuildingHoursEvent[]): BuildingHoursStatus {
         const startDate = DateTime.fromISO(event.start_date);
         const endDate = DateTime.fromISO(event.end_date);
 
-        // If the first event hasn't started yet, it's clsoed
+        // If the first event hasn't started yet, it's closed
         if(now < startDate) {
             const time = startDate.toRelative();
 
