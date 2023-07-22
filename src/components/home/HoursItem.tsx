@@ -1,10 +1,12 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Text, View } from 'react-native';
 import { getStatus } from '../../helpers/building-hours';
+import { useRerender } from '../../helpers/hooks';
 import { BuildingHours } from '../../helpers/models/building-hours';
 import tw from '../../helpers/tailwind';
 
 export default function HoursItem({ name, events }: BuildingHours) {
+    useRerender(1_000);
     const { status, message } = getStatus(events);
 
     const dotColor = {
@@ -20,7 +22,7 @@ export default function HoursItem({ name, events }: BuildingHours) {
 
             <View style={tw('shrink gap-1')}>
                 <Text numberOfLines={1} ellipsizeMode="middle" style={tw('font-semibold text-base leading-none')}>{name}</Text>
-                <Text numberOfLines={1} ellipsizeMode="head" style={tw('text-gray-500 text-sm leading-none')}>{message}</Text>
+                <Text numberOfLines={1} ellipsizeMode="head" style={tw('text-gray-500 text-sm leading-none tabular-nums')}>{message}</Text>
             </View>
         </View>
     );
