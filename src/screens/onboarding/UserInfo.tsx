@@ -1,16 +1,16 @@
-import { Text } from 'react-native';
-import OnboardingShell from '../../components/onboarding/OnboardingShell';
-import tw from '../../helpers/tailwind';
+import { useStore } from '@nanostores/react';
 import { useNavigation } from '@react-navigation/native';
+import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
+import { Text } from 'react-native';
 import Card from '../../components/Card';
 import InputLabel from '../../components/InputLabel';
 import PillRadioInput from '../../components/PillRadioInput';
-import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import OnboardingShell from '../../components/onboarding/OnboardingShell';
 import { patchUser } from '../../helpers/api/api';
-import { $user } from '../../helpers/user/user-store';
 import { User } from '../../helpers/models/user';
-import { useStore } from '@nanostores/react';
+import tw from '../../helpers/tailwind';
+import { $user } from '../../helpers/user/user-store';
 
 export default function UserInfo() {
     const navigation = useNavigation();
