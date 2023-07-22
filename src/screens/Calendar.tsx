@@ -11,7 +11,7 @@ import { CalendarFilter, calendarFilters, filterEvents } from '../helpers/calend
 import { groupEvents } from '../helpers/calendar/utils';
 import { CalendarEvent } from '../helpers/models/calendar';
 import tw from '../helpers/tailwind';
-import { useTanStackRefresh } from '../helpers/api/hooks';
+import { useTanStackRefresh } from '../helpers/hooks';
 
 /**
  * @see https://github.com/react-navigation/react-navigation/issues/11375#issuecomment-1588592971
