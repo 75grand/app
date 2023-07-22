@@ -7,7 +7,7 @@ import EmptyState from '../../components/EmptyState';
 import FloatingCircleButton from '../../components/FloatingCircleButton';
 import ListingItem from '../../components/marketplace/ListingItem';
 import { fetchListings } from '../../helpers/api/api';
-import { useTanStackRefresh } from '../../helpers/api/hooks';
+import { useTanStackRefresh } from '../../helpers/hooks';
 import tw from '../../helpers/tailwind';
 
 export const screenOptions: NativeStackNavigationOptions = {

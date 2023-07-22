@@ -12,7 +12,7 @@ import MenuSection from '../components/menu/MenuSection';
 import { fetchMenu } from '../helpers/api/api';
 import { Menu } from '../helpers/models/menu';
 import tw, { color } from '../helpers/tailwind';
-import { useTanStackRefresh } from '../helpers/api/hooks';
+import { useTanStackRefresh } from '../helpers/hooks';
 
 export default function Menus() {
     const navigation = useNavigation();
