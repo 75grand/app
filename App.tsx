@@ -5,6 +5,7 @@ import { QueryClient } from '@tanstack/react-query';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
+import { Platform, UIManager } from 'react-native';
 import 'react-native-url-polyfill/auto';
 import { HeaderButtonsProvider } from 'react-navigation-header-buttons';
 import Routing from './src/Routing';
@@ -38,6 +39,10 @@ const queryClient = new QueryClient({
         }
     }
 });
+
+if(Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 export default function App() {
     useEffect(() => {
