@@ -8,7 +8,8 @@ export async function openBrowser(url: string) {
     try {
         await WebBrowser.openBrowserAsync(url, {
             presentationStyle: WebBrowser.WebBrowserPresentationStyle.POPOVER,
-            controlsColor: color('accent')
+            controlsColor: color('accent'),
+            dismissButtonStyle: 'close'
         });
     } finally {
         setStatusBarStyle('auto');
