@@ -3,13 +3,14 @@ import { useStore } from '@nanostores/react';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { useQuery } from '@tanstack/react-query';
-import { ScrollView, TouchableOpacity, View } from 'react-native';
+import { LayoutAnimation, ScrollView, TouchableOpacity, View } from 'react-native';
 import Card from '../components/Card';
 import HoursItem from '../components/home/HoursItem';
 import { fetchHours } from '../helpers/api/api';
 import { BuildingHours } from '../helpers/models/building-hours';
 import tw from '../helpers/tailwind';
 import { $localSettings } from '../helpers/user/settings-store';
+import { getStatus } from '../helpers/building-hours';
 
 export const screenOptions: NativeStackNavigationOptions = {
     title: 'Campus Hours',
@@ -27,6 +28,28 @@ export default function Hours() {
 
     const { favoriteHours } = useStore($localSettings);
 
+    const sortedData = data.sort((a, b) => {
+        const aFavorite = favoriteHours.includes(a.name);
+        const bFavorite = favoriteHours.includes(b.name);
+
+        if(aFavorite && !bFavorite) return -1;
+        if(!aFavorite && bFavorite) return 1;
+
+        const aOpen = getStatus(a.events).status === 'open';
+        const bOpen = getStatus(b.events).status === 'open';
+
+        if(aOpen && !bOpen) return -1;
+        if(!aOpen && Boolean) return 1;
+
+        const aName = a.name.toLocaleLowerCase();
+        const bName = b.name.toLocaleLowerCase();
+
+        if(aName < bName) return -1;
+        if(aName > bName) return 1;
+
+        return 0;
+    });
+
     function handleStarPress(service: BuildingHours) {
         let favoriteHoursSet = new Set(favoriteHours);
 
@@ -36,6 +59,7 @@ export default function Hours() {
             favoriteHoursSet.add(service.name);
         }
 
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         $localSettings.setKey('favoriteHours', [...favoriteHoursSet]);
     }
 
@@ -44,7 +68,7 @@ export default function Hours() {
             <View style={tw('p-3')}>
                 <Card>
                     <View style={tw('gap-3')}>
-                        {data.map(service => (
+                        {sortedData.map(service => (
                             <View key={service.name} style={tw('flex-row justify-between items-center')}>
                                 <HoursItem name={service.name} events={service.events}/>
 

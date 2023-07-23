@@ -14,8 +14,9 @@ export async function takePhoto(options: ImagePicker.ImagePickerOptions = {}) {
     if(!permission.granted) return null;
 
     const result = await ImagePicker.launchCameraAsync({
-        allowsEditing: true,
         presentationStyle: ImagePicker.UIImagePickerPresentationStyle.POPOVER,
+        preferredAssetRepresentationMode: ImagePicker.UIImagePickerPreferredAssetRepresentationMode.Compatible,
+        quality: 0,
         ...options
     });
 
@@ -32,8 +33,9 @@ export async function pickPhoto(options: ImagePicker.ImagePickerOptions = {}) {
     if(!permission.granted) return null;
 
     const result = await ImagePicker.launchImageLibraryAsync({
-        allowsEditing: true,
         presentationStyle: ImagePicker.UIImagePickerPresentationStyle.POPOVER,
+        preferredAssetRepresentationMode: ImagePicker.UIImagePickerPreferredAssetRepresentationMode.Compatible,
+        quality: 0,
         ...options
     });
 

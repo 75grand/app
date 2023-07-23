@@ -1,13 +1,13 @@
 import { useStore } from '@nanostores/react';
 import { useNavigation } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
+import { TouchableOpacity } from 'react-native';
 import { fetchHours } from '../../helpers/api/api';
 import { $localSettings } from '../../helpers/user/settings-store';
 import Card from '../Card';
+import EmptyState from '../EmptyState';
 import Grid from '../Grid';
 import HoursItem from './HoursItem';
-import { TouchableOpacity } from 'react-native';
-import EmptyState from '../EmptyState';
 import tw from '../../helpers/tailwind';
 
 export default function HoursCard() {
@@ -25,10 +25,11 @@ export default function HoursCard() {
         return favoriteHours.includes(service.name);
     });
 
+    if(filteredData.length === 0) return;
 
     return (
         // @ts-expect-error
-        <TouchableOpacity onPress={() => navigation.navigate('HoursTab')}>
+        <TouchableOpacity style={tw('px-3 gap-3')} onPress={() => navigation.navigate('HoursTab')}>
             <Card>
                 {filteredData.length ? (
                     <Grid columns={2}>

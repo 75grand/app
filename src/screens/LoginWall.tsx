@@ -24,13 +24,8 @@ export default function LoginWall() {
         const created = await login(referralCode);
         setLoginLoading(false);
 
-        if(created||true) {
-            // @ts-expect-error
-            navigation.navigate('Onboarding');
-        } else {
-            // @ts-expect-error
-            navigation.navigate('Tabs');
-        }
+        // @ts-expect-error
+        navigation.navigate(created ? 'Onboarding' : 'Tabs');
     }
 
     async function handleReferralPress() {

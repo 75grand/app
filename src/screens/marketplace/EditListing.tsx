@@ -166,7 +166,7 @@ export default function EditListing() {
                                         ) : (
                                             <>
                                                 <Ionicons name="camera" style={tw('text-3xl text-accent')}/>
-                                                <Text style={tw('font-semibold')}>Add Image</Text>
+                                                <Text style={tw('font-semibold')}>Take Photo</Text>
                                             </>
                                         )}
                                     </TouchableOpacity>

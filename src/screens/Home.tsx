@@ -24,9 +24,7 @@ export default function Home() {
                 <View style={tw('py-3 gap-3')}>
                     <QuickAccess/>
 
-                    <View style={tw('px-3 gap-3')}>
-                        <HoursCard/>
-                    </View>
+                    <HoursCard/>
 
                     <FeaturedListings/>
 
