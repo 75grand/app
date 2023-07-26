@@ -9,10 +9,10 @@ import EmptyState from '../components/EmptyState';
 import Grid from '../components/Grid';
 import FutureMenuWarning from '../components/menu/FutureMenuWarning';
 import MenuSection from '../components/menu/MenuSection';
-import { fetchMenu } from '../helpers/api/api';
-import { Menu } from '../helpers/models/menu';
-import tw, { color } from '../helpers/tailwind';
-import { useTanStackRefresh } from '../helpers/hooks';
+import { fetchMenu } from '../lib/api/api';
+import { Menu } from '../lib/models/menu';
+import tw, { color } from '../lib/tailwind';
+import { useTanStackRefresh } from '../lib/hooks';
 
 export default function Menus() {
     const navigation = useNavigation();

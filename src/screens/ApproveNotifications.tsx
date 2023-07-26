@@ -5,8 +5,8 @@ import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { Text, View } from 'react-native';
 import Button from '../components/Button';
-import { askForNotifPermission } from '../helpers/notifications';
-import tw from '../helpers/tailwind';
+import { askForNotifPermission } from '../lib/notifications';
+import tw from '../lib/tailwind';
 
 export const screenOptions: NativeStackNavigationOptions = {
     presentation: 'modal',

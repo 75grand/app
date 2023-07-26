@@ -6,11 +6,11 @@ import { useQuery } from '@tanstack/react-query';
 import { LayoutAnimation, ScrollView, TouchableOpacity, View } from 'react-native';
 import Card from '../components/Card';
 import HoursItem from '../components/home/HoursItem';
-import { fetchHours } from '../helpers/api/api';
-import { BuildingHours } from '../helpers/models/building-hours';
-import tw from '../helpers/tailwind';
-import { $localSettings } from '../helpers/user/settings-store';
-import { getStatus } from '../helpers/building-hours';
+import { fetchHours } from '../lib/api/api';
+import { BuildingHours } from '../lib/models/building-hours';
+import tw from '../lib/tailwind';
+import { $localSettings } from '../lib/user/settings-store';
+import { getStatus } from '../lib/building-hours';
 
 export const screenOptions: NativeStackNavigationOptions = {
     title: 'Campus Hours',

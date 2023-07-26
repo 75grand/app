@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, Text, View } from 'react-native';
-import tw from '../../helpers/tailwind';
+import tw from '../../lib/tailwind';
 import Button from '../Button';
 import Logo from '../Logo';
 

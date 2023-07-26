@@ -14,11 +14,11 @@ import Input from '../components/Input';
 import InputLabel from '../components/InputLabel';
 import Profile from '../components/settings/Profile';
 import ReferralCode from '../components/settings/ReferralCode';
-import { patchUser } from '../helpers/api/api';
-import { logout, refreshUser } from '../helpers/api/login';
-import tw, { color } from '../helpers/tailwind';
-import { $localSettings } from '../helpers/user/settings-store';
-import { $user } from '../helpers/user/user-store';
+import { patchUser } from '../lib/api/api';
+import { logout, refreshUser } from '../lib/api/login';
+import tw, { color } from '../lib/tailwind';
+import { $localSettings } from '../lib/user/settings-store';
+import { $user } from '../lib/user/user-store';
 import { Masks } from 'react-native-mask-input';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 

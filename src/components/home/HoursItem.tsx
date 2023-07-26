@@ -1,9 +1,9 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Text, View } from 'react-native';
-import { getStatus } from '../../helpers/building-hours';
-import { useRerender } from '../../helpers/hooks';
-import { BuildingHours } from '../../helpers/models/building-hours';
-import tw from '../../helpers/tailwind';
+import { getStatus } from '../../lib/building-hours';
+import { useRerender } from '../../lib/hooks';
+import { BuildingHours } from '../../lib/models/building-hours';
+import tw from '../../lib/tailwind';
 
 export default function HoursItem({ name, events }: BuildingHours) {
     useRerender(1_000);

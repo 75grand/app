@@ -5,8 +5,8 @@ import { useState } from 'react';
 import { Alert, SafeAreaView, View } from 'react-native';
 import Button from '../components/Button';
 import AnimatedLogoIcon from '../components/login/AnimatedLogoIcon';
-import { login } from '../helpers/api/login';
-import tw from '../helpers/tailwind';
+import { login } from '../lib/api/login';
+import tw from '../lib/tailwind';
 import { useNavigation } from '@react-navigation/native';
 
 export const screenOptions: NativeStackNavigationOptions = {

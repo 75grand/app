@@ -1,6 +1,6 @@
 import { Children } from 'react';
 import { StyleProp, Text, View } from 'react-native';
-import tw from '../helpers/tailwind';
+import tw from '../lib/tailwind';
 import { FlashList } from '@shopify/flash-list';
 
 export interface Props {

@@ -1,5 +1,5 @@
 import { Text, View } from 'react-native';
-import tw from '../../helpers/tailwind';
+import tw from '../../lib/tailwind';
 import Card from '../Card';
 import CardHeader from '../CardHeader';
 import Button from '../Button';

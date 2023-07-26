@@ -13,11 +13,11 @@ import Input from '../components/Input';
 import InputLabel from '../components/InputLabel';
 import Logo from '../components/Logo';
 import PillRadioInput from '../components/PillRadioInput';
-import { patchUser } from '../helpers/api/api';
-import { User } from '../helpers/models/user';
-import tw, { color } from '../helpers/tailwind';
-import { $localSettings } from '../helpers/user/settings-store';
-import { $user } from '../helpers/user/user-store';
+import { patchUser } from '../lib/api/api';
+import { User } from '../lib/models/user';
+import tw, { color } from '../lib/tailwind';
+import { $localSettings } from '../lib/user/settings-store';
+import { $user } from '../lib/user/user-store';
 
 export const screenOptions: NativeStackNavigationOptions = {
     title: 'Finish Signing Up',

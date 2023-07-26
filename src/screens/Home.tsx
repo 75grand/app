@@ -6,7 +6,7 @@ import Logo from '../components/Logo';
 import FeaturedListings from '../components/home/FeaturedListings';
 import HoursCard from '../components/home/HoursCard';
 import QuickAccess from '../components/home/QuickAccess';
-import tw from '../helpers/tailwind';
+import tw from '../lib/tailwind';
 import RedditCard from '../components/home/RedditCard';
 
 export const screenOptions: NativeStackNavigationOptions = {

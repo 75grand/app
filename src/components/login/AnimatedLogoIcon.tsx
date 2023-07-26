@@ -2,7 +2,7 @@ import { MotiView } from 'moti';
 import { View } from 'react-native';
 import { Easing } from 'react-native-reanimated';
 import Svg, { Circle, Defs, Text, TextPath } from 'react-native-svg';
-import tw from '../../helpers/tailwind';
+import tw from '../../lib/tailwind';
 import Logo from '../Logo';
 
 export default function AnimatedLogoIcon() {

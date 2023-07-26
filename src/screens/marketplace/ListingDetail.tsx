@@ -8,12 +8,12 @@ import { Linking, Pressable, ScrollView, Text, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Button from '../../components/Button';
 import EmptyState from '../../components/EmptyState';
-import { fetchListing } from '../../helpers/api/api';
-import { Listing } from '../../helpers/models/marketplace';
-import tw from '../../helpers/tailwind';
-import { formatPhoneNumber, pluralize, ucFirst } from '../../helpers/text-utils';
-import { $user } from '../../helpers/user/user-store';
-import { getCdnUrl, openBrowser } from '../../helpers/utils';
+import { fetchListing } from '../../lib/api/api';
+import { Listing } from '../../lib/models/marketplace';
+import tw from '../../lib/tailwind';
+import { formatPhoneNumber, pluralize, ucFirst } from '../../lib/text-utils';
+import { $user } from '../../lib/user/user-store';
+import { getCdnUrl, openBrowser } from '../../lib/utils';
 import { Ionicons } from '@expo/vector-icons';
 
 export const screenOptions: NativeStackNavigationOptions = {

@@ -7,10 +7,10 @@ import Card from '../../components/Card';
 import InputLabel from '../../components/InputLabel';
 import PillRadioInput from '../../components/PillRadioInput';
 import OnboardingShell from '../../components/onboarding/OnboardingShell';
-import { patchUser } from '../../helpers/api/api';
-import { User } from '../../helpers/models/user';
-import tw from '../../helpers/tailwind';
-import { $user } from '../../helpers/user/user-store';
+import { patchUser } from '../../lib/api/api';
+import { User } from '../../lib/models/user';
+import tw from '../../lib/tailwind';
+import { $user } from '../../lib/user/user-store';
 
 export default function UserInfo() {
     const navigation = useNavigation();

@@ -1,6 +1,6 @@
 import * as Haptics from 'expo-haptics';
 import { ActivityIndicator, Text, TouchableOpacity } from 'react-native';
-import tw, { color as getColor } from '../helpers/tailwind';
+import tw, { color as getColor } from '../lib/tailwind';
 
 interface Props {
     text: string,

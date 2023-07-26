@@ -1,5 +1,5 @@
 import { Text, View } from 'react-native';
-import tw, { color } from '../helpers/tailwind';
+import tw, { color } from '../lib/tailwind';
 import { Ionicons } from '@expo/vector-icons';
 
 interface Props {

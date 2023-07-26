@@ -8,9 +8,9 @@ import { ActivityIndicator, Alert, ScrollView, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Input from '../components/Input';
 import InputLabel from '../components/InputLabel';
-import { postFeedback } from '../helpers/api/api';
-import tw, { color } from '../helpers/tailwind';
-import { $user } from '../helpers/user/user-store';
+import { postFeedback } from '../lib/api/api';
+import tw, { color } from '../lib/tailwind';
+import { $user } from '../lib/user/user-store';
 
 export const screenOptions: NativeStackNavigationOptions = {
     presentation: 'modal',

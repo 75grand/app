@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Text, View } from 'react-native';
-import tw from '../helpers/tailwind';
+import tw from '../lib/tailwind';
 
 interface Props {
     title?: string,

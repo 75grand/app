@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { ScrollView, Text, View } from 'react-native';
-import { fetchListings } from '../../helpers/api/api';
+import { fetchListings } from '../../lib/api/api';
 import ListingItem from '../marketplace/ListingItem';
-import tw from '../../helpers/tailwind';
+import tw from '../../lib/tailwind';
 
 export default function FeaturedListings() {
     const { data } = useQuery({

@@ -1,5 +1,5 @@
 import { StyleProp, View } from 'react-native';
-import tw from '../helpers/tailwind';
+import tw from '../lib/tailwind';
 
 interface Props {
     style?: StyleProp<any>,

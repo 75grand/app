@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { StyleProp, Text, TouchableOpacity } from 'react-native';
 import Card from '../Card';
-import tw from '../../helpers/tailwind';
+import tw from '../../lib/tailwind';
 
 interface Props {
     title: string;

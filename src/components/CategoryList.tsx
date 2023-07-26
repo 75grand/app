@@ -1,5 +1,5 @@
 import { SectionList, Text, TouchableOpacity, View } from 'react-native';
-import tw from '../helpers/tailwind';
+import tw from '../lib/tailwind';
 
 export type DataItem = { label: string, value?: any };
 

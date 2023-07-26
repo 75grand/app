@@ -2,8 +2,8 @@ import { useStore } from '@nanostores/react';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import { TouchableOpacity, View } from 'react-native';
-import tw from '../helpers/tailwind';
-import { $user } from '../helpers/user/user-store';
+import tw from '../lib/tailwind';
+import { $user } from '../lib/user/user-store';
 import Button from './Button';
 
 export default function AvatarButton() {

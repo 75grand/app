@@ -2,13 +2,13 @@ import { useStore } from '@nanostores/react';
 import { useNavigation } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
 import { TouchableOpacity } from 'react-native';
-import { fetchHours } from '../../helpers/api/api';
-import { $localSettings } from '../../helpers/user/settings-store';
+import { fetchHours } from '../../lib/api/api';
+import { $localSettings } from '../../lib/user/settings-store';
 import Card from '../Card';
 import EmptyState from '../EmptyState';
 import Grid from '../Grid';
 import HoursItem from './HoursItem';
-import tw from '../../helpers/tailwind';
+import tw from '../../lib/tailwind';
 
 export default function HoursCard() {
     const navigation = useNavigation();

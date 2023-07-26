@@ -6,9 +6,9 @@ import { View } from 'react-native';
 import EmptyState from '../../components/EmptyState';
 import FloatingCircleButton from '../../components/FloatingCircleButton';
 import ListingItem from '../../components/marketplace/ListingItem';
-import { fetchListings } from '../../helpers/api/api';
-import { useTanStackRefresh } from '../../helpers/hooks';
-import tw from '../../helpers/tailwind';
+import { fetchListings } from '../../lib/api/api';
+import { useTanStackRefresh } from '../../lib/hooks';
+import tw from '../../lib/tailwind';
 
 export const screenOptions: NativeStackNavigationOptions = {
     headerLargeTitle: true

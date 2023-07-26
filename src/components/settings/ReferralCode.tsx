@@ -2,8 +2,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { motifySvg } from 'moti/svg';
 import { Platform, Share, Text, TouchableOpacity, View } from 'react-native';
 import { Circle, Svg, Text as SvgText } from 'react-native-svg';
-import { User } from '../../helpers/models/user';
-import tw, { color, monospace } from '../../helpers/tailwind';
+import { User } from '../../lib/models/user';
+import tw, { color, monospace } from '../../lib/tailwind';
 import InputLabel from '../InputLabel';
 import { toWords } from 'number-to-words';
 
