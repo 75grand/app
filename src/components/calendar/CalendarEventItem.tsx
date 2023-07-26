@@ -2,9 +2,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import React from 'react';
 import { Text, View } from 'react-native';
-import { formatDuration, formatLocation, getCalendarIcon } from '../../helpers/calendar/utils';
-import { CalendarEvent } from '../../helpers/models/calendar';
-import tw, { color } from '../../helpers/tailwind';
+import { formatDuration, formatLocation, getCalendarIcon } from '../../lib/calendar/utils';
+import { CalendarEvent } from '../../lib/models/calendar';
+import tw, { color } from '../../lib/tailwind';
 
 export default function CalendarEventItem(event: CalendarEvent) {
     return (

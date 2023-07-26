@@ -1,6 +1,6 @@
 import { TextInput, TextInputProps, View, Text } from 'react-native';
 import MaskInput, { MaskInputProps } from 'react-native-mask-input';
-import tw, { color } from '../helpers/tailwind';
+import tw, { color } from '../lib/tailwind';
 
 interface Props {
     error?: string,

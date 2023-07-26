@@ -1,6 +1,6 @@
 import { TouchableOpacity, View } from 'react-native';
-import { CalendarEvent } from '../../helpers/models/calendar';
-import tw from '../../helpers/tailwind';
+import { CalendarEvent } from '../../lib/models/calendar';
+import tw from '../../lib/tailwind';
 import Card from '../Card';
 import CardHeader from '../CardHeader';
 import CalendarEventItem from './CalendarEventItem';

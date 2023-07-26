@@ -9,8 +9,8 @@ import { Platform, UIManager } from 'react-native';
 import 'react-native-url-polyfill/auto';
 import { HeaderButtonsProvider } from 'react-navigation-header-buttons';
 import Routing from './src/Routing';
-import { registerAndroidNotifChannel as registerNotifChannel, setNotifHandler, syncNotifToken } from './src/helpers/notifications';
-import { color } from './src/helpers/tailwind';
+import { registerAndroidNotifChannel as registerNotifChannel, setNotifHandler, syncNotifToken } from './src/lib/notifications';
+import { color } from './src/lib/tailwind';
 
 setNotifHandler();
 

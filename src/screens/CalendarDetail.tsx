@@ -12,14 +12,14 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Button from '../components/Button';
 import EmptyState from '../components/EmptyState';
 import AvatarStack from '../components/calendar/AvatarStack';
-import { fetchAttendees, fetchEvent, postRsvp } from '../helpers/api/api';
-import { formatDuration, formatLocation, shareEvent } from '../helpers/calendar/utils';
-import { CalendarEvent, EventAttendee } from '../helpers/models/calendar';
-import { areNotifsGranted } from '../helpers/notifications';
-import tw, { color } from '../helpers/tailwind';
-import { pluralize } from '../helpers/text-utils';
-import { $user } from '../helpers/user/user-store';
-import { openBrowser } from '../helpers/utils';
+import { fetchAttendees, fetchEvent, postRsvp } from '../lib/api/api';
+import { formatDuration, formatLocation, shareEvent } from '../lib/calendar/utils';
+import { CalendarEvent, EventAttendee } from '../lib/models/calendar';
+import { areNotifsGranted } from '../lib/notifications';
+import tw, { color } from '../lib/tailwind';
+import { pluralize } from '../lib/text-utils';
+import { $user } from '../lib/user/user-store';
+import { openBrowser } from '../lib/utils';
 
 /**
  * Controls screen options dynamically

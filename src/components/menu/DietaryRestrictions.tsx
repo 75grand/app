@@ -1,6 +1,6 @@
 import { Alert, TouchableOpacity, View } from 'react-native';
-import { DietaryRestriction } from '../../helpers/models/menu';
-import tw from '../../helpers/tailwind';
+import { DietaryRestriction } from '../../lib/models/menu';
+import tw from '../../lib/tailwind';
 import { Image } from 'expo-image';
 
 export default function DietaryRestrictions({ restrictions }: { restrictions: DietaryRestriction[] }) {

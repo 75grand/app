@@ -2,8 +2,8 @@ import { FontAwesome, MaterialCommunityIcons, MaterialIcons } from '@expo/vector
 import { decode } from 'html-entities';
 import { useEffect, useState } from 'react';
 import { Linking, Pressable, Text, TouchableOpacity, View } from 'react-native';
-import tw from '../../helpers/tailwind';
-import { openBrowser } from '../../helpers/utils';
+import tw from '../../lib/tailwind';
+import { openBrowser } from '../../lib/utils';
 import Card from '../Card';
 import CardHeader from '../CardHeader';
 import Grid from '../Grid';

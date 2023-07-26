@@ -1,10 +1,10 @@
 import { useStore } from '@nanostores/react';
 import { View } from 'react-native';
 import Svg, { Image, Path, Text } from 'react-native-svg';
-import tw, { slabSerif } from '../../helpers/tailwind';
-import { ucFirst } from '../../helpers/text-utils';
-import { $user } from '../../helpers/user/user-store';
-import { $localSettings } from '../../helpers/user/settings-store';
+import tw, { slabSerif } from '../../lib/tailwind';
+import { ucFirst } from '../../lib/text-utils';
+import { $user } from '../../lib/user/user-store';
+import { $localSettings } from '../../lib/user/settings-store';
 
 export default function MacPass() {
     const user = useStore($user);

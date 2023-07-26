@@ -1,5 +1,5 @@
 import Svg, { Circle, Path } from 'react-native-svg';
-import tw, { color } from '../helpers/tailwind';
+import tw, { color } from '../lib/tailwind';
 
 interface Props {
     version?: 'wordmark'|'icon';

@@ -8,8 +8,8 @@ import { SafeAreaView, Text, View } from 'react-native';
 import { Easing } from 'react-native-reanimated';
 import { Circle, G, Path, Svg, Text as SvgText } from 'react-native-svg';
 import Button from '../components/Button';
-import tw, { color } from '../helpers/tailwind';
-import { $localSettings } from '../helpers/user/settings-store';
+import tw, { color } from '../lib/tailwind';
+import { $localSettings } from '../lib/user/settings-store';
 
 export const screenOptions: NativeStackNavigationOptions = {
     presentation: 'modal',

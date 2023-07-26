@@ -1,5 +1,5 @@
 import { StyleProp, Text, View } from 'react-native';
-import tw, { color } from '../helpers/tailwind';
+import tw, { color } from '../lib/tailwind';
 
 type IconProps = { style: StyleProp<any>, size: 18 };
 

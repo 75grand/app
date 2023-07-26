@@ -1,10 +1,10 @@
 import { Text, View } from 'react-native';
-import { MenuItem } from '../../helpers/models/menu';
+import { MenuItem } from '../../lib/models/menu';
 import Card from '../Card';
 import CardHeader from '../CardHeader';
 import Grid from '../Grid';
 import DietaryRestrictions from './DietaryRestrictions';
-import tw from '../../helpers/tailwind';
+import tw from '../../lib/tailwind';
 
 export default function MenuSection({ title, items }: { title: string, items: MenuItem[] }) {
     const icons = {

@@ -1,6 +1,6 @@
 import { Image } from 'expo-image';
 import { View } from 'react-native';
-import tw from '../../helpers/tailwind';
+import tw from '../../lib/tailwind';
 
 interface Props {
     avatars: string[],

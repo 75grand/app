@@ -1,5 +1,5 @@
 import { ScrollView, View } from 'react-native';
-import tw from '../helpers/tailwind';
+import tw from '../lib/tailwind';
 import Button from './Button';
 
 interface Props {

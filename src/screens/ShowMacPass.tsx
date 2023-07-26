@@ -8,9 +8,9 @@ import { useEffect, useRef } from 'react';
 import { SafeAreaView, View } from 'react-native';
 import Button from '../components/Button';
 import MacPass from '../components/macpass/MacPass';
-import tw, { monospace } from '../helpers/tailwind';
-import { $user } from '../helpers/user/user-store';
-import { $localSettings } from '../helpers/user/settings-store';
+import tw, { monospace } from '../lib/tailwind';
+import { $user } from '../lib/user/user-store';
+import { $localSettings } from '../lib/user/settings-store';
 
 export const screenOptions: NativeStackNavigationOptions = {
     presentation: 'fullScreenModal',

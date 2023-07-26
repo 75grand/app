@@ -6,12 +6,12 @@ import { ActivityIndicator, RefreshControl, SafeAreaView } from 'react-native';
 import EmptyState from '../components/EmptyState';
 import CalendarDay from '../components/calendar/CalendarDay';
 import CalendarFilters from '../components/calendar/CalendarFilters';
-import { fetchEvents } from '../helpers/api/api';
-import { CalendarFilter, calendarFilters, filterEvents } from '../helpers/calendar/filters';
-import { groupEvents } from '../helpers/calendar/utils';
-import { CalendarEvent } from '../helpers/models/calendar';
-import tw from '../helpers/tailwind';
-import { useTanStackRefresh } from '../helpers/hooks';
+import { fetchEvents } from '../lib/api/api';
+import { CalendarFilter, calendarFilters, filterEvents } from '../lib/calendar/filters';
+import { groupEvents } from '../lib/calendar/utils';
+import { CalendarEvent } from '../lib/models/calendar';
+import tw from '../lib/tailwind';
+import { useTanStackRefresh } from '../lib/hooks';
 
 /**
  * @see https://github.com/react-navigation/react-navigation/issues/11375#issuecomment-1588592971

@@ -2,8 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import * as Location from 'expo-location';
 import { useEffect, useRef, useState } from 'react';
 import MapView, { Marker, Region } from 'react-native-maps';
-import { fetchMap } from '../helpers/api/api';
-import tw, { color } from '../helpers/tailwind';
+import { fetchMap } from '../lib/api/api';
+import tw, { color } from '../lib/tailwind';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 
 export const screenOptions: NativeStackNavigationOptions = {

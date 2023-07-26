@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
-import { CalendarFilter } from '../../helpers/calendar/filters';
-import tw, { color } from '../../helpers/tailwind';
+import { CalendarFilter } from '../../lib/calendar/filters';
+import tw, { color } from '../../lib/tailwind';
 import Pill from '../Pill';
 
 interface Props {

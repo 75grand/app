@@ -5,7 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { LogBox, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import tw from '../helpers/tailwind';
+import tw from '../lib/tailwind';
 
 LogBox.ignoreLogs([
     'Non-serializable values were found in the navigation state'
