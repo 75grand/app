@@ -62,6 +62,7 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@types/luxon": "^3.3.0",
+    "@types/number-to-words": "^1.2.1",
     "tailwindcss": "^3.3.2"
   },
   "private": true
