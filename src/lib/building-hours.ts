@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { BuildingHoursEvent } from './models/building-hours';
+import { BuildingHoursEvent } from './types/building-hours';
 
 export type BuildingHoursStatus = {
     status: 'open'|'closed'|'error'|'closing-soon',
@@ -10,19 +10,15 @@ export function getStatus(events: BuildingHoursEvent[]): BuildingHoursStatus {
     // Events must be sorted in chronological order
     // They are sorted on the server, so this is just in case
     events = events.sort((e1, e2) => {
-        const d1 = new Date(e1.start_date);
-        const d2 = new Date(e2.start_date);
-        return d1.getTime() - d2.getTime();
+        return e1.start_date.toMillis() - e2.start_date.toMillis();
     });
 
     for(const event of events) {
         const now = DateTime.now();
-        const startDate = DateTime.fromISO(event.start_date);
-        const endDate = DateTime.fromISO(event.end_date);
 
         // If the first event hasn't started yet, it's closed
-        if(now < startDate) {
-            const time = startDate.toRelative();
+        if(now < event.start_date) {
+            const time = event.start_date.toRelative();
 
             return {
                 status: 'closed',
@@ -31,9 +27,9 @@ export function getStatus(events: BuildingHoursEvent[]): BuildingHoursStatus {
         }
 
         // The event is happening now, so it's open
-        if(now < endDate) {
-            const time = endDate.toRelative();
-            const isClosingSoon = endDate.diff(now).as('minutes') <= 15;
+        if(now < event.end_date) {
+            const time = event.end_date.toRelative();
+            const isClosingSoon = event.end_date.diff(now).as('minutes') <= 15;
 
             return {
                 status: isClosingSoon ? 'closing-soon' : 'open',

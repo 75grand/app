@@ -17,7 +17,7 @@ import PillRadioInput from '../../components/PillRadioInput';
 import { patchListing, patchUser, postListing } from '../../lib/api/api';
 import { base64toFile } from '../../lib/api/http';
 import { takePhoto } from '../../lib/camera-utils';
-import { Listing } from '../../lib/models/marketplace';
+import { Listing } from '../../lib/types/marketplace';
 import tw from '../../lib/tailwind';
 import { $user } from '../../lib/user/user-store';
 import { ImagePickerAsset } from 'expo-image-picker';

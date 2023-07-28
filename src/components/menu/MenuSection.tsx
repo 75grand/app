@@ -1,5 +1,5 @@
 import { Text, View } from 'react-native';
-import { MenuItem } from '../../lib/models/menu';
+import { MenuItem } from '../../lib/types/menu';
 import Card from '../Card';
 import CardHeader from '../CardHeader';
 import Grid from '../Grid';

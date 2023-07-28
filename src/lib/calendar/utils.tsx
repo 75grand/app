@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { CalendarEvent } from '../models/calendar';
+import { CalendarEvent } from '../types/calendar';
 import { Share } from 'react-native';
 import { FontAwesome, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { color } from '../tailwind';
@@ -17,7 +17,7 @@ export function groupEvents(events: CalendarEvent[]): GroupedEvents {
     const temporaryGroup: Record<string, CalendarEvent[]> = {};
 
     for(const event of events) {
-        let isoDate = DateTime.fromISO(event.start_date).toISODate();
+        let isoDate = event.start_date.toISODate();
         temporaryGroup[isoDate] = temporaryGroup[isoDate] ?? [];
         temporaryGroup[isoDate].push(event);
     }
@@ -37,7 +37,7 @@ export function groupEvents(events: CalendarEvent[]): GroupedEvents {
 export async function shareEvent(event: CalendarEvent) {
     const message = [
         event.title,
-        DateTime.fromISO(event.start_date).toLocaleString(DateTime.DATETIME_MED),
+        event.start_date.toLocaleString(DateTime.DATETIME_MED),
         event.location,
         // 'More details at 75grand.net'
     ].join('\n');
@@ -50,8 +50,8 @@ export async function shareEvent(event: CalendarEvent) {
 
 /** Format the start and end times of an event */
 export function formatDuration(event: CalendarEvent) {
-    const startTime = DateTime.fromISO(event.start_date);
-    const endTime = DateTime.fromISO(event.end_date);
+    const startTime = event.start_date;
+    const endTime = event.end_date;
 
     const diff = Math.abs(startTime.diff(endTime).as('hours'));
     if(diff === 0) return 'All Day';

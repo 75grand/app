@@ -9,7 +9,7 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Button from '../../components/Button';
 import EmptyState from '../../components/EmptyState';
 import { fetchListing } from '../../lib/api/api';
-import { Listing } from '../../lib/models/marketplace';
+import { Listing } from '../../lib/types/marketplace';
 import tw from '../../lib/tailwind';
 import { formatPhoneNumber, pluralize, ucFirst } from '../../lib/text-utils';
 import { $user } from '../../lib/user/user-store';

@@ -14,10 +14,10 @@ import EmptyState from '../components/EmptyState';
 import AvatarStack from '../components/calendar/AvatarStack';
 import { fetchAttendees, fetchEvent, postRsvp } from '../lib/api/api';
 import { formatDuration, formatLocation, shareEvent } from '../lib/calendar/utils';
-import { CalendarEvent, EventAttendee } from '../lib/models/calendar';
 import { areNotifsGranted } from '../lib/notifications';
 import tw, { color } from '../lib/tailwind';
 import { pluralize } from '../lib/text-utils';
+import { CalendarEvent, EventAttendee } from '../lib/types/calendar';
 import { $user } from '../lib/user/user-store';
 import { openBrowser } from '../lib/utils';
 
@@ -99,8 +99,7 @@ export default function CalendarDetail() {
         });
     }, [attending, event]);
 
-    const startDate = DateTime.fromISO(event.start_date);
-    const startDateText = startDate.toLocaleString(DateTime.DATE_HUGE);
+    const startDateText = event.start_date.toLocaleString(DateTime.DATE_HUGE);
 
     return (
         <>

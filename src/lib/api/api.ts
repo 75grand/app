@@ -1,21 +1,21 @@
 import { GET, PATCH, POST } from './http';
-import { CalendarEvent, EventAttendee } from '../models/calendar';
 import { MapLayer } from '../models/map';
-import { EditableUserFields, User } from '../models/user';
-import { Menu } from '../models/menu';
+import { CalendarEvent, EventAttendee } from '../types/calendar';
+import { EditableUserFields, User } from '../types/user';
+import { Menu } from '../types/menu';
 import { DateTime } from 'luxon';
-import { BuildingHours } from '../models/building-hours';
-import { EditableListingFields, Listing, NewListingFields } from '../models/marketplace';
+import { BuildingHours } from '../types/building-hours';
+import { EditableListingFields, Listing, NewListingFields } from '../types/marketplace';
 import { $user } from '../user/user-store';
 
 export const fetchEvents = async () => await GET<CalendarEvent[]>('events');
-export const fetchEvent = async (id) => await GET<CalendarEvent>(`events/${id}`);
-export const fetchAttendees = async (id) => await GET<EventAttendee[]>(`events/${id}/attendees`);
-export const postRsvp = async (id, attending: boolean) => await POST<EventAttendee[]>(`events/${id}/attendees`, { attending });
+export const fetchEvent = async (id: number|string) => await GET<CalendarEvent>(`events/${id}`);
+export const fetchAttendees = async (id: number|string) => await GET<EventAttendee[]>(`events/${id}/attendees`);
+export const postRsvp = async (id: number|string, attending: boolean) => await POST<EventAttendee[]>(`events/${id}/attendees`, { attending });
 
 export const fetchListings = async () => await GET<Listing[]>('listings');
-export const fetchListing = async (id) => await GET<Listing>(`listings/${id}`);
-export const patchListing = async (id, data: EditableListingFields) => await PATCH<Listing>(`listings/${id}`, data);
+export const fetchListing = async (id: number|string) => await GET<Listing>(`listings/${id}`);
+export const patchListing = async (id: number|string, data: EditableListingFields) => await PATCH<Listing>(`listings/${id}`, data);
 export const postListing = async (data: NewListingFields) => await POST<Listing>(`listings`, data, true);
 
 export const postFeedback = async (message: string) => await POST('feedback', { message, email: $user.get().email });
