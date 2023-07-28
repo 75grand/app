@@ -1,7 +1,6 @@
 import { Children } from 'react';
-import { StyleProp, Text, View } from 'react-native';
+import { StyleProp, View } from 'react-native';
 import tw from '../lib/tailwind';
-import { FlashList } from '@shopify/flash-list';
 
 export interface Props {
     columns: 1|2|3|4;
