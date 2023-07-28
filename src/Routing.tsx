@@ -10,7 +10,6 @@ import * as CalendarDetail from './screens/CalendarDetail';
 import * as Home from './screens/Home';
 import * as Hours from './screens/Hours';
 import * as LoginWall from './screens/LoginWall';
-// import * as Map from './screens/Map';
 import * as Menus from './screens/Menus';
 import * as Onboarding from './screens/Onboarding';
 import * as ScanMacPass from './screens/ScanMacPass';
@@ -79,15 +78,6 @@ function TabRouting() {
                 }}
             />
 
-            {/* <Tabs.Screen
-                name="MapTab"
-                component={MapRouting}
-                options={{
-                    title: 'Map',
-                    tabBarIcon: props => <Ionicons {...props} name="map"/>
-                }}
-            /> */}
-
             <Tabs.Screen
                 name="MenusTab"
                 component={MenusRouting}
@@ -141,14 +131,6 @@ function MarketplaceRouting() {
         </Stack.Navigator>
     );
 }
-
-// function MapRouting() {
-//     return (
-//         <Stack.Navigator>
-//             <Stack.Screen name="Map" component={Map.default} options={Map.screenOptions}/>
-//         </Stack.Navigator>
-//     );
-// }
 
 function MenusRouting() {
     return (

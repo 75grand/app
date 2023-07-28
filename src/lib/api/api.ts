@@ -1,5 +1,4 @@
 import { GET, PATCH, POST } from './http';
-import { MapLayer } from '../models/map';
 import { CalendarEvent, EventAttendee } from '../types/calendar';
 import { EditableUserFields, User } from '../types/user';
 import { Menu } from '../types/menu';
@@ -19,8 +18,6 @@ export const patchListing = async (id: number|string, data: EditableListingField
 export const postListing = async (data: NewListingFields) => await POST<Listing>(`listings`, data, true);
 
 export const postFeedback = async (message: string) => await POST('feedback', { message, email: $user.get().email });
-
-export const fetchMap = async () => await GET<MapLayer[]>('map');
 
 export const fetchHours = async () => await GET<BuildingHours[]>('hours');
 
