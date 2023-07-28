@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { fetchListings } from '../../lib/api/api';
 import ListingItem from '../marketplace/ListingItem';
 import tw from '../../lib/tailwind';

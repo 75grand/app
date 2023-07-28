@@ -17,7 +17,7 @@ export function groupEvents(events: CalendarEvent[]): GroupedEvents {
     const temporaryGroup: Record<string, CalendarEvent[]> = {};
 
     for(const event of events) {
-        let isoDate = event.start_date.toISODate();
+        const isoDate = event.start_date.toISODate();
         temporaryGroup[isoDate] = temporaryGroup[isoDate] ?? [];
         temporaryGroup[isoDate].push(event);
     }

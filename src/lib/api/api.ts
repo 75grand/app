@@ -15,7 +15,7 @@ export const postRsvp = async (id: number|string, attending: boolean) => await P
 export const fetchListings = async () => await GET<Listing[]>('listings');
 export const fetchListing = async (id: number|string) => await GET<Listing>(`listings/${id}`);
 export const patchListing = async (id: number|string, data: EditableListingFields) => await PATCH<Listing>(`listings/${id}`, data);
-export const postListing = async (data: NewListingFields) => await POST<Listing>(`listings`, data, true);
+export const postListing = async (data: NewListingFields) => await POST<Listing>('listings', data, true);
 
 export const postFeedback = async (message: string) => await POST('feedback', { message, email: $user.get().email });
 

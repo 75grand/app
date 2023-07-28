@@ -3,16 +3,16 @@ import { useNavigation } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
 import { DateTime } from 'luxon';
 import { useLayoutEffect, useState } from 'react';
-import { ActivityIndicator, RefreshControl, SafeAreaView, ScrollView, Text, TouchableOpacity } from 'react-native';
+import { RefreshControl, SafeAreaView, ScrollView, Text, TouchableOpacity } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import EmptyState from '../components/EmptyState';
 import Grid from '../components/Grid';
 import FutureMenuWarning from '../components/menu/FutureMenuWarning';
 import MenuSection from '../components/menu/MenuSection';
 import { fetchMenu } from '../lib/api/api';
-import { Menu } from '../lib/types/menu';
-import tw, { color } from '../lib/tailwind';
 import { useTanStackRefresh } from '../lib/hooks';
+import tw, { color } from '../lib/tailwind';
+import { Menu } from '../lib/types/menu';
 
 export default function Menus() {
     const navigation = useNavigation();

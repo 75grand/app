@@ -17,8 +17,9 @@ export default function AvatarStack({ avatars, count = 0 }: Props) {
         <View style={tw('flex flex-row', { columnGap: -12 })}>
             {avatars.length > 0 ? avatars.map(src => {
                 return <Image key={src} source={src} style={styles}/>;
-            }) : [...Array(count)].map(_ => {
-                return <View style={styles}/>;
+            }) : [...Array(count)].map(() => {
+              /* eslint-disable react/jsx-key */
+              return <View style={styles}/>;
             })}
         </View>
     );

@@ -2,16 +2,16 @@ import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { FlashList } from '@shopify/flash-list';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo, useState } from 'react';
-import { ActivityIndicator, RefreshControl, SafeAreaView } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import EmptyState from '../components/EmptyState';
 import CalendarDay from '../components/calendar/CalendarDay';
 import CalendarFilters from '../components/calendar/CalendarFilters';
 import { fetchEvents } from '../lib/api/api';
 import { CalendarFilter, calendarFilters, filterEvents } from '../lib/calendar/filters';
 import { groupEvents } from '../lib/calendar/utils';
-import { CalendarEvent } from '../lib/types/calendar';
-import tw from '../lib/tailwind';
 import { useTanStackRefresh } from '../lib/hooks';
+import tw from '../lib/tailwind';
+import { CalendarEvent } from '../lib/types/calendar';
 
 /**
  * @see https://github.com/react-navigation/react-navigation/issues/11375#issuecomment-1588592971

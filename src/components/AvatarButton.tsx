@@ -15,11 +15,11 @@ export default function AvatarButton() {
             <Button
                 color="faint"
                 text="Feedback"
-                // @ts-expect-error
+                // @ts-expect-error Haven't configured React Navigation typing yet
                 onPress={() => navigation.navigate('Feedback')}
             />
 
-            <TouchableOpacity // @ts-expect-error
+            <TouchableOpacity // @ts-expect-error Haven't configured React Navigation typing yet
                 onPress={() => navigation.navigate('Settings')}>
                 <Image style={tw('w-8 h-8 rounded-lg')} source={user.avatar}/>
             </TouchableOpacity>
