@@ -40,6 +40,7 @@ module.exports = {
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/ban-ts-comment': 'off',
         'react/no-unescaped-entities': 'off',
-        'react/no-children-prop': 'off'
+        'react/no-children-prop': 'off',
+        '@typescript-eslint/no-unused-vars': 'warn'
     }
 }

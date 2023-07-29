@@ -36,7 +36,7 @@ async function request<T>(
     console.log(`Request: ${method} ${path}`);
 
     const options: RequestInit = {
-        method: method,        
+        method: method,
         headers: {
             'Accept': 'application/json',
             'Authorization': `Bearer ${token}`,

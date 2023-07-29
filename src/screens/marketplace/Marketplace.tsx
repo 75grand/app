@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { MasonryFlashList } from '@shopify/flash-list';
 import { useQuery } from '@tanstack/react-query';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import EmptyState from '../../components/EmptyState';
 import FloatingCircleButton from '../../components/FloatingCircleButton';
 import ListingItem from '../../components/marketplace/ListingItem';
