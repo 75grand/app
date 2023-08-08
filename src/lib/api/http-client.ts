@@ -24,20 +24,20 @@ $token.subscribe(token => {
     }
 });
 
-export async function request<T extends ZodType>(type: T, options: AxiosRequestConfig): Promise<Awaited<z.TypeOf<T>>> {
+export async function request <T extends ZodType>(type: T, options: AxiosRequestConfig): Promise<Awaited<z.TypeOf<T>>|null> {
     const name = `${options.method ?? 'GET'} ${options.url}`;
-    console.log(name)
+    console.log(name);
 
     try {
-        const response = await client.request<T>(options);
+        const response = await client.request(options);
         // return await type.parseAsync(response.data);
         const parseResult = await type.spa(response.data);
 
         if(parseResult.success) return parseResult.data;
         console.error(`Data from ${name} is invalid`);
     } catch(error) {
-        console.error(`Error with ${name}`);
-        throw error;
+        console.error(`Error with ${name} (${error.code})`);
+        if(error.status !== 404) throw error;
     }
 
     return null;
