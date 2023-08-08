@@ -32,7 +32,7 @@ export const postRsvp = async (id: Id) =>
 export const fetchListings = async () =>
     await request(array(Listing), { url: 'listings' });
 export const fetchListing = async (id: Id) =>
-    await request(array(Listing), { url: `listings/${id}` });
+    await request(Listing, { url: `listings/${id}` });
 export const patchListing = async (id: Id, data: NewListingFields) =>
     await request(array(Listing), { method: 'PATCH', url: `listings/${id}`, data });
 export const postListing = async (data: NewListingFields) =>
