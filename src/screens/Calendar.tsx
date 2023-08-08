@@ -44,7 +44,7 @@ export default function Calendar() {
                 <EmptyState title="No Events Found" subtitle={filter && 'Try another filter'} icon="calendar"/>}
 
             <FlashList
-                refreshing={isRefetching}
+                refreshing={isRefetching || isFetching}
                 onRefresh={fixedRefetch}
                 data={days}
                 keyExtractor={item => item.date.toString()}

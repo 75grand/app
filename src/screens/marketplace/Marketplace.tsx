@@ -41,7 +41,7 @@ export default function Marketplace() {
                 contentInsetAdjustmentBehavior="automatic"
                 contentContainerStyle={tw('p-1.5')}
                 onRefresh={fixedRefetch}
-                refreshing={isRefetching}
+                refreshing={isRefetching || isFetching}
                 data={[...listings]}
                 showsVerticalScrollIndicator={false}
                 numColumns={2}
