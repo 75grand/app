@@ -18,11 +18,11 @@ type Id = string|number;
 export const fetchEvents = async () =>
     await request(array(CalendarEvent), { url: 'events' });
 export const fetchEvent = async (id: Id) =>
-    await request(CalendarEvent, { url: `event/${id}` });
+    await request(CalendarEvent, { url: `events/${id}` });
 export const fetchAttendees = async (id: Id) =>
-    await request(array(EventAttendee), { url: `event/${id}/attendees` });
+    await request(array(EventAttendee), { url: `events/${id}/attendees` });
 export const postRsvp = async (id: Id) =>
-    await request(array(EventAttendee), { method: 'POST', url: `event/${id}/attendees` });
+    await request(array(EventAttendee), { method: 'POST', url: `events/${id}/attendees` });
 
 /**
  * Marketplace
