@@ -1,5 +1,4 @@
 import { DateTime } from 'luxon';
-import { array } from 'zod';
 import { BuildingHours } from '../types/building-hours';
 import { CalendarEvent, EventAttendee } from '../types/calendar';
 import { Listing, NewListingFields } from '../types/marketplace';
@@ -16,13 +15,13 @@ type Id = string|number;
  */
 
 export const fetchEvents = async () =>
-    await request(array(CalendarEvent), { url: 'events' });
+    await request(CalendarEvent.array(), { url: 'events' });
 export const fetchEvent = async (id: Id) =>
     await request(CalendarEvent, { url: `events/${id}` });
 export const fetchAttendees = async (id: Id) =>
-    await request(array(EventAttendee), { url: `events/${id}/attendees` });
+    await request(EventAttendee.array(), { url: `events/${id}/attendees` });
 export const postRsvp = async (id: Id) =>
-    await request(array(EventAttendee), { method: 'POST', url: `events/${id}/attendees` });
+    await request(EventAttendee.array(), { method: 'POST', url: `events/${id}/attendees` });
 
 /**
  * Marketplace
@@ -30,13 +29,13 @@ export const postRsvp = async (id: Id) =>
  */
 
 export const fetchListings = async () =>
-    await request(array(Listing), { url: 'listings' });
+    await request(Listing.array(), { url: 'listings' });
 export const fetchListing = async (id: Id) =>
     await request(Listing, { url: `listings/${id}` });
 export const patchListing = async (id: Id, data: NewListingFields) =>
-    await request(array(Listing), { method: 'PATCH', url: `listings/${id}`, data });
+    await request(Listing.array(), { method: 'PATCH', url: `listings/${id}`, data });
 export const postListing = async (data: NewListingFields) =>
-    await request(array(Listing), { method: 'POST', url: 'listings', data });
+    await request(Listing.array(), { method: 'POST', url: 'listings', data });
 
 /**
  * Feedback
@@ -52,7 +51,7 @@ export const postFeedback = async (message: string) =>
  */
 
 export const fetchHours = async () =>
-    await request(array(BuildingHours), { url: 'hours' });
+    await request(BuildingHours.array(), { url: 'hours' });
 
 /**
  * User & Authentication
