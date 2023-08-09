@@ -1,8 +1,5 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer, Theme } from '@react-navigation/native';
-import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister';
-import { QueryClient } from '@tanstack/react-query';
-import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { Platform, UIManager } from 'react-native';
@@ -26,19 +23,7 @@ const theme: Theme = {
     }
 };
 
-const persistOptions = {
-    persister: createAsyncStoragePersister({
-        storage: AsyncStorage
-    })
-};
-
-const queryClient = new QueryClient({
-    defaultOptions: {
-        queries: {
-            cacheTime: 1000 * 60 * 60 * 24
-        }
-    }
-});
+const queryClient = new QueryClient();
 
 if(Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -54,13 +39,13 @@ export default function App() {
         <>
             <StatusBar animated style="auto"/>
 
-            <PersistQueryClientProvider client={queryClient} persistOptions={persistOptions}>
+            <QueryClientProvider client={queryClient}>
                 <NavigationContainer theme={theme}>
                     <HeaderButtonsProvider stackType="native">
                         <Routing/>
                     </HeaderButtonsProvider>
                 </NavigationContainer>
-            </PersistQueryClientProvider>
+            </QueryClientProvider>
         </>
     );
 }
