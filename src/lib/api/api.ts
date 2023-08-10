@@ -6,6 +6,7 @@ import { Menu } from '../types/menu';
 import { EditableUserFields, User } from '../types/user';
 import { $user } from '../user/user-store';
 import { request } from './http-client';
+import { z } from 'zod';
 
 type Id = string|number;
 
@@ -43,7 +44,7 @@ export const postListing = async (data: NewListingFields) =>
  */
 
 export const postFeedback = async (message: string) =>
-    await request(null, { data: { message, email: $user.get().email } });
+    await request(z.any(), { url: 'feedback', data: { message, email: $user.get().email } });
 
 /**
  * Building Hours
