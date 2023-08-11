@@ -1,6 +1,9 @@
 import { DateTime } from 'luxon';
 import { z } from 'zod';
 
+/**
+ * An alias of Record<string, string> to avoid nested brackets (>>)
+ */
 export type StringRecord = Record<string, string>;
 
 export const stringToDateTime =
