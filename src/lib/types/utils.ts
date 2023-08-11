@@ -1,6 +1,8 @@
 import { DateTime } from 'luxon';
 import { z } from 'zod';
 
+export type StringRecord = Record<string, string>;
+
 export const stringToDateTime =
     z.string().transform((value, context) => {
         const dateTime = DateTime.fromISO(value);

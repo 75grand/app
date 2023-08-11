@@ -6,6 +6,7 @@ import { $token } from '../user/token-store';
 import { $user } from '../user/user-store';
 import { fetchUser } from './api';
 import { GET } from './http';
+import { StringRecord } from '../types/utils';
 
 export async function logout() {
     $token.set(null);
@@ -17,7 +18,7 @@ export async function logout() {
  * Fetch Google OAuth URL from the server
  * @see https://github.com/75grand/api/blob/71e740f5b493dd377761eaebadca2c9efe2a85d1/app/Http/Controllers/MobileAuthController.php
  */
-export async function getLoginUrl(options?: Record<string, string>) {
+export async function getLoginUrl(options?: StringRecord) {
     const response = await GET<{ redirect_url: string }>('authentication', {
         ...options,
         device: deviceName,
