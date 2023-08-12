@@ -9,7 +9,7 @@ import CalendarFilters from '../components/calendar/CalendarFilters';
 import { fetchEvents } from '../lib/api/api';
 import { CalendarFilter, calendarFilters, filterEvents } from '../lib/calendar/filters';
 import { groupEvents } from '../lib/calendar/utils';
-import { useTanStackRefresh } from '../lib/hooks';
+import { useTanStackRefresh } from '../lib/hooks/use-tanstack-refresh';
 import tw from '../lib/tailwind';
 import { CalendarEvent } from '../lib/types/calendar';
 
@@ -23,9 +23,13 @@ export const screenOptions: NativeStackNavigationOptions = {
 
 export default function Calendar() {
     const [filter, setFilter] = useState<CalendarFilter>(null);
-    const { data: events = [], refetch, isFetching } = useQuery<CalendarEvent[]>(['events'], fetchEvents);
+    const { data, refetch, isFetching } = useQuery<CalendarEvent[]>({
+        queryKey: ['events'],
+        queryFn: fetchEvents,
+        placeholderData: []
+    });
 
-    const filteredEvents = useMemo(() => filterEvents(events, filter), [events, filter]);
+    const filteredEvents = useMemo(() => filterEvents(data, filter), [data, filter]);
     const days = useMemo(() => groupEvents(filteredEvents), [filteredEvents]);
 
     const { fixedRefetch, isRefetching } = useTanStackRefresh(refetch);

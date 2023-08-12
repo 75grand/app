@@ -10,7 +10,7 @@ import Grid from '../components/Grid';
 import FutureMenuWarning from '../components/menu/FutureMenuWarning';
 import MenuSection from '../components/menu/MenuSection';
 import { fetchMenu } from '../lib/api/api';
-import { useTanStackRefresh } from '../lib/hooks';
+import { useTanStackRefresh } from '../lib/hooks/use-tanstack-refresh';
 import tw, { color } from '../lib/tailwind';
 import { Menu } from '../lib/types/menu';
 
