@@ -23,7 +23,7 @@ export async function getLoginUrl(options?: StringRecord) {
     const responseType = z.object({ redirect_url: z.string() });
     const response = await request(responseType, {
         url: 'authentication',
-        data: {
+        params: {
             ...options,
             device: deviceName,
             callback_url: Linking.createURL('')
