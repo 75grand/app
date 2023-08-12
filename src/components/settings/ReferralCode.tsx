@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { motifySvg } from 'moti/svg';
-import { Platform, Share, Text, TouchableOpacity, View } from 'react-native';
+import { Share, Text, TouchableOpacity, View } from 'react-native';
 import { Circle, Svg, Text as SvgText } from 'react-native-svg';
 import { User } from '../../lib/types/user';
 import tw, { color, monospace } from '../../lib/tailwind';
@@ -46,7 +46,7 @@ export default function ReferralCode({ referral_code, referrals_count, referrals
 function ProgressCircle({ value, max }: { value: number, max: number }) {
     const scale = 100;
     const strokeWidth = scale/8;
-    
+
     const percent = Math.min(value/max, 1);
     const radius = (scale/2) - (strokeWidth/2);
     const circumference = radius * 2 * Math.PI;

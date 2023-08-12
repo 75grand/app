@@ -1,27 +1,73 @@
-import { GET, PATCH, POST } from './http';
-import { CalendarEvent, EventAttendee } from '../types/calendar';
-import { EditableUserFields, User } from '../types/user';
-import { Menu } from '../types/menu';
 import { DateTime } from 'luxon';
 import { BuildingHours } from '../types/building-hours';
-import { EditableListingFields, Listing, NewListingFields } from '../types/marketplace';
+import { CalendarEvent, EventAttendee } from '../types/calendar';
+import { Listing, NewListingFields } from '../types/marketplace';
+import { Menu } from '../types/menu';
+import { EditableUserFields, User } from '../types/user';
 import { $user } from '../user/user-store';
+import { request } from './http-client';
+import { z } from 'zod';
 
-export const fetchEvents = async () => await GET<CalendarEvent[]>('events');
-export const fetchEvent = async (id: number|string) => await GET<CalendarEvent>(`events/${id}`);
-export const fetchAttendees = async (id: number|string) => await GET<EventAttendee[]>(`events/${id}/attendees`);
-export const postRsvp = async (id: number|string, attending: boolean) => await POST<EventAttendee[]>(`events/${id}/attendees`, { attending });
+type Id = string|number;
 
-export const fetchListings = async () => await GET<Listing[]>('listings');
-export const fetchListing = async (id: number|string) => await GET<Listing>(`listings/${id}`);
-export const patchListing = async (id: number|string, data: EditableListingFields) => await PATCH<Listing>(`listings/${id}`, data);
-export const postListing = async (data: NewListingFields) => await POST<Listing>(`listings`, data, true);
+/**
+ * Calendar
+ * @see https://www.notion.so/4d7b436cdfc6476693b7468d9d3278af
+ */
 
-export const postFeedback = async (message: string) => await POST('feedback', { message, email: $user.get().email });
+export const fetchEvents = async () =>
+    await request(CalendarEvent.array(), { url: 'events' });
+export const fetchEvent = async (id: Id) =>
+    await request(CalendarEvent, { url: `events/${id}` });
+export const fetchAttendees = async (id: Id) =>
+    await request(EventAttendee.array(), { url: `events/${id}/attendees` });
+export const postRsvp = async (id: Id) =>
+    await request(EventAttendee.array(), { method: 'POST', url: `events/${id}/attendees` });
 
-export const fetchHours = async () => await GET<BuildingHours[]>('hours');
+/**
+ * Marketplace
+ * @see https://www.notion.so/4d7b436cdfc6476693b7468d9d3278af
+ */
 
-export const fetchUser = async () => await GET<User>('user');
-export const patchUser = async (data: EditableUserFields) => await PATCH<User>('user', data);
+export const fetchListings = async () =>
+    await request(Listing.array(), { url: 'listings' });
+export const fetchListing = async (id: Id) =>
+    await request(Listing, { url: `listings/${id}` });
+export const patchListing = async (id: Id, data: NewListingFields) =>
+    await request(Listing.array(), { method: 'PATCH', url: `listings/${id}`, data });
+export const postListing = async (data: NewListingFields) =>
+    await request(Listing.array(), { method: 'POST', url: 'listings', data });
 
-export const fetchMenu = async (date: DateTime) => await GET<Menu>(`menu/${date.toSQLDate()}`);
+/**
+ * Feedback
+ * @see https://www.notion.so/4d7b436cdfc6476693b7468d9d3278af
+ */
+
+export const postFeedback = async (message: string) =>
+    await request(z.any(), { url: 'feedback', data: { message, email: $user.get().email } });
+
+/**
+ * Building Hours
+ * @see https://www.notion.so/4d7b436cdfc6476693b7468d9d3278af
+ */
+
+export const fetchHours = async () =>
+    await request(BuildingHours.array(), { url: 'hours' });
+
+/**
+ * User & Authentication
+ * @see https://www.notion.so/4d7b436cdfc6476693b7468d9d3278af
+ */
+
+export const fetchUser = async () =>
+    await request(User, { url: 'user' });
+export const patchUser = async (data: EditableUserFields) =>
+    await request(User, { method: 'PATCH', url: 'user', data });
+
+/**
+ * Dining Hall Menus
+ * @see https://www.notion.so/4d7b436cdfc6476693b7468d9d3278af
+ */
+
+export const fetchMenu = async (date: DateTime) =>
+    await request(Menu, { url: `menus/${date.toSQLDate()}` });

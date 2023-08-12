@@ -208,7 +208,7 @@ function EventLocation({ location, latitude, longitude }: CalendarEvent) {
     );
 }
 
-function CalendarDetailRow({ label, children }) {
+function CalendarDetailRow({ label, children }: { label: string, children: React.ReactNode }) {
     return (
         <View style={tw('flex flex-row gap-4')}>
             <Text style={tw('text-base text-gray-500 w-16 text-right')}>{label}</Text>

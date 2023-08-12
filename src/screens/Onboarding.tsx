@@ -51,7 +51,7 @@ export default function Onboarding() {
     });
 
     const [stepIndex, setStepIndex] = useState(0);
-    const steps = [<StepOne/>, <StepTwo/>];
+    const steps = [<StepOne key="one"/>, <StepTwo key="two"/>];
     const step = steps[stepIndex];
 
     const result =  (

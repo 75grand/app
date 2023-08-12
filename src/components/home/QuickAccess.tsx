@@ -3,11 +3,11 @@ import { useStore } from '@nanostores/react';
 import { useNavigation } from '@react-navigation/native';
 import { useMemo } from 'react';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
-import { SITE } from '../../lib/api/http';
 import tw from '../../lib/tailwind';
 import { $localSettings } from '../../lib/user/settings-store';
 import { openBrowser } from '../../lib/utils';
 import Pill from '../Pill';
+import { SITE } from '../../lib/constants';
 
 export default function QuickAccess() {
     const navigation = useNavigation();

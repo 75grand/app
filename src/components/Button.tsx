@@ -41,6 +41,8 @@ export default function Button({ text, onPress, color = 'accent', loading = fals
 
     return (
         <TouchableOpacity
+            aria-busy={loading}
+            aria-disabled={disabled}
             disabled={disabled}
             activeOpacity={0.5}
             style={tw('relative justify-center', bgColor, sizeStyle, disabled && 'opacity-75')}

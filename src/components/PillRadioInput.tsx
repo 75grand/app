@@ -1,9 +1,10 @@
 import { ScrollView, View } from 'react-native';
 import tw from '../lib/tailwind';
 import Button from './Button';
+import { StringRecord } from '../lib/types/utils';
 
 interface Props {
-    options: Record<string, string>|string[],
+    options: StringRecord|string[],
     value: string,
     setValue: (value: string) => void,
     allowEmpty?: boolean,

@@ -37,6 +37,7 @@ export default function RedditCard() {
     );
 }
 
+/* eslint-disable react/prop-types */
 function RedditItem({ id, title, score, author, permalink, num_comments, stickied }) {
     return (
         <TouchableOpacity key={id} onPress={() => openBrowser('https://www.reddit.com' + permalink)}>

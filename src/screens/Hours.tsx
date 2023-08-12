@@ -51,7 +51,7 @@ export default function Hours() {
     });
 
     function handleStarPress(service: BuildingHours) {
-        let favoriteHoursSet = new Set(favoriteHours);
+        const favoriteHoursSet = new Set(favoriteHours);
 
         if(favoriteHoursSet.has(service.name)) {
             favoriteHoursSet.delete(service.name);

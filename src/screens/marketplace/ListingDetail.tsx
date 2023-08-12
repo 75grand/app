@@ -14,7 +14,6 @@ import tw from '../../lib/tailwind';
 import { formatPhoneNumber, pluralize, ucFirst } from '../../lib/text-utils';
 import { $user } from '../../lib/user/user-store';
 import { getCdnUrl, openBrowser } from '../../lib/utils';
-import { Ionicons } from '@expo/vector-icons';
 
 export const screenOptions: NativeStackNavigationOptions = {
     headerTitle: () => <></>

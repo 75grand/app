@@ -2,15 +2,15 @@ import { TextInput, TextInputProps, View, Text } from 'react-native';
 import MaskInput, { MaskInputProps } from 'react-native-mask-input';
 import tw, { color } from '../lib/tailwind';
 
-interface Props {
-    error?: string,
+export interface InputProps {
+    error?: string|null,
     prefix?: string,
     suffix?: string,
     value: TextInputProps['value'],
     setValue: (value: string) => void
 }
 
-export default function Input(props: TextInputProps & Props & MaskInputProps) {
+export default function Input(props: TextInputProps & InputProps & MaskInputProps) {
     const shared = tw('text-base leading-5 py-2');
     const InputElement = props.mask ? MaskInput : TextInput;
 
