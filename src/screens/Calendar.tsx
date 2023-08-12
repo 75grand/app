@@ -9,7 +9,7 @@ import CalendarFilters from '../components/calendar/CalendarFilters';
 import { fetchEvents } from '../lib/api/api';
 import { CalendarFilter, calendarFilters, filterEvents } from '../lib/calendar/filters';
 import { groupEvents } from '../lib/calendar/utils';
-import { useTanStackRefresh } from '../lib/hooks';
+import { useTanStackRefresh } from '../lib/hooks/use-tanstack-refresh';
 import tw from '../lib/tailwind';
 import { CalendarEvent } from '../lib/types/calendar';
 
