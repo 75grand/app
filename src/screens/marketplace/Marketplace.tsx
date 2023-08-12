@@ -2,12 +2,12 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { MasonryFlashList } from '@shopify/flash-list';
 import { useQuery } from '@tanstack/react-query';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import EmptyState from '../../components/EmptyState';
 import FloatingCircleButton from '../../components/FloatingCircleButton';
 import ListingItem from '../../components/marketplace/ListingItem';
 import { fetchListings } from '../../lib/api/api';
-import { useTanStackRefresh } from '../../lib/hooks';
+import { useTanStackRefresh } from '../../lib/hooks/use-tanstack-refresh';
 import tw from '../../lib/tailwind';
 
 export const screenOptions: NativeStackNavigationOptions = {
@@ -41,7 +41,7 @@ export default function Marketplace() {
                 contentInsetAdjustmentBehavior="automatic"
                 contentContainerStyle={tw('p-1.5')}
                 onRefresh={fixedRefetch}
-                refreshing={isRefetching}
+                refreshing={isRefetching || isFetching}
                 data={[...listings]}
                 showsVerticalScrollIndicator={false}
                 numColumns={2}

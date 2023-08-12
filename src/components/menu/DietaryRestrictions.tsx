@@ -1,5 +1,5 @@
 import { Alert, TouchableOpacity, View } from 'react-native';
-import { DietaryRestriction } from '../../lib/models/menu';
+import { DietaryRestriction } from '../../lib/types/menu';
 import tw from '../../lib/tailwind';
 import { Image } from 'expo-image';
 

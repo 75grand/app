@@ -1,7 +1,7 @@
 import { Image } from 'expo-image';
 import { Text, View } from 'react-native';
-import { User } from '../../lib/models/user';
 import tw from '../../lib/tailwind';
+import { User } from '../../lib/types/user';
 
 export default function Profile({ name, avatar, email, id }: User) {
     return (

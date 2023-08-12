@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { map } from 'nanostores';
-import { User } from '../models/user';
+import { User } from '../types/user';
 
 export const $user = map<User>(null);
 

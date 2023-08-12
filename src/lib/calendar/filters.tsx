@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { CalendarEvent } from '../models/calendar';
+import { CalendarEvent } from '../types/calendar';
 
 export type CalendarFilter = {
     name: string,

@@ -3,7 +3,7 @@ import { Image } from 'expo-image';
 import { Text, TouchableOpacity, View } from 'react-native';
 import tw from '../../lib/tailwind';
 import Card from '../Card';
-import { Listing } from '../../lib/models/marketplace';
+import { Listing } from '../../lib/types/marketplace';
 import { getCdnUrl } from '../../lib/utils';
 
 export default function ListingItem(listing: Listing & { titleLines?: number }) {

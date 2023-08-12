@@ -3,7 +3,7 @@ import { Image } from 'expo-image';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { formatDuration, formatLocation, getCalendarIcon } from '../../lib/calendar/utils';
-import { CalendarEvent } from '../../lib/models/calendar';
+import { CalendarEvent } from '../../lib/types/calendar';
 import tw, { color } from '../../lib/tailwind';
 
 export default function CalendarEventItem(event: CalendarEvent) {

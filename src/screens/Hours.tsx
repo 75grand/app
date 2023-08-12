@@ -7,7 +7,7 @@ import { LayoutAnimation, ScrollView, TouchableOpacity, View } from 'react-nativ
 import Card from '../components/Card';
 import HoursItem from '../components/home/HoursItem';
 import { fetchHours } from '../lib/api/api';
-import { BuildingHours } from '../lib/models/building-hours';
+import { BuildingHours } from '../lib/types/building-hours';
 import tw from '../lib/tailwind';
 import { $localSettings } from '../lib/user/settings-store';
 import { getStatus } from '../lib/building-hours';
@@ -51,7 +51,7 @@ export default function Hours() {
     });
 
     function handleStarPress(service: BuildingHours) {
-        let favoriteHoursSet = new Set(favoriteHours);
+        const favoriteHoursSet = new Set(favoriteHours);
 
         if(favoriteHoursSet.has(service.name)) {
             favoriteHoursSet.delete(service.name);

@@ -8,7 +8,7 @@ import InputLabel from '../../components/InputLabel';
 import PillRadioInput from '../../components/PillRadioInput';
 import OnboardingShell from '../../components/onboarding/OnboardingShell';
 import { patchUser } from '../../lib/api/api';
-import { User } from '../../lib/models/user';
+import { User } from '../../lib/types/user';
 import tw from '../../lib/tailwind';
 import { $user } from '../../lib/user/user-store';
 
@@ -24,7 +24,7 @@ export default function UserInfo() {
     const mutation = useMutation({
         mutationFn: () => patchUser({
             position: position as User['position'],
-            class_year: Number(year)
+            class_year: year
         }),
         onSuccess: newUser => {
             $user.set(newUser);

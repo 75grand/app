@@ -9,7 +9,6 @@ import { SafeAreaView, View } from 'react-native';
 import Button from '../components/Button';
 import MacPass from '../components/macpass/MacPass';
 import tw, { monospace } from '../lib/tailwind';
-import { $user } from '../lib/user/user-store';
 import { $localSettings } from '../lib/user/settings-store';
 
 export const screenOptions: NativeStackNavigationOptions = {
@@ -21,7 +20,6 @@ export const screenOptions: NativeStackNavigationOptions = {
 
 export default function ShowMacPass() {
     const navigation = useNavigation();
-    const user = useStore($user);
     const settings = useStore($localSettings);
     const initialBrightness = useRef<number>();
 

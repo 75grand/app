@@ -17,7 +17,7 @@ export const screenOptions: NativeStackNavigationOptions = {
 export default function LoginWall() {
     const navigation = useNavigation();
     const [loginLoading, setLoginLoading] = useState(false);
-    const [referralLoading, setReferralLoading] = useState(false);
+    const [referralLoading,] = useState(false);
 
     async function handleLoginPress(referralCode?: string) {
         setLoginLoading(true);

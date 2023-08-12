@@ -4,6 +4,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Image } from 'expo-image';
+import { ImagePickerAsset } from 'expo-image-picker';
 import { StatusBar } from 'expo-status-bar';
 import { useLayoutEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
@@ -15,12 +16,10 @@ import Input from '../../components/Input';
 import InputLabel from '../../components/InputLabel';
 import PillRadioInput from '../../components/PillRadioInput';
 import { patchListing, patchUser, postListing } from '../../lib/api/api';
-import { base64toFile } from '../../lib/api/http';
 import { takePhoto } from '../../lib/camera-utils';
-import { Listing } from '../../lib/models/marketplace';
 import tw from '../../lib/tailwind';
+import { Listing } from '../../lib/types/marketplace';
 import { $user } from '../../lib/user/user-store';
-import { ImagePickerAsset } from 'expo-image-picker';
 
 export const screenOptions: NativeStackNavigationOptions = {
     title: 'Edit Listing',
