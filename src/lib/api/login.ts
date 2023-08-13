@@ -41,6 +41,8 @@ export async function login(referralCode: string = '') {
     const loginUrl = await getLoginUrl({ referral_code: referralCode });
     const result = await WebBrowser.openAuthSessionAsync(loginUrl);
 
+    console.log(JSON.stringify(result));
+
     if(result?.type === 'success') {
         // Retrieve and store authentication token
         const url = Linking.parse(result.url);
