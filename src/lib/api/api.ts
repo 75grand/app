@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon';
 import { BuildingHours } from '../types/building-hours';
 import { CalendarEvent, EventAttendee } from '../types/calendar';
-import { Listing, NewListingFields } from '../types/marketplace';
+import { EditableListingFields, Listing, NewListingFields } from '../types/marketplace';
 import { Menu } from '../types/menu';
 import { EditableUserFields, User } from '../types/user';
 import { $user } from '../user/user-store';
@@ -33,7 +33,7 @@ export const fetchListings = async () =>
     await request(Listing.array(), { url: 'listings' });
 export const fetchListing = async (id: Id) =>
     await request(Listing, { url: `listings/${id}` });
-export const patchListing = async (id: Id, data: NewListingFields) =>
+export const patchListing = async (id: Id, data: EditableListingFields) =>
     await request(Listing.array(), { method: 'PATCH', url: `listings/${id}`, data });
 export const postListing = async (data: NewListingFields) =>
     await request(Listing.array(), { method: 'POST', url: 'listings', data });
