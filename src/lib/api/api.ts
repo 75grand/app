@@ -43,8 +43,8 @@ export const postListing = async (data: NewListingFields) =>
  * @see https://www.notion.so/4d7b436cdfc6476693b7468d9d3278af
  */
 
-export const postFeedback = async (message: string) =>
-    await request(z.any(), { url: 'feedback', data: { message, email: $user.get().email } });
+export const postFeedback = async (message: string, email?: string) =>
+    await request(z.any(), { url: 'feedback', data: { email, message } });
 
 /**
  * Building Hours
