@@ -49,7 +49,7 @@ function TabRouting() {
             headerShown: false,
             tabBarShowLabel: false,
             tabBarStyle: tw('border-t border-t-black/10')
-        }} initialRouteName="MarketplaceTab">
+        }} initialRouteName="HomeTab">
             <Tabs.Screen
                 name="HomeTab"
                 component={HomeRouting}
