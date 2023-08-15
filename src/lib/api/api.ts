@@ -44,7 +44,7 @@ export const postListing = async (data: NewListingFields) =>
  */
 
 export const postFeedback = async (message: string, email?: string) =>
-    await request(z.any(), { url: 'feedback', data: { email, message } });
+    await request(z.any(), { url: 'feedback', method: 'POST', data: { email, message } });
 
 /**
  * Building Hours
