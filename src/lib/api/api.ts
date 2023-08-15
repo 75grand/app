@@ -4,7 +4,6 @@ import { CalendarEvent, EventAttendee } from '../types/calendar';
 import { EditableListingFields, Listing, NewListingFields } from '../types/marketplace';
 import { Menu } from '../types/menu';
 import { EditableUserFields, User } from '../types/user';
-import { $user } from '../user/user-store';
 import { request } from './http-client';
 import { z } from 'zod';
 
