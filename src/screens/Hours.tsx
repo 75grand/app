@@ -35,11 +35,11 @@ export default function Hours() {
         if(aFavorite && !bFavorite) return -1;
         if(!aFavorite && bFavorite) return 1;
 
-        const aOpen = getStatus(a.events).status === 'open';
-        const bOpen = getStatus(b.events).status === 'open';
+        // const aOpen = getStatus(a.events).status === 'open';
+        // const bOpen = getStatus(b.events).status === 'open';
 
-        if(aOpen && !bOpen) return -1;
-        if(!aOpen && Boolean) return 1;
+        // if(aOpen && !bOpen) return -1;
+        // if(!aOpen && Boolean) return 1;
 
         const aName = a.name.toLocaleLowerCase();
         const bName = b.name.toLocaleLowerCase();
@@ -82,8 +82,7 @@ export default function Hours() {
                                     </TouchableOpacity>
 
                                     <TouchableOpacity onPress={() => handleStarPress(service)}>
-                                        <Ionicons name="star"
-                                            style={tw('text-xl text-gray-300',
+                                        <Ionicons name="star" style={tw('text-xl text-gray-300',
                                                 favoriteHours.includes(service.name) && 'text-yellow')}/>
                                     </TouchableOpacity>
                                 </View>
