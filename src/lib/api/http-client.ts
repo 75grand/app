@@ -35,9 +35,11 @@ export async function request<T extends ZodType>(type: T, options: AxiosRequestC
 
         if(parseResult.success) return parseResult.data;
         console.error(`Data from ${name} is invalid`);
+        alert(`Data from ${name} is invalid`);
     } catch(error) {
         if(error.response.status !== 404) {
             console.error(`Error with ${name} (${error.response.status})`);
+            alert(`Error with ${name} (${error.response.status})`);
             throw error;
         }
     }
