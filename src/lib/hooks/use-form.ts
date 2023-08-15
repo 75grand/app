@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { AnyZodObject, ZodDefault, ZodTypeAny, z } from 'zod';
+import { AnyZodObject, ZodDefault, z } from 'zod';
 import { InputProps } from '../../components/Input';
 import { StringRecord } from '../types/utils';
 
@@ -43,7 +43,7 @@ export function useForm<T extends AnyZodObject>(type: T): Form<T> {
     const fields = {} as Record<keyof FormType, Field>;
 
     for(const name in type.shape) {
-        const errorMessage = safeResult.success === false
+        const errorMessage = safeResult.success === false && Boolean(values[name])
             ? safeResult.error.format()[name]?._errors.join('\n') ?? null
             : null;
 
