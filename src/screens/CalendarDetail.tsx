@@ -12,7 +12,7 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Button from '../components/Button';
 import EmptyState from '../components/EmptyState';
 import AvatarStack from '../components/calendar/AvatarStack';
-import { fetchAttendees, fetchEvent, postRsvp } from '../lib/api/api';
+import { fetchAttendees, fetchEvent, patchRsvp } from '../lib/api/api';
 import { formatDuration, formatLocation, shareEvent } from '../lib/calendar/utils';
 import { areNotifsGranted } from '../lib/notifications';
 import tw, { color } from '../lib/tailwind';
@@ -57,7 +57,7 @@ export default function CalendarDetail() {
     const attending = attendees.some(a => a.id === user.id);
 
     const rsvp = useMutation({
-        mutationFn: () => postRsvp(eventId, !attending),
+        mutationFn: () => patchRsvp(eventId, !attending),
         onSuccess: newAttendees => queryClient.setQueryData(
             ['events', eventId, 'attendees'],
             newAttendees

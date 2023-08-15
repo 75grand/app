@@ -21,8 +21,8 @@ export const fetchEvent = async (id: Id) =>
     await request(CalendarEvent, { url: `events/${id}` });
 export const fetchAttendees = async (id: Id) =>
     await request(EventAttendee.array(), { url: `events/${id}/attendees` });
-export const postRsvp = async (id: Id) =>
-    await request(EventAttendee.array(), { method: 'POST', url: `events/${id}/attendees` });
+export const patchRsvp = async (id: Id, attending: boolean) =>
+    await request(EventAttendee.array(), { method: 'PATCH', url: `events/${id}/attendees`, data: { attending } });
 
 /**
  * Marketplace
