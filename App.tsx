@@ -8,6 +8,7 @@ import { HeaderButtonsProvider } from 'react-navigation-header-buttons';
 import Routing from './src/Routing';
 import { registerAndroidNotifChannel as registerNotifChannel, setNotifHandler, syncNotifToken } from './src/lib/notifications';
 import { color } from './src/lib/tailwind';
+import { navigationRef } from './src/lib/navigation-ref';
 
 setNotifHandler();
 
@@ -40,7 +41,7 @@ export default function App() {
             <StatusBar animated style="auto"/>
 
             <QueryClientProvider client={queryClient}>
-                <NavigationContainer theme={theme}>
+                <NavigationContainer ref={navigationRef} theme={theme}>
                     <HeaderButtonsProvider stackType="native">
                         <Routing/>
                     </HeaderButtonsProvider>

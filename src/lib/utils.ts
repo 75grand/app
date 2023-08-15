@@ -2,6 +2,7 @@ import { setStatusBarStyle } from 'expo-status-bar';
 import * as WebBrowser from 'expo-web-browser';
 import { Alert } from 'react-native';
 import { color } from './tailwind';
+import { navigateWithRef } from './navigation-ref';
 
 export async function openBrowser(url: string) {
     setStatusBarStyle('light');
@@ -38,13 +39,13 @@ export function getCdnUrl(url: string, width: number, height: number) {
  */
 export function alertWithFeedback(alertTitle: string, alertMessage: string, feedbackMessage: string) {
     Alert.alert(alertTitle, alertMessage, [
-        // {
-        //     text: 'Submit Feedback',
-        //     onPress: () => navigation.navigate('Feedback', { message: feedbackMessage })
-        // },
+        {
+            text: 'Submit Feedback',
+            onPress: () => navigateWithRef('Feedback', { message: feedbackMessage })
+        },
         {
             text: 'Close',
-            style: 'default'
+            style: 'cancel'
         }
     ]);
 }
