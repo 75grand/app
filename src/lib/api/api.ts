@@ -6,6 +6,7 @@ import { Menu } from '../types/menu';
 import { EditableUserFields, User } from '../types/user';
 import { request } from './http-client';
 import { z } from 'zod';
+import { objectToFormData } from '../utils';
 
 type Id = string|number;
 
@@ -35,7 +36,7 @@ export const fetchListing = async (id: Id) =>
 export const patchListing = async (id: Id, data: EditableListingFields) =>
     await request(Listing.array(), { method: 'PATCH', url: `listings/${id}`, data });
 export const postListing = async (data: NewListingFields) =>
-    await request(Listing.array(), { method: 'POST', url: 'listings', data });
+    await request(Listing.array(), { method: 'POST', url: 'listings', data: objectToFormData(data) });
 
 /**
  * Feedback

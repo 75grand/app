@@ -14,6 +14,7 @@ import tw from '../../lib/tailwind';
 import { formatPhoneNumber, pluralize, ucFirst } from '../../lib/text-utils';
 import { $user } from '../../lib/user/user-store';
 import { getCdnUrl, openBrowser } from '../../lib/utils';
+import { formatDistance } from '../../lib/marketplace-utils';
 
 export const screenOptions: NativeStackNavigationOptions = {
     headerTitle: () => <></>
@@ -52,13 +53,9 @@ export default function ListingDetail() {
 
     if(!listing) return;
 
-    let metaText = listing.price === 0
+    const priceText = listing.price === 0
         ? 'Free'
         : '$' + listing.price.toLocaleString();
-
-    if(listing.miles_from_campus === 0) metaText += ' — On Campus';
-    else if(listing.miles_from_campus === 9) metaText += ' — 5+ Miles Away';
-    else metaText += ` — ${listing.miles_from_campus} ${pluralize(listing.miles_from_campus, 'mile')} from campus`;
 
     return (
         <>
@@ -71,7 +68,9 @@ export default function ListingDetail() {
                 <View style={tw('flex p-3 gap-3')}>
                     <Text selectable={true} style={tw('text-2xl font-bold')}>{listing.title}</Text>
 
-                    <Text style={tw('text-accent text-base leading-none')}>{metaText}</Text>
+                    <Text style={tw('text-accent text-base leading-none')}>
+                        {priceText} • {formatDistance(listing.miles_from_campus)}
+                    </Text>
 
                     <View style={tw('flex-row gap-3 items-center')}>
                         <Image source={listing.user.avatar}

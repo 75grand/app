@@ -1,10 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useStore } from '@nanostores/react';
+import Slider from '@react-native-community/slider';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Image } from 'expo-image';
-import { ImagePickerAsset } from 'expo-image-picker';
 import { StatusBar } from 'expo-status-bar';
 import { useLayoutEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
@@ -17,9 +17,12 @@ import InputLabel from '../../components/InputLabel';
 import PillRadioInput from '../../components/PillRadioInput';
 import { patchListing, patchUser, postListing } from '../../lib/api/api';
 import { takePhoto } from '../../lib/camera-utils';
-import tw from '../../lib/tailwind';
-import { Listing } from '../../lib/types/marketplace';
+import { useForm } from '../../lib/hooks/use-form';
+import { formatDistance } from '../../lib/marketplace-utils';
+import tw, { color } from '../../lib/tailwind';
+import { EditableListingFields, Listing, NewListingFields } from '../../lib/types/marketplace';
 import { $user } from '../../lib/user/user-store';
+import { mergeDefaultsForInput } from '../../lib/utils';
 
 export const screenOptions: NativeStackNavigationOptions = {
     title: 'Edit Listing',
@@ -44,35 +47,18 @@ export default function EditListing() {
 
     const isEditing = listing !== null;
 
-    const [image, setImage] = useState<ImagePickerAsset>();
-    const [title, setTitle] = useState(listing?.title ?? '');
-    const [available, setAvailable] = useState(listing?.available ?? true);
-    const [description, setDescription] = useState(listing?.description ?? '');
-    const [price, setPrice] = useState(`${listing?.price ?? ''}`);
-    const [distance, setDistance] = useState(`${listing?.miles_from_campus ?? ''}`);
+    const { fields, isValid, formData } = useForm(
+        isEditing
+            ? mergeDefaultsForInput(EditableListingFields, listing)
+            : NewListingFields
+    );
 
     const listingMutation = useMutation({
         async mutationFn() {
             if(isEditing) {
-                return patchListing(listing.id, {
-                    title,
-                    available,
-                    price: Number(price),
-                    description,
-                    miles_from_campus: Number(distance)
-                });
+                return patchListing(listing.id, formData);
             } else {
-                return postListing({
-                    title,
-                    description,
-                    price: Number(price),
-                    miles_from_campus: Number(distance),
-                    image: {
-                        uri: image.uri,
-                        name: image.fileName,
-                        type: image.type
-                    }
-                });
+                return postListing(formData);
             }
         },
         onSuccess() {
@@ -93,7 +79,13 @@ export default function EditListing() {
     async function handleImagePress() {
         const image = await takePhoto();
         if(image === null) return;
-        setImage(image);
+
+        // @ts-expect-error
+        fields.image.setValue({
+            uri: image.uri,
+            name: image.fileName,
+            type: image.type
+        });
     }
     
     useLayoutEffect(() => {
@@ -113,11 +105,13 @@ export default function EditListing() {
                         title={isEditing ? 'Save' : 'Post'}
                         buttonStyle={tw('font-semibold')}
                         onPress={saveListing}
+                        disabled={!isValid}
+                        style={tw(isValid || 'opacity-50')}
                     />
                 </HeaderButtons>
             )
         });
-    }, [saveListing]);
+    }, [saveListing, isValid]);
 
     return (
         <>
@@ -145,8 +139,10 @@ export default function EditListing() {
                             <InputLabel text="Is it still available?">
                                 <PillRadioInput
                                     options={['Available', 'Unavailable']}
-                                    value={available ? 'Available': 'Unavailable'}
-                                    setValue={value => setAvailable(value === 'Available')}
+                                    // @ts-expect-error
+                                    value={fields.available.value ? 'Available': 'Unavailable'}
+                                    // @ts-expect-error
+                                    setValue={value => fields.available.setValue(value === 'Available')}
                                 />
                             </InputLabel>
                         </Card>
@@ -155,11 +151,13 @@ export default function EditListing() {
                     <Card>
                         <View style={tw('gap-4')}>
                             {!isEditing && (
-                                <InputLabel text="Image">
+                                <InputLabel required text="Image">
                                     <TouchableOpacity onPress={handleImagePress} style={tw('w-48 h-24 border border-black/10 rounded-lg justify-center items-center')}>
-                                        {image ? (
+                                        {/* @ts-expect-error */}
+                                        {fields.image.value ? (
                                             <Image
-                                                source={image}
+                                                // @ts-expect-error
+                                                source={fields.image.value.uri}
                                                 style={tw('w-48 h-24 border border-black/10 rounded-lg')}
                                             />
                                         ) : (
@@ -172,47 +170,36 @@ export default function EditListing() {
                                 </InputLabel>
                             )}
 
-                            <InputLabel text="Title">
+                            <InputLabel required text="Title">
+                                <Input {...fields.title} placeholder="Bosch Mini Fridge"/>
+                            </InputLabel>
+
+                            <InputLabel required text="Price" description="$0 – $1,000">
                                 <Input
-                                    value={title}
-                                    setValue={setTitle}
-                                    placeholder="Mini Fridge"
+                                    {...fields.price}
+                                    prefix="$ "
+                                    placeholder="40"
+                                    inputMode="numeric"
                                 />
                             </InputLabel>
 
-                            <InputLabel text="Price" description="$0 – $1,000">
-                                <Input
-                                    value={price}
-                                    setValue={setPrice}
-                                    prefix="$ "
-                                    placeholder="40"
-                                    maxLength={4}
-                                    inputMode="numeric"
-                                    error={Number(price) <= 1000 ? '' : 'Price must be less than $1,000'}
+                            <InputLabel required text="Pick-Up Radius" description={formatDistance(Number(fields.miles_from_campus.value))}>
+                                <Slider
+                                    minimumValue={0}
+                                    maximumValue={9}
+                                    value={Number(fields.miles_from_campus.value)}
+                                    onValueChange={value => fields.miles_from_campus.setValue(String(value))}
+                                    minimumTrackTintColor={color('accent')}
+                                    tapToSeek={true}
+                                    step={1}
                                 />
                             </InputLabel>
 
                             <InputLabel text="Description">
                                 <Input
-                                    value={description}
-                                    setValue={setDescription}
+                                    {...fields.description}
                                     multiline={true}
                                     placeholder="Silver, works fine, small dent in the door"
-                                />
-                            </InputLabel>
-
-                            <InputLabel text="Location">
-                                <PillRadioInput
-                                    scroll
-                                    value={distance}
-                                    setValue={setDistance}
-                                    options={{
-                                        0: 'On Campus',
-                                        1: '1 mile',
-                                        2: '2 miles',
-                                        5: '5 miles',
-                                        9: 'More than 5 miles'
-                                    }}
                                 />
                             </InputLabel>
                         </View>

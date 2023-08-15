@@ -3,6 +3,7 @@ import * as WebBrowser from 'expo-web-browser';
 import { Alert } from 'react-native';
 import { color } from './tailwind';
 import { navigateWithRef } from './navigation-ref';
+import { AnyZodObject, z } from 'zod';
 
 export async function openBrowser(url: string) {
     setStatusBarStyle('light');
@@ -48,4 +49,29 @@ export function alertWithFeedback(alertTitle: string, alertMessage: string, feed
             style: 'cancel'
         }
     ]);
+}
+
+export function objectToFormData(object: object): FormData {
+    const formData = new FormData();
+    
+    for(const key in object) {
+        const value = object[key];
+        formData.append(key, value);
+    }
+
+    return formData;
+}
+
+/**
+ * Given an existing Zod type, merge an object of defaults into it
+ * @returns A new Zod type with the default values added as strings
+ */
+export function mergeDefaultsForInput<T extends AnyZodObject>(type: T, defaults: Partial<z.infer<T>>): T {
+    for(const key in type.shape) {
+        if(key in defaults) {
+            type.shape[key] = type.shape[key].default(String(defaults[key]));
+        }
+    }
+
+    return type;
 }

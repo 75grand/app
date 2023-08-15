@@ -8,16 +8,13 @@ export const Listing = z.object({
     title: z.string(),
     description: z.string().nullable(),
     image_url: z.string().url(),
-    price: z.number().lte(1000),
-    available: z.boolean(),
-    miles_from_campus: z.number().lte(9),
+    price: z.coerce.number().lte(1000, 'Price must be less than or equal to $1,000'),
+    available: z.coerce.boolean(),
+    miles_from_campus: z.coerce.number(),
     user: OtherUser,
     created_at: stringToDateTime
 });
 
-/**
- * @see https://stackoverflow.com/a/42521680/
- */
 export type NewListingFields = z.infer<typeof NewListingFields>;
 export const NewListingFields = Listing.pick({
     title: true,
@@ -25,6 +22,7 @@ export const NewListingFields = Listing.pick({
     price: true,
     miles_from_campus: true
 }).merge(z.object({
+    // https://stackoverflow.com/a/42521680/
     image: z.object({
         uri: z.string(),
         name: z.string(),

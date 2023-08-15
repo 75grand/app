@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import { Text, TouchableOpacity, View } from 'react-native';
 import tw from '../../lib/tailwind';
@@ -15,7 +15,12 @@ export default function ListingItem(listing: Listing & { titleLines?: number }) 
 
     function handlePress() {
         // @ts-expect-error
-        navigation.navigate('ListingDetail', { listingId: id, listing });
+        navigation.navigate('MarketplaceTab');
+
+        setTimeout(() => {
+            // @ts-expect-error
+            navigation.navigate('ListingDetail', { listingId: id, listing });
+        });
     }
 
     return (
