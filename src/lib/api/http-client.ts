@@ -4,6 +4,8 @@ import { Platform } from 'react-native';
 import { ZodType, z } from 'zod';
 import { SITE } from '../constants';
 import { $token } from '../user/token-store';
+import { alertWithFeedback } from '../utils';
+import { DateTime } from 'luxon';
 
 export const client = axios.create({
     baseURL: `${SITE}/api/`,
@@ -28,6 +30,8 @@ export async function request<T extends ZodType>(type: T, options: AxiosRequestC
     const name = `${options.method ?? 'GET'} ${options.url}`;
     console.log(name);
 
+    const requestDate = DateTime.now().toISO();
+
     try {
         const response = await client.request(options);
         // return await type.parseAsync(response.data);
@@ -35,11 +39,22 @@ export async function request<T extends ZodType>(type: T, options: AxiosRequestC
 
         if(parseResult.success) return parseResult.data;
         console.error(`Data from ${name} is invalid`);
-        alert(`Data from ${name} is invalid`);
+
+        alertWithFeedback(
+            'Something went wrong',
+            'The server sent back invalid data. If this issue persists, please submit feedback.',
+            `The server returned invalid data for ${name} at ${requestDate}`
+        );
     } catch(error) {
         if(error.response.status !== 404) {
             console.error(`Error with ${name} (${error.response.status})`);
-            alert(`Error with ${name} (${error.response.status})`);
+            
+            alertWithFeedback(
+                error.message || 'Something went wrong',
+                'If this issue persists, please submit feedback.',
+                `The server returned a ${error.response.status} error code for ${name} at ${requestDate}`
+            );
+
             throw error;
         }
     }
