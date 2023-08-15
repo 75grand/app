@@ -22,14 +22,16 @@ export const screenOptions: NativeStackNavigationOptions = {
 
 export default function Feedback() {
     const navigation = useNavigation();
+    
     const params = useRoute().params as any;
+    const initialMessage = params?.message ?? '';
 
     const user = useStore($user);
 
     const { fields, formData, isValid } = useForm(
         z.object({
             email: z.string().email().default(user.email),
-            message: z.string().min(5, 'Please describe your issue').default(params?.message ?? '')
+            message: z.string().min(5, 'Please describe your issue').default(initialMessage)
         })
     );
 
@@ -86,6 +88,7 @@ export default function Feedback() {
                         <Input multiline
                             {...fields.message}
                             placeholder="What’s up?"
+                            autoFocus={!initialMessage}
                         />
                     </InputLabel>
                 </View>
