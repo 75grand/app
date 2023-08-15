@@ -32,8 +32,6 @@ export function useForm<T extends AnyZodObject>(type: T): Form<T> {
 
     const defaults = getDefaults(type);
 
-    console.log('defaults', defaults);
-
     // The raw string values from the form inputs
     const [values, setValues] = useState<StringRecord>(defaults);
 
