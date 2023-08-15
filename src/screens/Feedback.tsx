@@ -3,12 +3,15 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { useMutation } from '@tanstack/react-query';
 import { StatusBar } from 'expo-status-bar';
-import { useLayoutEffect, useState } from 'react';
-import { ActivityIndicator, Alert, ScrollView, View } from 'react-native';
+import { useLayoutEffect } from 'react';
+import { ActivityIndicator, Alert, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { z } from 'zod';
 import Input from '../components/Input';
 import InputLabel from '../components/InputLabel';
 import { postFeedback } from '../lib/api/api';
+import { useForm } from '../lib/hooks/use-form';
 import tw, { color } from '../lib/tailwind';
 import { $user } from '../lib/user/user-store';
 
@@ -21,11 +24,17 @@ export default function Feedback() {
     const navigation = useNavigation();
     const params = useRoute().params as any;
 
-    const [message, setMessage] = useState(params?.message ?? '');
     const user = useStore($user);
 
+    const { fields, formData, isValid } = useForm(
+        z.object({
+            email: z.string().email().default(user.email),
+            message: z.string().min(5, 'Please describe your issue').default(params?.message ?? '')
+        })
+    );
+
     const mutation = useMutation({
-        mutationFn: () => postFeedback(message),
+        mutationFn: () => postFeedback(formData.message, formData.email),
         onSuccess() {
             Alert.alert('Thanks!', 'Your feedback has been sent.');
             navigation.goBack();
@@ -51,38 +60,36 @@ export default function Feedback() {
                             title="Send"
                             buttonStyle={tw('font-semibold')}
                             onPress={() => mutation.mutate()}
-                            disabled={message.length < 5}
-                            style={tw(message.length < 5 && 'opacity-50')}
+                            disabled={!isValid}
+                            style={tw(isValid || 'opacity-50')}
                         />
                     )}
                 </HeaderButtons>
             )
         });
-    }, [mutation, message]);
+    }, [mutation, isValid]);
 
     return (
         <>
             <StatusBar animated style="light"/>
 
-            <ScrollView>
+            <KeyboardAwareScrollView>
                 <View style={tw('p-3 gap-4')}>
-                    <InputLabel text="Email">
+                    <InputLabel required text="Email">
                         <Input
-                            setValue={v => v}
-                            value={user.email}
+                            {...fields.email}
                             editable={false}
                         />
                     </InputLabel>
 
-                    <InputLabel text="Message">
+                    <InputLabel required text="Message">
                         <Input multiline
-                            value={message}
-                            setValue={setMessage}
+                            {...fields.message}
                             placeholder="What’s up?"
                         />
                     </InputLabel>
                 </View>
-            </ScrollView>
+            </KeyboardAwareScrollView>
         </>
     );
 }
