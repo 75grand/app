@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { AnyZodObject, z } from 'zod';
+import { AnyZodObject, ZodDefault, ZodTypeAny, z } from 'zod';
 import { InputProps } from '../../components/Input';
 import { StringRecord } from '../types/utils';
 
@@ -22,7 +22,6 @@ interface Field {
  * Provides unified state managment and validation for forms.
  * Note: If you're using an input for numeric values, be sure to `.coerce` it with Zod.
  * 
- * @todo Support `.default()` values from Zod
  * @todo Automatic coercion of numeric values with Zod?
  * 
  * @returns formData If the form `isValid`, the form data as parsed by Zod. Otherwise, the raw form data from the inputs.
@@ -31,7 +30,9 @@ export function useForm<T extends AnyZodObject>(type: T): Form<T> {
     // Infer TypeScript type from Zod object for type safety
     type FormType = z.infer<T>;
 
-    const defaults = {} as FormType;
+    const defaults = getDefaults(type);
+
+    console.log('defaults', defaults);
 
     // The raw string values from the form inputs
     const [values, setValues] = useState<StringRecord>(defaults);
@@ -71,4 +72,19 @@ export function useForm<T extends AnyZodObject>(type: T): Form<T> {
         reset: () => setValues(defaults),
         clear: () => setValues({})
     }
+}
+
+/**
+ * Get the default values from a Zod type
+ * 
+ * @see https://github.com/colinhacks/zod/discussions/1953#discussioncomment-4811588
+ * @returns An object in the shape of the input object where the values are the default values
+ */
+function getDefaults<T extends AnyZodObject>(type: T): Partial<z.infer<T>> {
+    return Object.fromEntries(
+        Object.entries(type.shape).map(([key, value]) => {
+            if(value instanceof ZodDefault) return [key, value._def.defaultValue()];
+            return [key, undefined];
+        })
+    ) as Partial<z.infer<T>>;
 }
