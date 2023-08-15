@@ -22,7 +22,8 @@
       "supportsTablet": true,
       "config": {
         "usesNonExemptEncryption": false
-      }
+      },
+      "bundleIdentifier": "zone.jero.grand"
     },
     "android": {
       "adaptiveIcon": {
