@@ -7,6 +7,9 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "scheme": "grand",
+    "updates": {
+      "useClassicUpdates": true
+    },
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
