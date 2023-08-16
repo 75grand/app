@@ -36,9 +36,7 @@ export default function Routing() {
             <Stack.Screen name="Login" component={LoginWall.default} options={LoginWall.screenOptions}/>
             <Stack.Screen name="ScanMacPass" component={ScanMacPass.default} options={ScanMacPass.screenOptions}/>
             <Stack.Screen name="Onboarding" component={Onboarding.default} options={Onboarding.screenOptions}/>
-
-            {user !== null &&
-                <Stack.Screen name="Tabs" component={TabRouting} options={{ headerShown: false }}/>}
+            {user !== null && <Stack.Screen name="Tabs" component={TabRouting} options={{ headerShown: false }}/>}
         </Stack.Navigator>
     );
 }

@@ -14,7 +14,7 @@ LogBox.ignoreLogs([
 export function screenOptions({ navigation }): NativeStackNavigationOptions {
     return {
         presentation: 'modal',
-        title: 'Scan MacPass',
+        title: 'Scan Barcode',
         headerLeft: () => (
             <HeaderButtons left>
                 <Item title="Cancel" onPress={navigation.goBack}/>

@@ -3,7 +3,7 @@ import { useStore } from '@nanostores/react';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { useQuery } from '@tanstack/react-query';
-import { LayoutAnimation, ScrollView, TouchableOpacity, View } from 'react-native';
+import { LayoutAnimation, RefreshControl, ScrollView, TouchableOpacity, View } from 'react-native';
 import Card from '../components/Card';
 import HoursItem from '../components/home/HoursItem';
 import { fetchHours } from '../lib/api/api';
@@ -11,6 +11,7 @@ import { BuildingHours } from '../lib/types/building-hours';
 import tw from '../lib/tailwind';
 import { $localSettings } from '../lib/user/settings-store';
 import { getStatus } from '../lib/building-hours';
+import { useTanStackRefresh } from '../lib/hooks/use-tanstack-refresh';
 
 export const screenOptions: NativeStackNavigationOptions = {
     title: 'Campus Hours',
@@ -20,13 +21,24 @@ export const screenOptions: NativeStackNavigationOptions = {
 export default function Hours() {
     const navigation = useNavigation();
 
-    const { data } = useQuery({
+    const { data, refetch, isFetching, isSuccess } = useQuery({
         queryKey: ['hours'],
         queryFn: fetchHours,
         placeholderData: []
     });
 
+    const { fixedRefetch, isRefetching } = useTanStackRefresh(refetch)
+
+    const refreshControl = (
+        <RefreshControl
+            refreshing={isRefetching || isFetching}
+            onRefresh={fixedRefetch}
+        />
+    );
+
     const { favoriteHours } = useStore($localSettings);
+
+    if(!isSuccess) return;
 
     const sortedData = data.sort((a, b) => {
         const aFavorite = favoriteHours.includes(a.name);
@@ -64,7 +76,7 @@ export default function Hours() {
     }
 
     return (
-        <ScrollView contentInsetAdjustmentBehavior="automatic">
+        <ScrollView refreshControl={refreshControl} contentInsetAdjustmentBehavior="automatic">
             <View style={tw('p-3')}>
                 <Card>
                     <View style={tw('gap-3')}>
