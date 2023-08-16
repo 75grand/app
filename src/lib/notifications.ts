@@ -51,9 +51,13 @@ export async function areNotifsGranted(): Promise<boolean> {
  * @see https://github.com/75grand/api/blob/main/app/Http/Controllers/UserController.php
  */
 export async function syncNotifToken() {
-    const projectId = Constants.expoConfig?.extra?.eas?.projectId;
-    const token = await Notifications.getExpoPushTokenAsync({ projectId });
-    await patchUser({ expo_token: token.data });
+    if(await areNotifsGranted()) {
+        const projectId = Constants.expoConfig?.extra?.eas?.projectId;
+        const token = await Notifications.getExpoPushTokenAsync({ projectId });
+        await patchUser({ expo_token: token.data });
+    } else {
+        await patchUser({ expo_token: null });
+    }
 }
 
 /**
