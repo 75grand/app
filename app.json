@@ -39,7 +39,8 @@
           "icon": "./assets/notification-icon.png",
           "color": "#0369A1"
         }
-      ]
+      ],
+      "sentry-expo"
     ],
     "extra": {
       "eas": {
