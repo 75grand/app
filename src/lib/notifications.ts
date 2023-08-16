@@ -4,6 +4,7 @@ import { patchUser } from './api/api';
 import { color } from './tailwind';
 import * as Device from 'expo-device';
 import Constants from 'expo-constants';
+import { $user } from './user/user-store';
 
 /**
  * Set the notification handler
@@ -51,6 +52,8 @@ export async function areNotifsGranted(): Promise<boolean> {
  * @see https://github.com/75grand/api/blob/main/app/Http/Controllers/UserController.php
  */
 export async function syncNotifToken() {
+    if($user.get() === null) return;
+
     if(await areNotifsGranted()) {
         const projectId = Constants.expoConfig?.extra?.eas?.projectId;
         const token = await Notifications.getExpoPushTokenAsync({ projectId });
