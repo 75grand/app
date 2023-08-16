@@ -2,8 +2,8 @@ import * as Sentry from 'sentry-expo';
 
 Sentry.init({
     dsn: 'https://bd1e4216a645640180f9bc5169c65b74@o4505444279975936.ingest.sentry.io/4505713166909440',
-    enableInExpoDevelopment: true,
-    debug: __DEV__
+    enableInExpoDevelopment: false,
+    debug: false
 });
 
 import { NavigationContainer, Theme } from '@react-navigation/native';
