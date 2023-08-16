@@ -1,3 +1,11 @@
+import * as Sentry from 'sentry-expo';
+
+Sentry.init({
+    dsn: 'https://bd1e4216a645640180f9bc5169c65b74@o4505444279975936.ingest.sentry.io/4505713166909440',
+    enableInExpoDevelopment: true,
+    debug: __DEV__
+});
+
 import { NavigationContainer, Theme } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { StatusBar } from 'expo-status-bar';
@@ -6,9 +14,9 @@ import { Platform, UIManager } from 'react-native';
 import 'react-native-url-polyfill/auto';
 import { HeaderButtonsProvider } from 'react-navigation-header-buttons';
 import Routing from './src/Routing';
+import { navigationRef } from './src/lib/navigation-ref';
 import { registerAndroidNotifChannel as registerNotifChannel, setNotifHandler, syncNotifToken } from './src/lib/notifications';
 import { color } from './src/lib/tailwind';
-import { navigationRef } from './src/lib/navigation-ref';
 
 setNotifHandler();
 
@@ -30,7 +38,9 @@ if(Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental)
     UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-export default function App() {
+export default Sentry.Native.wrap(App);
+
+function App() {
     useEffect(() => {
         registerNotifChannel();
         syncNotifToken();
