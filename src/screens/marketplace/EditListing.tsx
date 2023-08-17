@@ -87,7 +87,7 @@ export default function EditListing() {
             type: image.type
         });
     }
-    
+
     useLayoutEffect(() => {
         navigation.setOptions({
             title: isEditing ? 'Edit Listing' : 'Create Listing',

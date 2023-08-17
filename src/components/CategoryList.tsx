@@ -16,7 +16,7 @@ export default function CategoryList({ data, onItemPress, renderText }: Props) {
             data: entry[1]
         }
     });
-    
+
     return (
         <SectionList
             initialNumToRender={30}

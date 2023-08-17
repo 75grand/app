@@ -19,7 +19,7 @@ export const screenOptions: NativeStackNavigationOptions = {
 
 export default function ShowCombination() {
     const navigation = useNavigation();
-    
+
     const maxNumber = 50;
     const stepCount = 5;
 
@@ -27,7 +27,7 @@ export default function ShowCombination() {
     const first = Number(mailboxCombination.slice(0, 2));
     const second = Number(mailboxCombination.slice(2, 4));
     const third = Number(mailboxCombination.slice(4, 6));
-    
+
     const [step, setStep] = useState(-1);
 
     const getRotation = useCallback((step: number) => {
@@ -42,7 +42,7 @@ export default function ShowCombination() {
             3: -(maxNumber*4) -(first) +(maxNumber*2) +(first-second) -(third-second), // Turn left and stop at the third number
             4: -(maxNumber*4) -(first) +(maxNumber*2) +(first-second) -(third-second) // Turn right and pull to open
         }[step] ?? 0;
-    
+
         return number * degPerNum;
     }, [first, second, third]);
 

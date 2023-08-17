@@ -24,7 +24,7 @@ export default function ApproveNotifications() {
         setLoading(false);
         navigation.goBack();
     }
-    
+
     return (
         <>
             <StatusBar animated style="light"/>

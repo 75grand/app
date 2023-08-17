@@ -16,7 +16,7 @@ export function useRerender(interval: number) {
 
         function loop() {
             const alignmentDelay = interval - (Date.now() % interval);
-    
+
             timeout = setTimeout(() => {
                 setCount(i => i+1);
                 loop();

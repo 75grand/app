@@ -19,7 +19,7 @@ export default function Menus() {
 
     const [date, setDate] = useState(DateTime.now());
     const [showPicker, setShowPicker] = useState(false);
-    
+
     const { data: menu, isError, refetch, isFetching } = useQuery<Menu>({
         queryKey: ['menu', date.toSQLDate()],
         queryFn: async () => await fetchMenu(date),
@@ -37,7 +37,7 @@ export default function Menus() {
             headerTitle: () => (
                 <>
                     <Text style={tw('text-[17px] font-semibold')}>Menu for </Text>
-    
+
                     <TouchableOpacity style={tw('flex flex-row items-center gap-0.5')} onPress={() => setShowPicker(true)}>
                         <Text style={tw('text-accent text-[17px] font-semibold')}>{date.toLocaleString(DateTime.DATE_FULL)}</Text>
                         <Ionicons size={16} color={color('accent')} name="chevron-down"/>

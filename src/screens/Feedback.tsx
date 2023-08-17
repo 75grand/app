@@ -22,7 +22,7 @@ export const screenOptions: NativeStackNavigationOptions = {
 
 export default function Feedback() {
     const navigation = useNavigation();
-    
+
     const params = useRoute().params as any;
     const initialMessage = params?.message ?? '';
 

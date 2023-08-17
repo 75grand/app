@@ -53,7 +53,7 @@ export function alertWithFeedback(alertTitle: string, alertMessage: string, feed
 
 export function objectToFormData(object: object): FormData {
     const formData = new FormData();
-    
+
     for(const key in object) {
         const value = object[key];
         formData.append(key, value);
