@@ -9,8 +9,6 @@ import Button from '../Button';
 import InputLabel from '../InputLabel';
 
 export default function ReferralCode({ referral_code, referrals_count, referrals_per_prize }: User) {
-    referrals_count=5;
-
     async function shareReferral() {
         await Share.share({
             // url: 'https://www.75grand.net',
