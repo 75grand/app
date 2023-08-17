@@ -37,8 +37,8 @@ export async function request<T extends ZodType>(type: T, options: AxiosRequestC
         // return await type.parseAsync(response.data);
         const parseResult = await type.safeParseAsync(response.data);
 
-        if(parseResult.success) return parseResult.data;
-        console.error(`Data from ${name} is invalid`);
+        if(parseResult.success === true) return parseResult.data;
+        console.error(`Data from ${name} is invalid`, parseResult.error);
 
         alertWithFeedback(
             'It’s not you, it’s us',
