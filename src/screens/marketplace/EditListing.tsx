@@ -50,7 +50,7 @@ export default function EditListing() {
     const { fields, isValid, formData } = useForm(
         isEditing
             ? mergeDefaultsForInput(EditableListingFields, listing)
-            : NewListingFields
+            : mergeDefaultsForInput(NewListingFields, { miles_from_campus: 0 })
     );
 
     const listingMutation = useMutation({
