@@ -23,7 +23,7 @@ export default function ReferralCode({ referral_code, referrals_count, referrals
                 <ProgressCircle value={referrals_count} max={referrals_per_prize}/>
 
                 <View style={tw('shrink gap-1')}>
-                    <TouchableOpacity onPress={shareReferral} style={tw('-mt-1.5')}>
+                    <TouchableOpacity onPress={shareReferral} style={tw('-mt-1.5 self-start')}>
                         <View style={tw('flex-row gap-2 items-center')}>
                             <Text selectable style={tw('leading-none text-base mt-1', { fontFamily: monospace })}>
                                 {referral_code}
