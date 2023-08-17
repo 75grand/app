@@ -47,8 +47,8 @@ export default function ReferralCode({ referral_code, referrals_count, referrals
 
                                     Linking.openURL(
                                         Platform.select({
-                                            android: `sms:15109444641?body=${message}`,
-                                            ios: `sms:15109444641&body=${message}`
+                                            android: `sms:+15109444641?body=${message}`,
+                                            ios: `sms:+15109444641&body=${message}`
                                         })
                                     );
                                 }}
