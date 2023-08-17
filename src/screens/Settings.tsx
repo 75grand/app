@@ -1,11 +1,10 @@
-import { Ionicons } from '@expo/vector-icons';
 import { useStore } from '@nanostores/react';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { useMutation } from '@tanstack/react-query';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useLayoutEffect } from 'react';
-import { ActivityIndicator, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Masks } from 'react-native-mask-input';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -15,6 +14,7 @@ import Card from '../components/Card';
 import Grid from '../components/Grid';
 import Input from '../components/Input';
 import InputLabel from '../components/InputLabel';
+import MacPassInput from '../components/macpass/MacPassInput';
 import Profile from '../components/settings/Profile';
 import ReferralCode from '../components/settings/ReferralCode';
 import { patchUser } from '../lib/api/api';
@@ -117,21 +117,7 @@ export default function Settings() {
                         </InputLabel>
 
                         <InputLabel text="MacPass Number">
-                            <Input
-                                {...fields.macPass}
-                                placeholder="Scan or enter manually"
-                                maxLength={9}
-                                inputMode="numeric"
-                                returnKeyType="done"
-                            />
-
-                            <TouchableOpacity
-                                style={tw('absolute px-3 right-0 top-1.75')}
-                                // @ts-expect-error
-                                onPress={() => navigation.navigate('ScanMacPass', { setMacPass: fields.macPass.setValue })}
-                            >
-                                <Ionicons name="camera" size={22} color={color('accent')}/>
-                            </TouchableOpacity>
+                            <MacPassInput {...fields.macPass}/>
                         </InputLabel>
 
                         <Grid columns={2}>
