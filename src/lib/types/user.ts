@@ -6,7 +6,7 @@ export const User = z.object({
     id: z.number(),
     name: z.string(),
     email: z.string().email(),
-    phone: z.string().length(10).nullable(),
+    phone: z.string().length(10, 'Must be a valid phone number').nullable(),
     avatar: z.string().url(),
     referral_code: z.string(),
     referrals_count: z.number(),

@@ -4,9 +4,12 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { useMutation } from '@tanstack/react-query';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { ActivityIndicator, TouchableOpacity, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Masks } from 'react-native-mask-input';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { z } from 'zod';
 import Button from '../components/Button';
 import Card from '../components/Card';
 import Grid from '../components/Grid';
@@ -16,11 +19,11 @@ import Profile from '../components/settings/Profile';
 import ReferralCode from '../components/settings/ReferralCode';
 import { patchUser } from '../lib/api/api';
 import { logout, refreshUser } from '../lib/api/login';
+import { useForm } from '../lib/hooks/use-form';
 import tw, { color } from '../lib/tailwind';
+import { User } from '../lib/types/user';
 import { $localSettings } from '../lib/user/settings-store';
 import { $user } from '../lib/user/user-store';
-import { Masks } from 'react-native-mask-input';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export const screenOptions: NativeStackNavigationOptions = {
     presentation: 'modal',
@@ -32,26 +35,30 @@ export default function Settings() {
     const navigation = useNavigation();
 
     const user = useStore($user);
-    const [phone, setPhone] = useState(user.phone ?? '');
+    const settings = useStore($localSettings);
 
     const mutation = useMutation({
-        mutationFn: () => patchUser({ phone }),
+        mutationFn: (phone: string) => patchUser({ phone }),
         onSuccess: user => $user.set(user)
     });
 
-    const settings = useStore($localSettings);
-    const [mailboxNumber, setMailboxNumber] = useState(settings.mailboxNumber);
-    const [mailboxCombination, setMailboxCombination] = useState(settings.mailboxCombination);
-    const [macPass, setMacPass] = useState(settings.macPass);
+    const { fields, isValid, formData } = useForm(
+        z.object({
+            phone: User.shape.phone.optional().default(user.phone),
+            macPass: z.string().length(9, 'Must be a valid MacPass number').regex(/^\d*$/).optional().default(settings.macPass),
+            mailboxNumber: z.string().optional().default(settings.mailboxNumber),
+            mailboxCombination: z.string().regex(/^[0-4][0-9][0-4][0-9][0-4][0-9]$/, 'Must be valid').optional().default(settings.mailboxCombination)
+        })
+    );
 
     useEffect(() => { refreshUser() }, []);
 
     async function saveSettings() {
-        $localSettings.setKey('macPass', macPass);
-        $localSettings.setKey('mailboxNumber', mailboxNumber);
-        $localSettings.setKey('mailboxCombination', mailboxCombination);
+        $localSettings.setKey('macPass', formData.macPass);
+        $localSettings.setKey('mailboxNumber', formData.mailboxNumber);
+        $localSettings.setKey('mailboxCombination', formData.mailboxCombination);
 
-        await mutation.mutateAsync();
+        await mutation.mutateAsync(formData.phone);
 
         navigation.goBack();
     }
@@ -75,12 +82,14 @@ export default function Settings() {
                             title="Save"
                             buttonStyle={tw('font-semibold')}
                             onPress={saveSettings}
+                            disabled={!isValid}
+                            style={tw(isValid || 'opacity-50')}
                         />
                     )}
                 </HeaderButtons>
             )
         });
-    }, [saveSettings, mutation.isLoading]);
+    }, [saveSettings, mutation.isLoading, isValid]);
 
     return (
         <>
@@ -99,9 +108,8 @@ export default function Settings() {
                     <Card style={tw('gap-4')}>
                         <InputLabel text="Phone Number">
                             <Input
+                                {...fields.phone}
                                 mask={Masks.USA_PHONE}
-                                value={phone}
-                                setValue={setPhone}
                                 placeholder="(651) 696-6000"
                                 maxLength={14}
                                 inputMode="numeric"
@@ -110,18 +118,17 @@ export default function Settings() {
 
                         <InputLabel text="MacPass Number">
                             <Input
+                                {...fields.macPass}
                                 placeholder="Scan or enter manually"
                                 maxLength={9}
                                 inputMode="numeric"
                                 returnKeyType="done"
-                                value={macPass}
-                                setValue={setMacPass}
                             />
 
                             <TouchableOpacity
                                 style={tw('absolute px-3 right-0 top-1.75')}
                                 // @ts-expect-error
-                                onPress={() => navigation.navigate('ScanMacPass', { setMacPass })}
+                                onPress={() => navigation.navigate('ScanMacPass', { setMacPass: fields.macPass.setValue })}
                             >
                                 <Ionicons name="camera" size={22} color={color('accent')}/>
                             </TouchableOpacity>
@@ -130,24 +137,22 @@ export default function Settings() {
                         <Grid columns={2}>
                             <InputLabel text="Mailbox Number">
                                 <Input
+                                    {...fields.mailboxNumber}
                                     placeholder="1605"
                                     maxLength={4}
                                     inputMode="numeric"
                                     returnKeyType="done"
-                                    value={mailboxNumber}
-                                    setValue={setMailboxNumber}
                                 />
                             </InputLabel>
 
                             <InputLabel text="Mailbox Combination">
                                 <Input
+                                    {...fields.mailboxCombination}
                                     mask={[/[0-4]/, /\d/, '-', /[0-4]/, /\d/, '-', /[0-4]/, /\d/]}
                                     placeholder="33-05-27"
                                     maxLength={8}
                                     inputMode="decimal"
                                     returnKeyType="done"
-                                    value={mailboxCombination}
-                                    setValue={setMailboxCombination}
                                 />
                             </InputLabel>
                         </Grid>
