@@ -41,7 +41,7 @@ export async function request<T extends ZodType>(type: T, options: AxiosRequestC
         console.error(`Data from ${name} is invalid`);
 
         alertWithFeedback(
-            'Something went wrong',
+            'It’s not you, it’s us',
             'The server sent back invalid data. If this issue persists, please submit feedback.',
             `The server returned invalid data for ${name} at ${requestDate}`
         );
@@ -50,7 +50,7 @@ export async function request<T extends ZodType>(type: T, options: AxiosRequestC
             console.error(`Error with ${name} (${error.response.status})`);
             
             alertWithFeedback(
-                error.message || 'Something went wrong',
+                error.message || 'It’s not you, it’s us',
                 'If this issue persists, please submit feedback.',
                 `The server returned a ${error.response.status} error code for ${name} at ${requestDate}`
             );

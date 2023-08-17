@@ -1,14 +1,15 @@
 import { Ionicons } from '@expo/vector-icons';
 import { motifySvg } from 'moti/svg';
-import { Share, Text, TouchableOpacity, View } from 'react-native';
-import { Circle, Svg, Text as SvgText } from 'react-native-svg';
-import { User } from '../../lib/types/user';
-import tw, { color, monospace } from '../../lib/tailwind';
-import InputLabel from '../InputLabel';
 import { toWords } from 'number-to-words';
+import { Linking, Platform, Share, Text, TouchableOpacity, View } from 'react-native';
+import { Circle, Svg, Text as SvgText } from 'react-native-svg';
+import tw, { color, monospace } from '../../lib/tailwind';
+import { User } from '../../lib/types/user';
+import Button from '../Button';
+import InputLabel from '../InputLabel';
 
 export default function ReferralCode({ referral_code, referrals_count, referrals_per_prize }: User) {
-    const numberLeft = Math.max(referrals_per_prize - referrals_count ?? 0, 0);
+    referrals_count=5;
 
     async function shareReferral() {
         await Share.share({
@@ -22,8 +23,8 @@ export default function ReferralCode({ referral_code, referrals_count, referrals
             <View style={tw('flex-row gap-3')}>
                 <ProgressCircle value={referrals_count} max={referrals_per_prize}/>
 
-                <View style={tw('shrink gap-1')}>
-                    <TouchableOpacity onPress={shareReferral} style={tw('-mt-1.5 self-start')}>
+                <View style={tw('shrink gap-3')}>
+                    <TouchableOpacity onPress={shareReferral} style={tw('self-start -mb-1.5 -mt-0.5')}>
                         <View style={tw('flex-row gap-2 items-center')}>
                             <Text selectable style={tw('leading-none text-base mt-1', { fontFamily: monospace })}>
                                 {referral_code}
@@ -34,9 +35,28 @@ export default function ReferralCode({ referral_code, referrals_count, referrals
                     </TouchableOpacity>
 
                     <Text>
-                        Refer just {toWords(numberLeft)} people for
+                        Refer just {toWords(referrals_per_prize)} people for
                         a free drink from Sencha, Simplicitea, or Dunn Bros!
                     </Text>
+
+                    {
+                        referrals_count >= referrals_per_prize && (
+                            <Button
+                                text="Redeem Free Drink!"
+                                onPress={() => {
+                                    const message =
+                                        encodeURIComponent(`Hey! I’ve referred ${referrals_per_prize} people and would like a drink from`);
+
+                                    Linking.openURL(
+                                        Platform.select({
+                                            android: `sms:15109444641?body=${message}`,
+                                            ios: `sms:15109444641&body=${message}`
+                                        })
+                                    );
+                                }}
+                            />
+                        )
+                    }
                 </View>
             </View>
         </InputLabel>
@@ -55,7 +75,7 @@ function ProgressCircle({ value, max }: { value: number, max: number }) {
     const MotiCircle = motifySvg(Circle)();
 
     return (
-        <View style={{ aspectRatio: 1/1 }}>
+        <View style={tw('w-14', { aspectRatio: 1/1 })}>
             <Svg viewBox={`0 0 ${scale} ${scale}`} height="100%" width="100%">
                 <SvgText
                     textAnchor="middle"
