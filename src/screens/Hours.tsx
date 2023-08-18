@@ -10,7 +10,6 @@ import { fetchHours } from '../lib/api/api';
 import { BuildingHours } from '../lib/types/building-hours';
 import tw from '../lib/tailwind';
 import { $localSettings } from '../lib/user/settings-store';
-import { getStatus } from '../lib/building-hours';
 import { useTanStackRefresh } from '../lib/hooks/use-tanstack-refresh';
 
 export const screenOptions: NativeStackNavigationOptions = {
@@ -31,7 +30,7 @@ export default function Hours() {
 
     const refreshControl = (
         <RefreshControl
-            refreshing={isRefetching || isFetching}
+            refreshing={isRefetching}
             onRefresh={fixedRefetch}
         />
     );
