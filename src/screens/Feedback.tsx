@@ -31,7 +31,7 @@ export default function Feedback() {
     const { fields, formData, isValid } = useForm(
         z.object({
             email: z.string().email().default(user.email),
-            message: z.string().min(5, 'Please describe your issue').default(initialMessage)
+            message: z.string().default(initialMessage)
         })
     );
 
