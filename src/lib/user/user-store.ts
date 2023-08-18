@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { map } from 'nanostores';
 import { User } from '../types/user';
 import { refreshUser } from '../api/login';
+import * as Sentry from 'sentry-expo';
 
 export const $user = map<User>(null);
 
@@ -29,14 +30,14 @@ $user.listen(async user => {
 });
 
 // Tell Sentry when the user changes
-// $user.subscribe(async user => {
-//     if(user === null) {
-//         Sentry.setUser(null);
-//     } else {
-//         Sentry.setUser({
-//             id: user.id.toString(),
-//             username: user.name,
-//             email: user.email
-//         });
-//     }
-// });
+$user.subscribe(async user => {
+    if(user === null) {
+        Sentry.Native.setUser(null);
+    } else {
+        Sentry.Native.setUser({
+            id: user.id.toString(),
+            username: user.name,
+            email: user.email
+        });
+    }
+});
