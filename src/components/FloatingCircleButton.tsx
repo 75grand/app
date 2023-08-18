@@ -10,7 +10,7 @@ interface Props {
 export default function FloatingCircleButton({ icon, onPress }: Props) {
     return (
         <TouchableOpacity style={tw(
-            'bg-accent rounded-full p-3',
+            'bg-accent rounded-full p-4',
             'absolute z-1 bottom-3 right-3',
             'shadow-lg', { shadowOpacity: 0.25 }
         )} onPress={onPress}>
