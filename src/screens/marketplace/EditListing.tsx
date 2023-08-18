@@ -140,7 +140,7 @@ export default function EditListing() {
                                 <PillRadioInput
                                     options={['Available', 'Unavailable']}
                                     // @ts-expect-error
-                                    value={fields.available.value ? 'Available': 'Unavailable'}
+                                    value={fields.available.value === 'true' ? 'Available': 'Unavailable'}
                                     // @ts-expect-error
                                     setValue={value => fields.available.setValue(value === 'Available')}
                                 />
