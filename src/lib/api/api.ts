@@ -34,7 +34,7 @@ export const fetchListings = async () =>
 export const fetchListing = async (id: Id) =>
     await request(Listing, { url: `listings/${id}` });
 export const patchListing = async (id: Id, data: EditableListingFields) =>
-    await request(Listing.array(), { method: 'PATCH', url: `listings/${id}`, data });
+    await request(Listing, { method: 'PATCH', url: `listings/${id}`, data });
 export const postListing = async (data: NewListingFields) =>
     await request(Listing, { method: 'POST', url: 'listings', data: objectToFormData(data) });
 
