@@ -1,5 +1,6 @@
 import { isDevice } from 'expo-device';
 import * as ImagePicker from 'expo-image-picker';
+import { ActionResize, manipulateAsync } from 'expo-image-manipulator';
 
 /**
  * Display a camera for the user to take a picture
@@ -40,4 +41,16 @@ export async function pickPhoto(options: ImagePicker.ImagePickerOptions = {}) {
     });
 
     return result.assets ? result.assets[0] : null;
+}
+
+export async function resizeImage(image: ImagePicker.ImagePickerAsset, longestSide = 1000) {
+    const dimensions: ActionResize['resize'] = {
+        [image.width > image.height ? 'width' : 'height']: longestSide
+    }
+
+    return await manipulateAsync(
+        image.uri,
+        [{ resize: dimensions }],
+        { compress: 0.5 }
+    );
 }

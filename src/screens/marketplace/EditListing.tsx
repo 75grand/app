@@ -16,7 +16,7 @@ import Input from '../../components/Input';
 import InputLabel from '../../components/InputLabel';
 import PillRadioInput from '../../components/PillRadioInput';
 import { patchListing, patchUser, postListing } from '../../lib/api/api';
-import { takePhoto } from '../../lib/camera-utils';
+import { resizeImage, takePhoto } from '../../lib/camera-utils';
 import { useForm } from '../../lib/hooks/use-form';
 import { formatDistance } from '../../lib/marketplace-utils';
 import tw, { color } from '../../lib/tailwind';
@@ -82,7 +82,7 @@ export default function EditListing() {
 
         // @ts-expect-error
         fields.image.setValue({
-            uri: image.uri,
+            uri: (await resizeImage(image)).uri,
             name: image.fileName || 'image.jpg',
             type: image.type
         });
