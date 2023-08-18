@@ -44,16 +44,18 @@ export default function Calendar() {
                 />
             </SafeAreaView>
 
-            {filteredEvents.length === 0 && !isFetching &&
-                <EmptyState title="No Events Found" subtitle={filter && 'Try another filter'} icon="calendar"/>}
-
             <FlashList
-                refreshing={isRefetching || isFetching}
+                refreshing={isRefetching}
                 onRefresh={fixedRefetch}
                 data={days}
                 keyExtractor={item => item.date.toString()}
                 renderItem={item => <CalendarDay {...item.item} index={item.index}/>}
                 estimatedItemSize={225}
+                ListEmptyComponent={!isFetching && <EmptyState
+                    icon="calendar"
+                    title="No Events Found"
+                    subtitle="Try another filter"
+                />}
             />
         </>
     );
