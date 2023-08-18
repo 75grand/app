@@ -1,11 +1,10 @@
-import { Ionicons } from '@expo/vector-icons';
 import { useStore } from '@nanostores/react';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { useMutation } from '@tanstack/react-query';
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, Text, View } from 'react-native';
 import Button from '../components/Button';
 import Card from '../components/Card';
 import Grid from '../components/Grid';
@@ -13,9 +12,10 @@ import Input from '../components/Input';
 import InputLabel from '../components/InputLabel';
 import Logo from '../components/Logo';
 import PillRadioInput from '../components/PillRadioInput';
+import MacPassInput from '../components/macpass/MacPassInput';
 import { patchUser } from '../lib/api/api';
+import tw from '../lib/tailwind';
 import { User } from '../lib/types/user';
-import tw, { color } from '../lib/tailwind';
 import { $localSettings } from '../lib/user/settings-store';
 import { $user } from '../lib/user/user-store';
 
@@ -132,22 +132,10 @@ export default function Onboarding() {
         
                 <Card style={tw('gap-3')}>
                     <InputLabel text="MacPass Number">
-                        <Input
-                            placeholder="Scan or enter manually"
-                            maxLength={9}
-                            inputMode="numeric"
-                            returnKeyType="done"
+                        <MacPassInput
                             value={settings.macPass}
                             setValue={value => $localSettings.setKey('macPass', value)}
                         />
-        
-                        <TouchableOpacity
-                            style={tw('absolute px-3 right-0 top-1.75')}
-                            // @ts-expect-error
-                            onPress={() => navigation.navigate('ScanMacPass', { setMacPass })}
-                        >
-                            <Ionicons name="camera" size={22} color={color('accent')}/>
-                        </TouchableOpacity>
                     </InputLabel>
         
                     {position === 'student' && <Grid columns={2}>
