@@ -83,7 +83,7 @@ export default function EditListing() {
         // @ts-expect-error
         fields.image.setValue({
             uri: image.uri,
-            name: image.fileName,
+            name: image.fileName || 'image.jpg',
             type: image.type
         });
     }
