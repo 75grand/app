@@ -2,8 +2,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import tw, { color } from '../../lib/tailwind';
 import Input, { InputProps } from '../Input';
+import { useNavigation } from '@react-navigation/native';
 
 export default function MacPassInput(props: InputProps) {
+    const navigation = useNavigation();
+
     return (
         <>
             <Input
