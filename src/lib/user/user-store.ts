@@ -1,14 +1,25 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { map } from 'nanostores';
 import { User } from '../types/user';
+import { refreshUser } from '../api/login';
 
 export const $user = map<User>(null);
 
 // Load currently saved user
 (async () => {
     const json = await AsyncStorage.getItem('user');
-    const parsedUser: User = json === null ? null : JSON.parse(json);
-    $user.set(parsedUser);
+    if(json === null) return;
+    
+    const parsedJson = JSON.parse(json);
+    if(parsedJson === null) return;
+
+    const parsedUser = await User.safeParseAsync(parsedJson);
+
+    if(parsedUser.success === true) {
+        $user.set(parsedUser.data);
+    } else {
+        await refreshUser();
+    }
 })();
 
 // Save the user when it changes

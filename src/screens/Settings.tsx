@@ -24,6 +24,7 @@ import tw, { color } from '../lib/tailwind';
 import { User } from '../lib/types/user';
 import { $localSettings } from '../lib/user/settings-store';
 import { $user } from '../lib/user/user-store';
+import * as StoreReview from 'expo-store-review';
 
 export const screenOptions: NativeStackNavigationOptions = {
     presentation: 'modal',
@@ -145,7 +146,13 @@ export default function Settings() {
                     </Card>
 
                     <Button
-                        text="Logout & Delete Local Data"
+                        text="Leave a Review for 75grand"
+                        color="faint"
+                        onPress={StoreReview.requestReview}
+                    />
+
+                    <Button
+                        text="Log Out & Delete Local Data"
                         color="faint-red"
                         onPress={logout}
                     />

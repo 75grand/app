@@ -8,6 +8,7 @@ import HoursCard from '../components/home/HoursCard';
 import QuickAccess from '../components/home/QuickAccess';
 import tw from '../lib/tailwind';
 import RedditCard from '../components/home/RedditCard';
+import RatingPrompt from '../components/home/RatingPrompt';
 
 export const screenOptions: NativeStackNavigationOptions = {
     headerLeft: () => <Logo/>,
@@ -23,6 +24,8 @@ export default function Home() {
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={tw('py-3 gap-3')}>
                     <QuickAccess/>
+
+                    <RatingPrompt/>
 
                     <HoursCard/>
 

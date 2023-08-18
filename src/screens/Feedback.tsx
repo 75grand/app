@@ -87,7 +87,7 @@ export default function Feedback() {
                     <InputLabel required text="Message">
                         <Input multiline
                             {...fields.message}
-                            placeholder="What’s up?"
+                            placeholder="How can we do better?"
                             autoFocus={!initialMessage}
                         />
                     </InputLabel>
