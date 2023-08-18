@@ -7,7 +7,7 @@ import Button from '../components/Button';
 import AnimatedLogoIcon from '../components/login/AnimatedLogoIcon';
 import { login } from '../lib/api/login';
 import tw from '../lib/tailwind';
-import { useNavigation } from '@react-navigation/native';
+import { StackActions, useNavigation } from '@react-navigation/native';
 
 export const screenOptions: NativeStackNavigationOptions = {
     headerShown: false,
@@ -24,8 +24,11 @@ export default function LoginWall() {
         const created = await login(referralCode);
         setLoginLoading(false);
 
-        // @ts-expect-error
-        navigation.navigate(created ? 'Onboarding' : 'Tabs');
+        navigation.dispatch(
+            StackActions.replace(
+                created ? 'Onboarding' : 'Tabs'
+            )
+        );
     }
 
     async function handleReferralPress() {
