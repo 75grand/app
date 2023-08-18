@@ -45,7 +45,7 @@ function TabRouting() {
     return (
         <Tabs.Navigator screenOptions={{
             headerShown: false,
-            tabBarShowLabel: false,
+            tabBarShowLabel: true,
             tabBarStyle: tw('border-t border-t-black/10')
         }} initialRouteName="HomeTab">
             <Tabs.Screen
