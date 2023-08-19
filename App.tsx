@@ -8,17 +8,16 @@ Sentry.init({
 
 import { NavigationContainer, Theme } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import { Platform, UIManager } from 'react-native';
 import 'react-native-url-polyfill/auto';
 import { HeaderButtonsProvider } from 'react-navigation-header-buttons';
 import Routing from './src/Routing';
 import { navigationRef } from './src/lib/navigation-ref';
-import { registerAndroidNotifChannel as registerNotifChannel, setNotifHandler, syncNotifToken } from './src/lib/notifications';
 import { color } from './src/lib/tailwind';
-
-setNotifHandler();
+import { useEffect, useState } from 'react';
+import { boot } from './src/lib/boot';
+import { Text, View } from 'react-native';
 
 const theme: Theme = {
     dark: false,
@@ -34,17 +33,20 @@ const theme: Theme = {
 
 const queryClient = new QueryClient();
 
-if(Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
-    UIManager.setLayoutAnimationEnabledExperimental(true);
-}
+SplashScreen.preventAutoHideAsync();
 
-export default Sentry.Native.wrap(App);
+export default Sentry.Native.wrap(() => {
+    const [isReady, setIsReady] = useState(false);
 
-function App() {
     useEffect(() => {
-        registerNotifChannel();
-        syncNotifToken();
+        (async () => {
+            await boot();
+            setIsReady(true);
+            setTimeout(SplashScreen.hideAsync);
+        })();
     }, []);
+
+    if(!isReady) return;
 
     return (
         <>
@@ -59,4 +61,4 @@ function App() {
             </QueryClientProvider>
         </>
     );
-}
+});

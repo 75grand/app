@@ -1,13 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { map } from 'nanostores';
 import { User } from '../types/user';
-import { refreshUser } from '../api/login';
 import * as Sentry from 'sentry-expo';
+import { fetchUser } from '../api/api';
 
 export const $user = map<User>(null);
 
 // Load currently saved user
-(async () => {
+export async function loadUserFromDisk() {
     const json = await AsyncStorage.getItem('user');
     if(json === null) return;
     
@@ -19,9 +19,9 @@ export const $user = map<User>(null);
     if(parsedUser.success === true) {
         $user.set(parsedUser.data);
     } else {
-        await refreshUser();
+        $user.set(await fetchUser());
     }
-})();
+}
 
 // Save the user when it changes
 $user.listen(async user => {

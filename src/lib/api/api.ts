@@ -7,6 +7,7 @@ import { EditableUserFields, User } from '../types/user';
 import { request } from './http-client';
 import { z } from 'zod';
 import { objectToFormData } from '../utils';
+import { $user } from '../user/user-store';
 
 type Id = string|number;
 

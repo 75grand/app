@@ -4,10 +4,10 @@ import * as SecureStore from 'expo-secure-store';
 export const $token = atom<string>(null);
 
 // Load saved token
-(async () => {
+export async function loadTokenFromDisk() {
     const token = await SecureStore.getItemAsync('token');
     $token.set(token);
-})();
+}
 
 // Save the token when it changes
 $token.listen(async token => {

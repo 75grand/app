@@ -21,7 +21,7 @@ export default function AvatarButton() {
 
             <TouchableOpacity // @ts-expect-error Haven't configured React Navigation typing yet
                 onPress={() => navigation.navigate('Settings')}>
-                <Image style={tw('w-8 h-8 rounded-lg')} source={user.avatar}/>
+                <Image style={tw('w-8 h-8 rounded-lg bg-gray-100')} source={user.avatar}/>
             </TouchableOpacity>
         </View>
     );

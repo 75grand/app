@@ -12,7 +12,7 @@ export const DEFAULT_SETTINGS = {
 
 export const $localSettings = map<typeof DEFAULT_SETTINGS>();
 
-(async () => {
+export async function loadSettingsFromDisk() {
     const json = await AsyncStorage.getItem('settings');
     const parsedSettings = json === null ? {} : JSON.parse(json);
 
@@ -20,7 +20,7 @@ export const $localSettings = map<typeof DEFAULT_SETTINGS>();
         ...DEFAULT_SETTINGS,
         ...parsedSettings
     });
-})();
+}
 
 $localSettings.listen(async settings => {
     const json = JSON.stringify(settings);

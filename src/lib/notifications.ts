@@ -1,9 +1,9 @@
+import Constants from 'expo-constants';
+import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { Linking, Platform } from 'react-native';
 import { patchUser } from './api/api';
 import { color } from './tailwind';
-import * as Device from 'expo-device';
-import Constants from 'expo-constants';
 import { $user } from './user/user-store';
 
 /**
@@ -54,12 +54,16 @@ export async function areNotifsGranted(): Promise<boolean> {
 export async function syncNotifToken() {
     if($user.get() === null) return;
 
-    if(await areNotifsGranted()) {
-        const projectId = Constants.expoConfig?.extra?.eas?.projectId;
-        const token = await Notifications.getExpoPushTokenAsync({ projectId });
-        await patchUser({ expo_token: token.data });
-    } else {
-        await patchUser({ expo_token: null });
+    try {
+        if(await areNotifsGranted()) {
+            const projectId = Constants.expoConfig?.extra?.eas?.projectId;
+            const token = await Notifications.getExpoPushTokenAsync({ projectId });
+            await patchUser({ expo_token: token.data });
+        } else {
+            await patchUser({ expo_token: null });
+        }
+    } catch(error) {
+        console.error('Error syncing notification token', error);
     }
 }
 

@@ -17,8 +17,8 @@ import InputLabel from '../components/InputLabel';
 import MacPassInput from '../components/macpass/MacPassInput';
 import Profile from '../components/settings/Profile';
 import ReferralCode from '../components/settings/ReferralCode';
-import { patchUser } from '../lib/api/api';
-import { logout, refreshUser } from '../lib/api/login';
+import { fetchUser, patchUser } from '../lib/api/api';
+import { logout } from '../lib/api/login';
 import { useForm } from '../lib/hooks/use-form';
 import tw, { color } from '../lib/tailwind';
 import { User } from '../lib/types/user';
@@ -52,7 +52,7 @@ export default function Settings() {
         })
     );
 
-    useEffect(() => { refreshUser() }, []);
+    useEffect(() => { fetchUser().then($user.set) }, []);
 
     async function saveSettings() {
         $localSettings.setKey('macPass', formData.macPass);
