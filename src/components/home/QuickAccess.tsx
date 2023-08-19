@@ -51,11 +51,11 @@ export default function QuickAccess() {
         name: item[0] as string,
         icon: item[1] as any,
         action: item[2] as () => void
-    })).sort((a, b) => {
+    }))/* .sort((a, b) => {
         const aUses = mostUsedActions[a.name] ?? 0;
         const bUses = mostUsedActions[b.name] ?? 0;
         return bUses - aUses;
-    }), [mostUsedActions]);
+    }) */, [mostUsedActions]);
 
     const rows = [
         items.slice(0, Math.ceil(items.length/2)),
