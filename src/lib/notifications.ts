@@ -5,6 +5,7 @@ import { Linking, Platform } from 'react-native';
 import { patchUser } from './api/api';
 import { color } from './tailwind';
 import { $user } from './user/user-store';
+import { isLoggedIn } from './api/login';
 
 /**
  * Set the notification handler
@@ -52,7 +53,7 @@ export async function areNotifsGranted(): Promise<boolean> {
  * @see https://github.com/75grand/api/blob/main/app/Http/Controllers/UserController.php
  */
 export async function syncNotifToken() {
-    if($user.get() === null) return;
+    if(!isLoggedIn()) return;
 
     try {
         if(await areNotifsGranted()) {

@@ -9,10 +9,14 @@ import { StringRecord } from '../types/utils';
 import { request } from './http-client';
 import { z } from 'zod';
 
-export async function logout() {
+export function logout() {
     $token.set(null);
     $user.set(null);
     $localSettings.set(DEFAULT_SETTINGS);
+}
+
+export function isLoggedIn() {
+    return $token.get() !== null && $user.get() !== null;
 }
 
 /**

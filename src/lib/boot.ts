@@ -5,7 +5,7 @@ import { $user, loadUserFromDisk } from './user/user-store';
 import { loadSettingsFromDisk } from './user/settings-store';
 import { fetchUser } from './api/api';
 import { HttpStatusCode } from 'axios';
-import { logout } from './api/login';
+import { isLoggedIn, logout } from './api/login';
 
 /**
  * Code that should run before the app loads. The splash screen will
@@ -16,12 +16,14 @@ export async function boot(): Promise<true> {
     await loadUserFromDisk();
     await loadSettingsFromDisk();
 
-    try {
-        const user = await fetchUser();
-        $user.set(user);
-    } catch(error) {
-        if(error.response?.status === HttpStatusCode.Unauthorized) {
-            await logout();
+    if(isLoggedIn()) {
+        try {
+            const user = await fetchUser();
+            $user.set(user);
+        } catch(error) {
+            if(error.response?.status === HttpStatusCode.Unauthorized) {
+                logout();
+            }
         }
     }
 
