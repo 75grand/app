@@ -6,7 +6,7 @@ export type Listing = z.infer<typeof Listing>;
 export const Listing = z.object({
     id: z.number(),
     title: z.string(),
-    description: z.string().nullable(),
+    description: z.string(),
     image_url: z.string().url(),
     price: z.coerce.number().lte(1000, 'Price must be less than or equal to $1,000'),
     available: z.coerce.boolean(),
