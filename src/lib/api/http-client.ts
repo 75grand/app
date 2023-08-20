@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig, HttpStatusCode } from 'axios';
 import Constants from 'expo-constants';
 import { Platform } from 'react-native';
 import { ZodType, z } from 'zod';
@@ -46,7 +46,7 @@ export async function request<T extends ZodType>(type: T, options: AxiosRequestC
             `The server returned invalid data for ${name} at ${requestDate}`
         );
     } catch(error) {
-        if(error.response.status !== 404) {
+        if(error.response.status !== HttpStatusCode.NotFound) {
             console.error(`Error with ${name} (${error.response.status})`);
             
             alertWithFeedback(
