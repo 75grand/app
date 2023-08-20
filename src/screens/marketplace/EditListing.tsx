@@ -119,8 +119,6 @@ export default function EditListing() {
 
             <KeyboardAwareScrollView>
                 <View style={tw('p-3 gap-3')}>
-                    <Text>{JSON.stringify(fields, null, 4)}</Text>
-
                     {!$user.get().phone && (
                         <Card>
                             <InputLabel text="Phone Number">
