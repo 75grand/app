@@ -1,5 +1,5 @@
 import { useStore } from '@nanostores/react';
-import { useNavigation } from '@react-navigation/native';
+import { StackActions, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { useMutation } from '@tanstack/react-query';
 import { StatusBar } from 'expo-status-bar';
@@ -62,6 +62,14 @@ export default function Settings() {
         await mutation.mutateAsync(formData.phone);
 
         navigation.goBack();
+    }
+
+    function handleLogoutPress() {
+        setTimeout(logout);
+
+        navigation.dispatch(
+            StackActions.replace('Login')
+        );
     }
 
     useLayoutEffect(() => {
@@ -154,7 +162,7 @@ export default function Settings() {
                     <Button
                         text="Log Out & Delete Local Data"
                         color="faint-red"
-                        onPress={logout}
+                        onPress={handleLogoutPress}
                     />
                 </View>
             </KeyboardAwareScrollView>
