@@ -154,12 +154,6 @@ export default function Settings() {
                     </Card>
 
                     <Button
-                        text="Leave a Review for 75grand"
-                        color="faint"
-                        onPress={StoreReview.requestReview}
-                    />
-
-                    <Button
                         text="Log Out & Delete Local Data"
                         color="faint-red"
                         onPress={handleLogoutPress}
