@@ -40,11 +40,11 @@ export async function request<T extends ZodType>(type: T, options: AxiosRequestC
         if(parseResult.success === true) return parseResult.data;
         console.error(`Data from ${name} is invalid`, parseResult.error, response.data);
 
-        alertWithFeedback(
-            'It’s not you, it’s us',
-            'The server sent back invalid data. If this issue persists, please submit feedback.',
-            `The server returned invalid data for ${name} at ${requestDate}`
-        );
+        // alertWithFeedback(
+        //     'It’s not you, it’s us',
+        //     'The server sent back invalid data. If this issue persists, please submit feedback.',
+        //     `The server returned invalid data for ${name} at ${requestDate}`
+        // );
     } catch(error) {
         if(error.response.status !== HttpStatusCode.NotFound) {
             console.error(`Error with ${name} (${error.response.status})`);
@@ -59,5 +59,5 @@ export async function request<T extends ZodType>(type: T, options: AxiosRequestC
         }
     }
 
-    return null;
+    return undefined;
 }
