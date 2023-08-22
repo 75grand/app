@@ -26,7 +26,7 @@ export default function MoodleCard() {
     const user = useStore($user);
     const { dismissedMoodleSetup } = useStore($localSettings);
 
-    if(!user.moodle_enabled && (dismissedMoodleSetup || user.position !== 'student')) return;
+    if(!user.moodle_enabled && (dismissedMoodleSetup || user.position !== 'student')) return null;
 
     function handleSetUp() {
         // @ts-expect-error
@@ -103,7 +103,8 @@ function MoodleTasks() {
             />
 
             <View style={tw('gap-4')}>
-                {sortedTasks.map(MoodleTaskItem)}
+                {sortedTasks.map(task =>
+                    <MoodleTaskItem key={task.id} {...task}/>)}
             </View>
         </>
     );
@@ -124,7 +125,7 @@ function MoodleTaskItem(task: MoodleTask) {
     }
 
     return (
-        <View key={task.id} style={tw('flex-row gap-3 items-center')}>
+        <View style={tw('flex-row gap-3 items-center')}>
             <Checkbox checked={isCompleted} onPress={handlePress}/>
 
             <View style={tw('gap-1', isCompleted && 'opacity-50')}>
