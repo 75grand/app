@@ -59,38 +59,32 @@ export default function MoodleSetup() {
                     document.getElementById('id_period_timeperiod_recentupcoming').click();
                     document.getElementById('id_generateurl').click();
                 } else {
-                    window.ReactNativeWebView.postMessage(
-                        'CalURL:' + url.value
-                    );
+                    window.ReactNativeWebView.postMessage(url.value);
                 }
             `);
         }
     }
 
     async function handleMessage(event: WebViewMessageEvent) {
-        const text = event.nativeEvent.data;
+        const url = new URL(event.nativeEvent.data);
 
-        if(text.startsWith('CalURL:')) {
-            const url = new URL(text.replace('CalURL:', ''));
+        const userId = url.searchParams.get('userid');
+        const authToken = url.searchParams.get('authtoken');
 
-            const userId = url.searchParams.get('userid');
-            const authToken = url.searchParams.get('authtoken');
-
-            if(userId === null || authToken === null) {
-                return;   
-            }
-
-            setIsLoading(true);
-
-            const updatedUser = await patchUser({
-                moodle_user_id: userId,
-                moodle_token: authToken
-            });
-
-            $user.set(updatedUser);
-
-            navigation.goBack();
+        if(userId === null || authToken === null) {
+            return;   
         }
+
+        setIsLoading(true);
+
+        const updatedUser = await patchUser({
+            moodle_user_id: userId,
+            moodle_token: authToken
+        });
+
+        $user.set(updatedUser);
+
+        navigation.goBack();
     }
 
     return (
