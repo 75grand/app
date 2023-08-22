@@ -46,9 +46,9 @@ export default function Settings() {
     const { fields, isValid, formData } = useForm(
         z.object({
             phone: User.shape.phone.optional().default(user.phone),
-            macPass: z.string().length(9, 'Must be a valid MacPass number').regex(/^\d*$/).optional().default(settings.macPass),
+            macPass: z.string().length(9, 'Must be a valid MacPass number').regex(/^\d*$/).optional().or(z.literal('')).default(settings.macPass),
             mailboxNumber: z.string().optional().default(settings.mailboxNumber),
-            mailboxCombination: z.string().regex(/^[0-4][0-9][0-4][0-9][0-4][0-9]$/, 'Must be valid').optional().default(settings.mailboxCombination)
+            mailboxCombination: z.string().regex(/^[0-4][0-9][0-4][0-9][0-4][0-9]$/, 'Must be valid').optional().or(z.literal('')).default(settings.mailboxCombination)
         })
     );
 

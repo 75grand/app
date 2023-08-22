@@ -43,7 +43,7 @@ export function useForm<T extends AnyZodObject>(type: T): Form<T> {
     const fields = {} as Record<keyof FormType, Field>;
 
     for(const name in type.shape) {
-        const errorMessage = safeResult.success === false && Boolean(values[name])
+        const errorMessage = safeResult.success === false && values[name]
             ? safeResult.error.format()[name]?._errors.join('\n') ?? null
             : null;
 
