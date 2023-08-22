@@ -8,6 +8,7 @@ import { request } from './http-client';
 import { z } from 'zod';
 import { objectToFormData } from '../utils';
 import { $user } from '../user/user-store';
+import { MoodleTask } from '../types/moodle';
 
 type Id = string|number;
 
@@ -68,7 +69,15 @@ export const patchUser = async (data: EditableUserFields) =>
 /**
  * Dining Hall Menus
  * @see https://www.notion.so/4d7b436cdfc6476693b7468d9d3278af
- */
+*/
 
 export const fetchMenu = async (date: DateTime) =>
     await request(Menu, { url: `menus/${date.toSQLDate()}` });
+
+/**
+ * Moodle Assignments
+ * @see https://www.notion.so/4d7b436cdfc6476693b7468d9d3278af
+ */
+
+export const fetchMoodleTasks = async () =>
+    await request(MoodleTask.array(), { url: 'moodle' });

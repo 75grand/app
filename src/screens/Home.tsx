@@ -1,14 +1,16 @@
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
-import { ScrollView, View } from 'react-native';
+import { View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import AvatarButton from '../components/AvatarButton';
 import Logo from '../components/Logo';
 import FeaturedListings from '../components/home/FeaturedListings';
 import HoursCard from '../components/home/HoursCard';
+import MoodleCard from '../components/home/MoodleCard';
 import QuickAccess from '../components/home/QuickAccess';
-import tw from '../lib/tailwind';
-import RedditCard from '../components/home/RedditCard';
 import RatingPrompt from '../components/home/RatingPrompt';
+import RedditCard from '../components/home/RedditCard';
+import tw from '../lib/tailwind';
 
 export const screenOptions: NativeStackNavigationOptions = {
     headerLeft: () => <Logo/>,
@@ -21,7 +23,7 @@ export default function Home() {
         <>
             <StatusBar animated style="auto"/>
 
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
                 <View style={tw('py-3 gap-3')}>
                     <QuickAccess/>
 
@@ -31,11 +33,13 @@ export default function Home() {
 
                     <FeaturedListings/>
 
-                    <View style={tw('px-3 gap-3')}>
+                    <MoodleCard/>
+
+                    <View style={tw('px-3')}>
                         <RedditCard/>
                     </View>
                 </View>
-            </ScrollView>
+            </KeyboardAwareScrollView>
         </>
     );
 }

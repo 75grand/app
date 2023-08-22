@@ -12,6 +12,7 @@ export const User = z.object({
     referrals_count: z.number(),
     referrals_per_prize: z.number(),
     class_year: z.string().nullable(),
+    moodle_enabled: z.boolean(),
     position: z.enum(['student', 'professor', 'staff']).nullable(),
     created_at: stringToDateTime
 });
@@ -22,7 +23,9 @@ export const EditableUserFields = User.partial().pick({
     class_year: true,
     position: true
 }).merge(z.object({
-    expo_token: z.string().optional()
+    expo_token: z.string().optional(),
+    moodle_token: z.string().optional(),
+    moodle_user_id: z.string().optional()
 }));
 
 export type OtherUser = z.infer<typeof OtherUser>;

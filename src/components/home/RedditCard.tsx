@@ -26,7 +26,7 @@ export default function RedditCard() {
                 <CardHeader
                     title="r/Macalester"
                     subtitle={(items[0]?.subreddit_subscribers?.toLocaleString() ?? '???') + ' members'}
-                    customIcon={() => <FontAwesome name="reddit" style={tw('text-[#FF4500]')} size={32}/>}
+                    customIcon={props => <FontAwesome name="reddit" {...props}/>}
                 />
             </Pressable>
 

@@ -29,7 +29,10 @@ export async function boot(): Promise<true> {
 
     setNotifHandler();
     registerAndroidNotifChannel();
-    await syncNotifToken();
+
+    // This is async, but it should run in the background
+    // https://github.com/expo/expo/issues/19648
+    syncNotifToken();
 
     if(Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
         UIManager.setLayoutAnimationEnabledExperimental(true);
