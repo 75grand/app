@@ -22,6 +22,7 @@ export default function MoodleSetup() {
     const navigation = useNavigation();
 
     const [isLoading, setIsLoading] = useState(true);
+    const [isCollectingData, setIsCollectingData] = useState(false);
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -51,15 +52,27 @@ export default function MoodleSetup() {
         setIsLoading(false);
 
         if(event.nativeEvent.url.startsWith(MOODLE_PAGE_URL)) {
-            webView.current.injectJavaScript(`
-                const url = document.getElementById('calendarexporturl');
+            setIsCollectingData(true);
 
-                if(url === null) {
-                    document.getElementById('id_events_exportevents_all').click();
-                    document.getElementById('id_period_timeperiod_recentupcoming').click();
-                    document.getElementById('id_generateurl').click();
+            webView.current.injectJavaScript(`
+                const result = document.getElementById('calendarexporturl');
+
+                if(result === null) {
+                    const ids = [
+                        'id_events_exportevents_all', // All events
+                        'id_period_timeperiod_recentupcoming', // Recent and next 60 days
+                        'id_generateurl' // Get calendar URL
+                    ];
+
+                    for(let i = 0; i < ids.length; i++) {
+                        setTimeout(() => {
+                            const element = document.getElementById(ids[i]);
+                            element.scrollIntoView({ behavior: 'smooth' });
+                            element.click();
+                        }, i * 500);
+                    }
                 } else {
-                    window.ReactNativeWebView.postMessage(url.value);
+                    window.ReactNativeWebView.postMessage(result.value);
                 }
             `);
         }
@@ -75,14 +88,14 @@ export default function MoodleSetup() {
             return;   
         }
 
-        setIsLoading(true);
-
         const updatedUser = await patchUser({
             moodle_user_id: userId,
             moodle_token: authToken
         });
 
         $user.set(updatedUser);
+
+        setIsCollectingData(false);
 
         navigation.goBack();
     }
@@ -91,7 +104,7 @@ export default function MoodleSetup() {
         <>
             <StatusBar animated style="light"/>
 
-            <View style={tw('h-full bg-gray-200')}>
+            <View style={tw('h-full bg-gray-200 relative')}>
                 <WebView
                     ref={webView}
                     source={{ uri: MOODLE_PAGE_URL }}
@@ -100,6 +113,16 @@ export default function MoodleSetup() {
                     onLoad={handleLoad}
                     onMessage={handleMessage}
                 />
+
+                {isCollectingData && (
+                    <View style={tw('absolute w-full h-full bg-accent/90 justify-center items-center gap-4')}>
+                        <ActivityIndicator color="white" size="large"/>
+
+                        <Text style={tw('text-white text-2xl font-semibold text-center')}>
+                            Loading
+                        </Text>
+                    </View>
+                )}
             </View>
         </>
     );

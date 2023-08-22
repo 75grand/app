@@ -111,7 +111,7 @@ function MoodleTasks() {
 
 function MoodleTaskItem(task: MoodleTask) {
     useRerender(1_000);
-    
+
     const { completedMoodleTasks } = useStore($localSettings);
     
     const isCompleted = completedMoodleTasks.includes(task.id);
