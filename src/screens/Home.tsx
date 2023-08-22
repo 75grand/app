@@ -10,11 +10,18 @@ import QuickAccess from '../components/home/QuickAccess';
 import RatingPrompt from '../components/home/RatingPrompt';
 import RedditCard from '../components/home/RedditCard';
 import tw from '../lib/tailwind';
+import TouchableScale from '../components/TouchableScale';
 
-export const screenOptions: NativeStackNavigationOptions = {
-    headerLeft: () => <Logo/>,
-    headerTitle: () => <></>,
-    headerRight: () => <AvatarButton/>
+export function screenOptions({ navigation }): NativeStackNavigationOptions {
+    return {
+        headerLeft: () => (
+            <TouchableScale onPress={() => navigation.navigate('AboutTheApp')}>
+                <Logo/>
+            </TouchableScale>
+        ),
+        headerTitle: () => <></>,
+        headerRight: () => <AvatarButton/>
+    }
 }
 
 export default function Home() {

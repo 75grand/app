@@ -4,10 +4,11 @@ import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { useMutation } from '@tanstack/react-query';
 import { StatusBar } from 'expo-status-bar';
 import { useLayoutEffect } from 'react';
-import { ActivityIndicator, Alert, View } from 'react-native';
+import { ActivityIndicator, Alert, Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { z } from 'zod';
+import Card from '../components/Card';
 import Input from '../components/Input';
 import InputLabel from '../components/InputLabel';
 import { postFeedback } from '../lib/api/api';
@@ -76,21 +77,29 @@ export default function Feedback() {
             <StatusBar animated style="light"/>
 
             <KeyboardAwareScrollView>
-                <View style={tw('p-3 gap-4')}>
-                    <InputLabel required text="Email">
-                        <Input
-                            {...fields.email}
-                            editable={false}
-                        />
-                    </InputLabel>
+                <View style={tw('p-3')}>
+                    <Card style={tw('gap-4')}>
+                        <InputLabel required text="Email">
+                            <Input
+                                {...fields.email}
+                                editable={false}
+                            />
+                        </InputLabel>
 
-                    <InputLabel required text="Message">
-                        <Input multiline
-                            {...fields.message}
-                            placeholder="How can we do better?"
-                            autoFocus={!initialMessage}
-                        />
-                    </InputLabel>
+                        <InputLabel required text="Message">
+                            <Input multiline
+                                {...fields.message}
+                                placeholder="How can we do better?"
+                                autoFocus={!initialMessage}
+                            />
+                        </InputLabel>
+
+                        <Text style={tw('text-sm text-gray-500')}>
+                            75grand is not an official app. It is not developed, maintained,
+                            or affiliated in any way with Macalester. Do not contact ITS for
+                            support; use this form.
+                        </Text>
+                    </Card>
                 </View>
             </KeyboardAwareScrollView>
         </>

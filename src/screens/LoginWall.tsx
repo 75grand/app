@@ -8,6 +8,8 @@ import AnimatedLogoIcon from '../components/login/AnimatedLogoIcon';
 import { login } from '../lib/api/login';
 import tw from '../lib/tailwind';
 import { StackActions, useNavigation } from '@react-navigation/native';
+import AnimatedRing from '../components/AnimatedRing';
+import Logo from '../components/Logo';
 
 export const screenOptions: NativeStackNavigationOptions = {
     headerShown: false,
@@ -46,7 +48,9 @@ export default function LoginWall() {
                     <View style={tw('p-3 h-full justify-between')}>
                         <View/>
 
-                        <AnimatedLogoIcon/>
+                        <AnimatedRing text="Your Portal to Macalester">
+                            <Logo version="icon"/>
+                        </AnimatedRing>
 
                         <View/>
 
