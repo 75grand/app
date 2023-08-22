@@ -15,6 +15,7 @@ import { formatPhoneNumber, pluralize, ucFirst } from '../../lib/text-utils';
 import { $user } from '../../lib/user/user-store';
 import { getCdnUrl, openBrowser } from '../../lib/utils';
 import { formatDistance } from '../../lib/marketplace-utils';
+import UserItem from '../../components/UserItem';
 
 export const screenOptions: NativeStackNavigationOptions = {
     headerTitle: () => <></>
@@ -72,22 +73,11 @@ export default function ListingDetail() {
                         {priceText} • {formatDistance(listing.miles_from_campus)}
                     </Text>
 
-                    <View style={tw('flex-row gap-3 items-center')}>
-                        <Image source={listing.user.avatar}
-                            style={tw('w-10 h-10 rounded-full bg-gray-200')}/>
-
-                        <View>
-                            <Text style={tw('text-base font-semibold')}>{listing.user.name}</Text>
-
-                            <Text style={tw('text-gray-500')}>
-                                {(
-                                    listing.user.class_year
-                                        ? `Class of ${listing.user.class_year}`
-                                        : ucFirst(listing.user.position)
-                                )}
-                            </Text>
-                        </View>
-                    </View>
+                    <UserItem
+                        name={listing.user.name}
+                        avatar={listing.user.avatar}
+                        subtitle={listing.user.class_year ? `Class of ${listing.user.class_year}` : ucFirst(listing.user.position)}
+                    />
 
                     {listing.description &&
                         <Text style={tw('text-base')}>{listing.description}</Text>}
