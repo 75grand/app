@@ -5,10 +5,11 @@ import AvatarButton from '../components/AvatarButton';
 import Logo from '../components/Logo';
 import FeaturedListings from '../components/home/FeaturedListings';
 import HoursCard from '../components/home/HoursCard';
+import MoodleCard from '../components/home/MoodleCard';
 import QuickAccess from '../components/home/QuickAccess';
-import tw from '../lib/tailwind';
-import RedditCard from '../components/home/RedditCard';
 import RatingPrompt from '../components/home/RatingPrompt';
+import RedditCard from '../components/home/RedditCard';
+import tw from '../lib/tailwind';
 
 export const screenOptions: NativeStackNavigationOptions = {
     headerLeft: () => <Logo/>,
@@ -31,7 +32,9 @@ export default function Home() {
 
                     <FeaturedListings/>
 
-                    <View style={tw('px-3 gap-3')}>
+                    <MoodleCard/>
+
+                    <View style={tw('px-3')}>
                         <RedditCard/>
                     </View>
                 </View>

@@ -7,7 +7,9 @@ export const DEFAULT_SETTINGS = {
     mailboxCombination: '',
     mostUsedActions: {} as Record<string, number>,
     favoriteHours: ['Café Mac', 'The Grille', 'Mailroom', 'Library', 'ITS Help Desk', 'Leonard Center'],
-    hasLeftReviewOrFeedback: false
+    hasLeftReviewOrFeedback: false,
+    completedMoodleTasks: [],
+    dismissedMoodleSetup: false
 }
 
 export const $localSettings = map<typeof DEFAULT_SETTINGS>();

@@ -19,6 +19,10 @@ export function isLoggedIn() {
     return $token.get() !== null && $user.get() !== null;
 }
 
+function getRedirectUrl() {
+    return Linking.createURL('');
+}
+
 /**
  * Fetch Google OAuth URL from the server
  * @see https://github.com/75grand/api/blob/71e740f5b493dd377761eaebadca2c9efe2a85d1/app/Http/Controllers/MobileAuthController.php
@@ -30,7 +34,7 @@ export async function getLoginUrl(options?: StringRecord) {
         params: {
             ...options,
             device: deviceName,
-            callback_url: Linking.createURL('')
+            callback_url: getRedirectUrl()
         }
     });
 
@@ -43,7 +47,7 @@ export async function getLoginUrl(options?: StringRecord) {
 export async function login(referralCode: string = '') {
     // Fetch Google OAuth URL from server
     const loginUrl = await getLoginUrl({ referral_code: referralCode });
-    const result = await WebBrowser.openAuthSessionAsync(loginUrl);
+    const result = await WebBrowser.openAuthSessionAsync(loginUrl, getRedirectUrl());
 
     console.log(JSON.stringify(result));
 

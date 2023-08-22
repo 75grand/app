@@ -20,10 +20,9 @@ export const screenOptions: NativeStackNavigationOptions = {
 export default function Hours() {
     const navigation = useNavigation();
 
-    const { data, refetch, isFetching, isSuccess } = useQuery({
+    const { data = [], refetch, isSuccess } = useQuery({
         queryKey: ['hours'],
-        queryFn: fetchHours,
-        placeholderData: []
+        queryFn: fetchHours
     });
 
     const { fixedRefetch, isRefetching } = useTanStackRefresh(refetch)

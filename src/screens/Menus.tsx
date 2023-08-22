@@ -20,10 +20,9 @@ export default function Menus() {
     const [date, setDate] = useState(DateTime.now());
     const [showPicker, setShowPicker] = useState(false);
 
-    const { data: menu, isError, refetch } = useQuery<Menu>({
+    const { data: menu = {}, isError, refetch } = useQuery<Menu>({
         queryKey: ['menu', date.toSQLDate()],
-        queryFn: async () => await fetchMenu(date),
-        placeholderData: {}
+        queryFn: async () => await fetchMenu(date)
     });
 
     const { fixedRefetch, isRefetching } = useTanStackRefresh(refetch);

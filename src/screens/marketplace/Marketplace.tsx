@@ -17,10 +17,9 @@ export const screenOptions: NativeStackNavigationOptions = {
 export default function Marketplace() {
     const navigation = useNavigation();
 
-    const { data: listings, isFetching, refetch } = useQuery({
+    const { data: listings = [], isFetching, refetch } = useQuery({
         queryKey: ['listings'],
-        queryFn: fetchListings,
-        placeholderData: []
+        queryFn: fetchListings
     });
 
     const { fixedRefetch, isRefetching } = useTanStackRefresh(refetch);

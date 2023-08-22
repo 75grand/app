@@ -13,10 +13,9 @@ import tw from '../../lib/tailwind';
 export default function HoursCard() {
     const navigation = useNavigation();
 
-    const { data } = useQuery({
+    const { data = [] } = useQuery({
         queryKey: ['hours'],
-        queryFn: fetchHours,
-        placeholderData: []
+        queryFn: fetchHours
     });
 
     const { favoriteHours } = useStore($localSettings);

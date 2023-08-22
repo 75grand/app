@@ -48,15 +48,15 @@ export default function ApproveNotifications() {
                     />
 
                     <SellingPoint
-                        icon="restaurant"
-                        title="Favorite Food (coming soon)"
-                        text="Get notified when Café Mac serves your favorite foods"
+                        icon="checkbox-outline"
+                        title="Moodle Assignments"
+                        text="Never miss an assignment again"
                     />
 
                     <SellingPoint
-                        icon="car"
-                        title="Carpooling (coming soon)"
-                        text="Coordinate rides to the airport, Minneapolis, nature, and more"
+                        icon="restaurant"
+                        title="Favorite Food (coming soon)"
+                        text="Get notified when Café Mac serves your favorite foods"
                     />
 
                     <SellingPoint

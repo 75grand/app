@@ -20,6 +20,7 @@ import * as Marketplace from './screens/marketplace/Marketplace';
 import * as ListingDetail from './screens/marketplace/ListingDetail';
 import * as EditListing from './screens/marketplace/EditListing';
 import * as Feedback from './screens/Feedback';
+import * as MoodleSetup from './screens/MoodleSetup';
 
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -106,6 +107,7 @@ function HomeRouting() {
             <Stack.Screen name="ShowMacPass" component={ShowMacPass.default} options={ShowMacPass.screenOptions}/>
             <Stack.Screen name="ShowCombination" component={ShowCombination.default} options={ShowCombination.screenOptions}/>
             <Stack.Screen name="Feedback" component={Feedback.default} options={Feedback.screenOptions}/>
+            <Stack.Screen name="MoodleSetup" component={MoodleSetup.default} options={MoodleSetup.screenOptions}/>
         </Stack.Navigator>
     );
 }

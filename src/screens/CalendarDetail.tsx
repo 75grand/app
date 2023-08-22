@@ -48,10 +48,9 @@ export default function CalendarDetail() {
         initialData: params.event
     });
 
-    const { data: attendees } = useQuery<EventAttendee[]>({
+    const { data: attendees = [] } = useQuery<EventAttendee[]>({
         queryKey: ['events', eventId, 'attendees'],
-        queryFn: () => fetchAttendees(eventId),
-        placeholderData: []
+        queryFn: () => fetchAttendees(eventId)
     });
 
     const attending = attendees.some(a => a.id === user.id);
