@@ -1,7 +1,6 @@
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
-import { View } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { ScrollView, View } from 'react-native';
 import AvatarButton from '../components/AvatarButton';
 import Logo from '../components/Logo';
 import FeaturedListings from '../components/home/FeaturedListings';
@@ -23,7 +22,7 @@ export default function Home() {
         <>
             <StatusBar animated style="auto"/>
 
-            <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={tw('py-3 gap-3')}>
                     <QuickAccess/>
 
@@ -39,7 +38,7 @@ export default function Home() {
                         <RedditCard/>
                     </View>
                 </View>
-            </KeyboardAwareScrollView>
+            </ScrollView>
         </>
     );
 }

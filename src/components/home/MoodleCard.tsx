@@ -1,5 +1,6 @@
 import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import { useStore } from '@nanostores/react';
+import { useNavigation } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
 import * as Haptics from 'expo-haptics';
 import { DateTime } from 'luxon';
@@ -13,18 +14,28 @@ import { pluralize } from '../../lib/text-utils';
 import { MoodleTask } from '../../lib/types/moodle';
 import { $localSettings } from '../../lib/user/settings-store';
 import { $user } from '../../lib/user/user-store';
+import Button from '../Button';
 import Card from '../Card';
 import CardHeader from '../CardHeader';
 import EmptyState from '../EmptyState';
 import TouchableScale from '../TouchableScale';
-import InputLabel from '../InputLabel';
-import Button from '../Button';
-import Input from '../Input';
 
 export default function MoodleCard() {
-    const user = useStore($user);
+    const navigation = useNavigation();
 
-    if(user.position !== 'student') return;
+    const user = useStore($user);
+    const { dismissedMoodleSetup } = useStore($localSettings);
+
+    if(!user.moodle_enabled && (dismissedMoodleSetup || user.position !== 'student')) return;
+
+    function handleSetUp() {
+        // @ts-expect-error
+        navigation.navigate('MoodleSetup');
+    }
+
+    function handleDismiss() {
+        $localSettings.setKey('dismissedMoodleSetup', true);
+    }
 
     return (
         <View style={tw('px-3')}>
@@ -35,11 +46,26 @@ export default function MoodleCard() {
                     <>
                         <CardHeader
                             title="Moodle"
-                            subtitle="Sync your assignments"
                             customIcon={props => <FontAwesome5 name="graduation-cap" {...props}/>}
                         />
 
-                        <Button text="Sign in with Moodle" size="mega"/>
+                        <View style={tw('gap-3 -mt-1')}>
+                            <Text style={tw('text-base')}>
+                                75grand can display your Moodle assignments and
+                                remind you before they're due.
+                            </Text>
+
+                            <Button text="Set Up Automatically" onPress={handleSetUp} size="mega"/>
+                            <Button text="Not Now" onPress={handleDismiss} color="gray"/>
+
+                            <Text style={tw('text-xs text-gray-500')}>
+                                Notifications will be sent when the assignment is due
+                                and at 9:00 AM the day before.
+                                
+                                This feature does not store your login credentials
+                                and was not developed by Moodle or ITS.
+                            </Text>
+                        </View>
                     </>
                 )}
             </Card>
