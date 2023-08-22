@@ -23,10 +23,10 @@ export const screenOptions: NativeStackNavigationOptions = {
 
 export default function Calendar() {
     const [filter, setFilter] = useState<CalendarFilter>(null);
-    const { data, refetch, isFetching } = useQuery<CalendarEvent[]>({
+
+    const { data = [], refetch, isFetching } = useQuery<CalendarEvent[]>({
         queryKey: ['events'],
-        queryFn: fetchEvents,
-        placeholderData: []
+        queryFn: fetchEvents
     });
 
     const filteredEvents = useMemo(() => filterEvents(data, filter), [data, filter]);
