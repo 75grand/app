@@ -10,6 +10,7 @@ import { useForm } from '../../lib/hooks/use-form';
 import tw from '../../lib/tailwind';
 import { User } from '../../lib/types/user';
 import { $user } from '../../lib/user/user-store';
+import { getClassYears } from '../../lib/utils';
 
 export default function UserInfo() {
     const navigation = useNavigation();
@@ -58,7 +59,7 @@ export default function UserInfo() {
                         <PillRadioInput
                             {...fields.class_year}
                             scroll={true}
-                            options={['2023', '2024', '2025', '2026', '2027']}
+                            options={getClassYears().map(String)}
                         />
                     </InputLabel>
                 )}

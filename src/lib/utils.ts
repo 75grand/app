@@ -4,6 +4,7 @@ import { Alert } from 'react-native';
 import { color } from './tailwind';
 import { navigateWithRef } from './navigation-ref';
 import { AnyZodObject, z } from 'zod';
+import { DateTime } from 'luxon';
 
 export async function openBrowser(url: string) {
     setStatusBarStyle('light');
@@ -74,4 +75,11 @@ export function mergeDefaultsForInput<T extends AnyZodObject>(type: T, defaults:
     }
 
     return type;
+}
+
+/**
+ * Generate class years for the current year
+ */
+export function getClassYears(year = DateTime.now().year): number[] {
+    return [...Array(5).keys()].map(i => year + i);
 }
