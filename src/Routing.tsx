@@ -11,7 +11,6 @@ import * as Home from './screens/Home';
 import * as Hours from './screens/Hours';
 import * as LoginWall from './screens/LoginWall';
 import * as Menus from './screens/Menus';
-import * as Onboarding from './screens/Onboarding';
 import * as ScanMacPass from './screens/ScanMacPass';
 import * as Settings from './screens/Settings';
 import * as ShowMacPass from './screens/ShowMacPass';
@@ -22,6 +21,8 @@ import * as EditListing from './screens/marketplace/EditListing';
 import * as Feedback from './screens/Feedback';
 import * as MoodleSetup from './screens/MoodleSetup';
 import * as AboutTheApp from './screens/AboutTheApp';
+import UserInfo from './screens/onboarding/UserInfo';
+import MacPassAndMailbox from './screens/onboarding/MacPassAndMailbox';
 
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -37,8 +38,18 @@ export default function Routing() {
         <Stack.Navigator initialRouteName={initialRoute}>
             <Stack.Screen name="Login" component={LoginWall.default} options={LoginWall.screenOptions}/>
             <Stack.Screen name="ScanMacPass" component={ScanMacPass.default} options={ScanMacPass.screenOptions}/>
-            <Stack.Screen name="Onboarding" component={Onboarding.default} options={Onboarding.screenOptions}/>
+            <Stack.Screen name="Onboarding" component={OnboardingRouting} options={{ animation: 'flip' }}/>
             <Stack.Screen name="Tabs" component={TabRouting} options={{ headerShown: false }}/>
+        </Stack.Navigator>
+    );
+}
+
+function OnboardingRouting() {
+    return (
+        <Stack.Navigator screenOptions={{ headerShown: false, gestureEnabled: false }}>
+            <Stack.Screen name="UserInfo" component={UserInfo}/>
+            <Stack.Screen name="MacPassAndMailbox" component={MacPassAndMailbox}/>
+            <Stack.Screen name="ScanMacPass" component={ScanMacPass.default} options={ScanMacPass.screenOptions}/>
         </Stack.Navigator>
     );
 }
