@@ -36,7 +36,6 @@ export default function UserInfo() {
     return (
         <OnboardingShell
             title={<>Welcome, <Text style={tw('text-accent')}>{firstName}</Text>!</>}
-            buttonText="Next"
             onPress={mutation.mutate}
             isLoading={mutation.isLoading}
             isValid={Boolean(position && (position === 'student' ? year : true))}
