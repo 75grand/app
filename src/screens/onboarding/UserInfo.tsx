@@ -26,7 +26,7 @@ export default function UserInfo() {
         onSuccess: newUser => {
             $user.set(newUser);
             // @ts-expect-error
-            navigation.navigate('MacPassAndMailbox');
+            navigation.navigate('PhoneNumber');
         }
     });
 

@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import { useRef, useState } from 'react';
@@ -15,6 +15,7 @@ export function screenOptions({ navigation }): NativeStackNavigationOptions {
         title: 'Set Up Moodle',
         presentation: 'modal',
         gestureEnabled: false,
+        headerShown: true,
         headerLeft: () => (
             <HeaderButtons left>
                 <Item title="Cancel" onPress={navigation.goBack}/>
@@ -27,6 +28,7 @@ const MOODLE_PAGE_URL = 'https://moodle.macalester.edu/calendar/export.php';
 
 export default function MoodleSetup() {
     const navigation = useNavigation();
+    const { onSetupEnd } = useRoute().params as any;
 
     const [isLoading, setIsLoading] = useState(true);
 
@@ -81,6 +83,7 @@ export default function MoodleSetup() {
         setIsLoading(false);
 
         navigation.goBack();
+        if(onSetupEnd) onSetupEnd();
     }
 
     return (

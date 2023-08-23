@@ -31,15 +31,19 @@ export default function MacPassAndMailbox() {
         $localSettings.setKey('mailboxNumber', formData.mailboxNumber);
         $localSettings.setKey('mailboxCombination', formData.mailboxCombination);
 
-        // @ts-expect-error
-        navigation.navigate('BegForNotifications');
+        if(user.position === 'student') {
+            // @ts-expect-error
+            navigation.navigate('ConfigureMoodle');
+        } else {
+            // @ts-expect-error
+            navigation.navigate('BegForNotifications');
+        }
     }
 
     return (
         <OnboardingShell
             onPressPrimary={handleNext}
             isPrimaryValid={isValid}
-            secondaryButtonText="Go Back"
             onPressSecondary={navigation.goBack}
         >
             <Text style={tw('text-base leading-tight px-2 text-center')}>

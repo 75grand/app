@@ -1,5 +1,4 @@
 import { useStore } from '@nanostores/react';
-import { useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, Text, View } from 'react-native';
 import tw from '../../lib/tailwind';
@@ -31,12 +30,11 @@ export default function OnboardingShell({
     isPrimaryLoading = false,
     isPrimaryValid = true,
 
-    secondaryButtonText = '',
+    secondaryButtonText = 'Go Back',
     onPressSecondary,
     isSecondaryLoading = false,
     isSecondaryValid = true,
 }: Props) {
-    const navigation = useNavigation();
     const user = useStore($user);
 
     return (
@@ -70,7 +68,7 @@ export default function OnboardingShell({
                             onPress={onPressPrimary}
                         />
 
-                        {secondaryButtonText && (
+                        {onPressSecondary && (
                             <Button
                                 text={secondaryButtonText}
                                 color="light"

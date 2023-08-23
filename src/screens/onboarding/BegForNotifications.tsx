@@ -4,7 +4,7 @@ import OnboardingShell from '../../components/onboarding/OnboardingShell';
 import tw from '../../lib/tailwind';
 import { useState } from 'react';
 import { askForNotifPermission } from '../../lib/notifications';
-import { useNavigation } from '@react-navigation/native';
+import { StackActions, useNavigation } from '@react-navigation/native';
 
 export default function BegForNotifications() {
     const navigation = useNavigation();
@@ -14,13 +14,13 @@ export default function BegForNotifications() {
         setIsLoading(true);
         await askForNotifPermission();
         setIsLoading(false);
-
-        // // @ts-expect-error
-        // navigation.navigate();
+        goToNext();
     }
 
-    function handleDecline() {
-        
+    function goToNext() {
+        navigation.dispatch(
+            StackActions.replace('Tabs')
+        );
     }
 
     return (
@@ -30,7 +30,7 @@ export default function BegForNotifications() {
             onPressPrimary={handleAccept}
             isPrimaryLoading={isLoading}
             secondaryButtonText="Maybe Later"
-            onPressSecondary={handleDecline}
+            onPressSecondary={goToNext}
         >
             <View style={tw('p-3')}>
                 <NotificationSellingPoints/>

@@ -23,12 +23,22 @@ import * as MoodleSetup from './screens/MoodleSetup';
 import * as AboutTheApp from './screens/AboutTheApp';
 import UserInfo from './screens/onboarding/UserInfo';
 import MacPassAndMailbox from './screens/onboarding/MacPassAndMailbox';
+import BegForNotifications from './screens/onboarding/BegForNotifications';
+import ConfigureMoodle from './screens/onboarding/ConfigureMoodle';
+import PhoneNumber from './screens/onboarding/PhoneNumber';
 
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
 
 export default function Routing() {
     const user = useStore($user);
+
+    // FOR TESTING...REMOVE LATER
+    return (
+        <Stack.Navigator initialRouteName="Onboarding">
+            <Stack.Screen name="Onboarding" component={OnboardingRouting} options={{ headerShown: false, animation: 'flip' }}/>
+        </Stack.Navigator>
+    );
 
     let initialRoute = 'Tabs';
     if(user === null) initialRoute = 'Login';
@@ -48,7 +58,12 @@ function OnboardingRouting() {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false, gestureEnabled: false }}>
             <Stack.Screen name="UserInfo" component={UserInfo}/>
+            <Stack.Screen name="PhoneNumber" component={PhoneNumber}/>
             <Stack.Screen name="MacPassAndMailbox" component={MacPassAndMailbox}/>
+            <Stack.Screen name="ConfigureMoodle" component={ConfigureMoodle}/>
+            <Stack.Screen name="BegForNotifications" component={BegForNotifications}/>
+
+            <Stack.Screen name="MoodleSetup" component={MoodleSetup.default} options={MoodleSetup.screenOptions}/>
             <Stack.Screen name="ScanMacPass" component={ScanMacPass.default} options={ScanMacPass.screenOptions}/>
         </Stack.Navigator>
     );
