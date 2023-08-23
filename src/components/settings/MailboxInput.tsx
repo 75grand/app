@@ -30,7 +30,7 @@ export default function MailboxInput(props: Props) {
                     placeholder="33-05-27"
                     maxLength={8}
                     mask={[/[0-4]/, /\d/, '-', /[0-4]/, /\d/, '-', /[0-4]/, /\d/]}
-                    keyboardType="numbers-and-punctuation"
+                    inputMode="numeric"
                     returnKeyType="done"
                 />
             </InputLabel>
