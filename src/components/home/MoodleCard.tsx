@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import * as Haptics from 'expo-haptics';
 import { DateTime } from 'luxon';
 import { useMemo } from 'react';
-import { LayoutAnimation, Platform, Text, View } from 'react-native';
+import { LayoutAnimation, Platform, Pressable, Text, View } from 'react-native';
 import { fetchMoodleTasks } from '../../lib/api/api';
 import { useRerender } from '../../lib/hooks/use-rerender';
 import { completeTask, sortTasks } from '../../lib/moodle-utils';
@@ -125,7 +125,7 @@ function MoodleTaskItem(task: MoodleTask) {
     }
 
     return (
-        <View style={tw('flex-row gap-3 items-center')}>
+        <Pressable onPress={handlePress} style={tw('flex-row gap-3 items-center')}>
             <Checkbox checked={isCompleted} onPress={handlePress}/>
 
             <View style={tw('gap-1', isCompleted && 'opacity-50')}>
@@ -141,7 +141,7 @@ function MoodleTaskItem(task: MoodleTask) {
                     </Text>
                 )}
             </View>
-        </View>
+        </Pressable>
     );
 }
 
