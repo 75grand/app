@@ -2,7 +2,7 @@ import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { FlashList } from '@shopify/flash-list';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo, useState } from 'react';
-import { SafeAreaView } from 'react-native';
+import { Platform, SafeAreaView, StatusBar } from 'react-native';
 import EmptyState from '../components/EmptyState';
 import CalendarDay from '../components/calendar/CalendarDay';
 import CalendarFilters from '../components/calendar/CalendarFilters';
@@ -36,7 +36,11 @@ export default function Calendar() {
 
     return (
         <>
-            <SafeAreaView style={tw('bg-white')}>
+            <SafeAreaView style={tw('bg-white', {
+                paddingTop: Platform.select({
+                    android: StatusBar.currentHeight
+                })
+            })}>
                 <CalendarFilters
                     filters={calendarFilters}
                     activeFilter={filter}
