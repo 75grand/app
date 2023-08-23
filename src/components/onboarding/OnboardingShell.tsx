@@ -38,7 +38,9 @@ export default function OnboardingShell({ title, buttonText = 'Next', onPress, i
                             )}
                         </Text>
 
-                        <View style={tw('w-full')}>{children}</View>
+                        <View style={tw('w-full gap-6')}>
+                            {children}
+                        </View>
                     </View>
 
                     <View style={tw('gap-2')}>
