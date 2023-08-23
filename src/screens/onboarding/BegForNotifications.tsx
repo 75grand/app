@@ -14,10 +14,10 @@ export default function BegForNotifications() {
         setIsLoading(true);
         await askForNotifPermission();
         setIsLoading(false);
-        goToNext();
+        handleSkip();
     }
 
-    function goToNext() {
+    function handleSkip() {
         navigation.dispatch(
             StackActions.replace('Tabs')
         );
@@ -30,7 +30,7 @@ export default function BegForNotifications() {
             onPressPrimary={handleAccept}
             isPrimaryLoading={isLoading}
             secondaryButtonText="Maybe Later"
-            onPressSecondary={goToNext}
+            onPressSecondary={handleSkip}
         >
             <View style={tw('p-3')}>
                 <NotificationSellingPoints/>

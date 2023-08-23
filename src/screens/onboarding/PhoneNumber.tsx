@@ -33,7 +33,7 @@ export default function PhoneNumber() {
         navigation.navigate('MacPassAndMailbox');
     }
 
-    function handleDecline() {
+    function handleSkip() {
         Alert.alert(
             'Are you sure?',
             'You’ll need to provide a phone number to use the marketplace and other functionality.',
@@ -54,11 +54,8 @@ export default function PhoneNumber() {
     return (
         <OnboardingShell
             title="What’s your number?"
-            onPressPrimary={handleNext}
+            onPressPrimary={isValid ? handleNext : handleSkip}
             isPrimaryLoading={mutation.isLoading}
-            isPrimaryValid={isValid}
-            secondaryButtonText="Not Now"
-            onPressSecondary={handleDecline}
         >
             <Card>
                 <InputLabel text="Phone Number">
