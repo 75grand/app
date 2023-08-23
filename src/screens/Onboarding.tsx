@@ -12,7 +12,7 @@ import Input from '../components/Input';
 import InputLabel from '../components/InputLabel';
 import Logo from '../components/Logo';
 import PillRadioInput from '../components/PillRadioInput';
-import MacPassInput from '../components/macpass/MacPassInput';
+import MacPassInput from '../components/settings/MacPassInput';
 import { patchUser } from '../lib/api/api';
 import tw from '../lib/tailwind';
 import { User } from '../lib/types/user';

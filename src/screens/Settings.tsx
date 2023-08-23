@@ -11,10 +11,10 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { z } from 'zod';
 import Button from '../components/Button';
 import Card from '../components/Card';
-import Grid from '../components/Grid';
 import Input from '../components/Input';
 import InputLabel from '../components/InputLabel';
-import MacPassInput from '../components/macpass/MacPassInput';
+import MacPassInput from '../components/settings/MacPassInput';
+import MailboxInput from '../components/settings/MailboxInput';
 import Profile from '../components/settings/Profile';
 import ReferralCode from '../components/settings/ReferralCode';
 import { fetchUser, patchUser } from '../lib/api/api';
@@ -22,10 +22,9 @@ import { logout } from '../lib/api/login';
 import { useForm } from '../lib/hooks/use-form';
 import tw, { color } from '../lib/tailwind';
 import { User } from '../lib/types/user';
+import { zMacPass, zMailboxCombination } from '../lib/types/utils';
 import { $localSettings } from '../lib/user/settings-store';
 import { $user } from '../lib/user/user-store';
-import * as StoreReview from 'expo-store-review';
-import { zMacPass, zMailboxCombination } from '../lib/types/utils';
 
 export const screenOptions: NativeStackNavigationOptions = {
     presentation: 'modal',
@@ -130,28 +129,12 @@ export default function Settings() {
                             <MacPassInput {...fields.macPass}/>
                         </InputLabel>
 
-                        <Grid columns={2}>
-                            <InputLabel text="Mailbox Number">
-                                <Input
-                                    {...fields.mailboxNumber}
-                                    placeholder="1605"
-                                    maxLength={4}
-                                    inputMode="numeric"
-                                    returnKeyType="done"
-                                />
-                            </InputLabel>
-
-                            <InputLabel text="Mailbox Combination">
-                                <Input
-                                    {...fields.mailboxCombination}
-                                    mask={[/[0-4]/, /\d/, '-', /[0-4]/, /\d/, '-', /[0-4]/, /\d/]}
-                                    placeholder="33-05-27"
-                                    maxLength={8}
-                                    inputMode="decimal"
-                                    returnKeyType="done"
-                                />
-                            </InputLabel>
-                        </Grid>
+                        <MailboxInput
+                            mailboxNumber={fields.mailboxNumber.value}
+                            setMailboxNumber={fields.mailboxNumber.setValue}
+                            mailboxCombination={fields.mailboxCombination.value}
+                            setMailboxCombination={fields.mailboxCombination.setValue}
+                        />
                     </Card>
 
                     <Button
