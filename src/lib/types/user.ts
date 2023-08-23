@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { stringToDateTime } from './utils';
+import { zDateTime } from './utils';
 
 export type User = z.infer<typeof User>;
 export const User = z.object({
@@ -14,7 +14,7 @@ export const User = z.object({
     class_year: z.string().nullable(),
     moodle_enabled: z.boolean(),
     position: z.enum(['student', 'professor', 'staff']).nullable(),
-    created_at: stringToDateTime
+    created_at: zDateTime
 });
 
 export type EditableUserFields = z.infer<typeof EditableUserFields>;

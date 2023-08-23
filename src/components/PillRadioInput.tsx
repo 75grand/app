@@ -19,7 +19,7 @@ export default function PillRadioInput({ options, value, setValue, allowEmpty = 
     }
 
     return (
-        <ScrollView scrollEnabled={scroll} style={tw('-m-3')} horizontal showsHorizontalScrollIndicator={false}>
+        <ScrollView scrollEnabled={scroll} bounces={false} style={tw('-m-3')} horizontal showsHorizontalScrollIndicator={false}>
             <View style={tw('flex-row gap-2 p-3')}>
                 {Object.entries(options).map(([thisValue, label]) => {
                     return (

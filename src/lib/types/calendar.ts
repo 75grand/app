@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { stringToDateTime } from './utils';
+import { zDateTime } from './utils';
 
 export type CalendarEvent = z.infer<typeof CalendarEvent>;
 export const CalendarEvent = z.object({
@@ -9,8 +9,8 @@ export const CalendarEvent = z.object({
     location: z.string().nullable(),
     latitude: z.number().nullable(),
     longitude: z.number().nullable(),
-    start_date: stringToDateTime,
-    end_date: stringToDateTime,
+    start_date: zDateTime,
+    end_date: zDateTime,
     calendar_name: z.string(),
     image_url: z.string().url().nullable(),
     url: z.string().url().nullable(),

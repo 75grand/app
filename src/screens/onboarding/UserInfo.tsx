@@ -1,51 +1,51 @@
-import { useStore } from '@nanostores/react';
 import { useNavigation } from '@react-navigation/native';
 import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
-import { Text } from 'react-native';
+import { z } from 'zod';
 import Card from '../../components/Card';
 import InputLabel from '../../components/InputLabel';
 import PillRadioInput from '../../components/PillRadioInput';
 import OnboardingShell from '../../components/onboarding/OnboardingShell';
 import { patchUser } from '../../lib/api/api';
-import { User } from '../../lib/types/user';
+import { useForm } from '../../lib/hooks/use-form';
 import tw from '../../lib/tailwind';
+import { User } from '../../lib/types/user';
 import { $user } from '../../lib/user/user-store';
+import { getClassYears } from '../../lib/utils';
 
 export default function UserInfo() {
     const navigation = useNavigation();
 
-    const [position, setPosition] = useState<string>();
-    const [year, setYear] = useState<string>();
-
-    const user = useStore($user);
-    const firstName = user.name.split(' ')[0];
+    const { fields, formData, isValid } = useForm(
+        z.object({
+            position: User.shape.position,
+            class_year: User.shape.class_year.optional()
+        })
+    );
 
     const mutation = useMutation({
-        mutationFn: () => patchUser({
-            position: position as User['position'],
-            class_year: year
-        }),
+        mutationFn: () => patchUser(formData),
         onSuccess: newUser => {
             $user.set(newUser);
             // @ts-expect-error
-            navigation.navigate('Tabs');
+            navigation.navigate('PhoneNumber');
         }
     });
 
     return (
         <OnboardingShell
-            title={<>Welcome, <Text style={tw('text-accent')}>{firstName}</Text>!</>}
-            buttonText="Next"
-            onPress={mutation.mutate}
-            isLoading={mutation.isLoading}
-            isValid={Boolean(position && (position === 'student' ? year : true))}
+            onPressPrimary={mutation.mutate}
+            isPrimaryLoading={mutation.isLoading}
+            isPrimaryValid={
+                isValid && (
+                    fields.position.value !== 'student' ||
+                    Boolean(fields.class_year.value)
+                )
+            }
         >
             <Card style={tw('gap-3')}>
                 <InputLabel text="What’s your position at Mac?">
                     <PillRadioInput
-                        setValue={setPosition}
-                        value={position}
+                        {...fields.position}
                         options={{
                             student: 'Student',
                             professor: 'Professor',
@@ -54,14 +54,15 @@ export default function UserInfo() {
                     />
                 </InputLabel>
 
-                {position === 'student' && <InputLabel text="What’s your class year?">
-                    <PillRadioInput
-                        setValue={setYear}
-                        value={year}
-                        scroll={true}
-                        options={['2023', '2024', '2025', '2026', '2027']}
-                    />
-                </InputLabel>}
+                {fields.position.value === 'student' && (
+                    <InputLabel text="What’s your class year?">
+                        <PillRadioInput
+                            {...fields.class_year}
+                            scroll={true}
+                            options={getClassYears().map(String)}
+                        />
+                    </InputLabel>
+                )}
             </Card>
         </OnboardingShell>
     );
