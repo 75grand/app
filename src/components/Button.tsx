@@ -1,6 +1,7 @@
 import * as Haptics from 'expo-haptics';
 import { ActivityIndicator, Text, TouchableOpacity } from 'react-native';
 import tw, { color as getColor } from '../lib/tailwind';
+import { Platform } from 'react-native';
 
 interface Props {
     text: string,
@@ -49,7 +50,7 @@ export default function Button({ text, onPress, color = 'accent', loading = fals
             onPress={() => {
                 if(disabled) return;
                 onPress();
-                Haptics.selectionAsync();
+                if(Platform.OS === 'ios') Haptics.selectionAsync();
             }}
         >
             {loading && (

@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import * as Haptics from 'expo-haptics';
 import { DateTime } from 'luxon';
 import { useMemo } from 'react';
-import { LayoutAnimation, Text, View } from 'react-native';
+import { LayoutAnimation, Platform, Text, View } from 'react-native';
 import { fetchMoodleTasks } from '../../lib/api/api';
 import { useRerender } from '../../lib/hooks/use-rerender';
 import { completeTask, sortTasks } from '../../lib/moodle-utils';
@@ -119,7 +119,7 @@ function MoodleTaskItem(task: MoodleTask) {
     const isOverdue = !isCompleted && task.due < DateTime.now();
 
     function handlePress() {
-        Haptics.selectionAsync();
+        if(Platform.OS === 'ios') Haptics.selectionAsync();
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         completeTask(task);
     }
