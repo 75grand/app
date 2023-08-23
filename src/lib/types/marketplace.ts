@@ -8,7 +8,7 @@ export const Listing = z.object({
     title: z.string(),
     description: z.string(),
     image_url: z.string().url(),
-    price: z.coerce.number().lte(1000, 'Price must be less than or equal to $1,000'),
+    price: z.coerce.number().lte(5000, 'Price must be less than or equal to $5,000'),
     available: z.coerce.boolean(),
     miles_from_campus: z.coerce.number(),
     user: OtherUser,
