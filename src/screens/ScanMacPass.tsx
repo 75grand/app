@@ -16,6 +16,7 @@ export function screenOptions({ navigation }): NativeStackNavigationOptions {
     return {
         presentation: 'modal',
         title: 'Scan Barcode',
+        headerShown: true,
         headerLeft: () => (
             <HeaderButtons left>
                 <Item title="Cancel" onPress={navigation.goBack}/>
