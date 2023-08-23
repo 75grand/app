@@ -32,9 +32,9 @@ export default function UserInfo() {
 
     return (
         <OnboardingShell
-            onPress={mutation.mutate}
-            isLoading={mutation.isLoading}
-            isValid={
+            onPressPrimary={mutation.mutate}
+            isPrimaryLoading={mutation.isLoading}
+            isPrimaryValid={
                 isValid && (
                     fields.position.value !== 'student' ||
                     Boolean(fields.class_year.value)

@@ -9,15 +9,33 @@ import Logo from '../Logo';
 
 interface Props {
     title?: React.ReactNode,
-    buttonText?: string,
-    onPress: () => void,
-    isLoading?: boolean,
-    isValid?: boolean,
-    showBackButton?: boolean,
-    children: React.ReactNode
+    children: React.ReactNode,
+
+    primaryButtonText?: string,
+    onPressPrimary: () => void,
+    isPrimaryLoading?: boolean,
+    isPrimaryValid?: boolean,
+
+    secondaryButtonText?: string,
+    onPressSecondary?: () => void,
+    isSecondaryLoading?: boolean,
+    isSecondaryValid?: boolean
 }
 
-export default function OnboardingShell({ title, buttonText = 'Next', onPress, isLoading = false, isValid = true, showBackButton = false, children }: Props) {
+export default function OnboardingShell({
+    title,
+    children,
+
+    primaryButtonText = 'Next',
+    onPressPrimary,
+    isPrimaryLoading = false,
+    isPrimaryValid = true,
+
+    secondaryButtonText = '',
+    onPressSecondary,
+    isSecondaryLoading = false,
+    isSecondaryValid = true,
+}: Props) {
     const navigation = useNavigation();
     const user = useStore($user);
 
@@ -45,18 +63,20 @@ export default function OnboardingShell({ title, buttonText = 'Next', onPress, i
 
                     <View style={tw('gap-2')}>
                         <Button
-                            text={buttonText}
+                            text={primaryButtonText}
                             size="mega"
-                            loading={isLoading}
-                            disabled={!isValid}
-                            onPress={onPress}
+                            loading={isPrimaryLoading}
+                            disabled={!isPrimaryValid}
+                            onPress={onPressPrimary}
                         />
 
-                        {showBackButton && (
+                        {secondaryButtonText && (
                             <Button
-                                text="Back"
+                                text={secondaryButtonText}
                                 color="light"
-                                onPress={navigation.goBack}
+                                loading={isSecondaryLoading}
+                                disabled={!isSecondaryValid}
+                                onPress={onPressSecondary}
                             />
                         )}
                     </View>

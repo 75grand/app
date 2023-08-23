@@ -30,10 +30,18 @@ export default function MacPassAndMailbox() {
         $localSettings.setKey('macPass', formData.macPass);
         $localSettings.setKey('mailboxNumber', formData.mailboxNumber);
         $localSettings.setKey('mailboxCombination', formData.mailboxCombination);
+
+        // @ts-expect-error
+        navigation.navigate('BegForNotifications');
     }
 
     return (
-        <OnboardingShell onPress={handleNext} showBackButton isValid={isValid}>
+        <OnboardingShell
+            onPressPrimary={handleNext}
+            isPrimaryValid={isValid}
+            secondaryButtonText="Go Back"
+            onPressSecondary={navigation.goBack}
+        >
             <Text style={tw('text-base leading-tight px-2 text-center')}>
                 {user.position === 'student' ? (
                     '75grand can remember your MacPass number, mailbox number, and mailbox combination for you. They’ll be stored securely and will never leave your device.'
