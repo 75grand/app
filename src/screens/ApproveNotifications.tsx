@@ -7,6 +7,7 @@ import { Text, View } from 'react-native';
 import Button from '../components/Button';
 import { askForNotifPermission } from '../lib/notifications';
 import tw from '../lib/tailwind';
+import NotificationSellingPoints from '../components/onboarding/NotificationSellingPoints';
 
 export const screenOptions: NativeStackNavigationOptions = {
     presentation: 'modal',
@@ -40,31 +41,7 @@ export default function ApproveNotifications() {
                     </Text>
                 </View>
 
-                <View style={tw('gap-6 w-full')}>
-                    <SellingPoint
-                        icon="calendar"
-                        title="Event Notifications"
-                        text="Sign up to be notified about events happening around campus"
-                    />
-
-                    <SellingPoint
-                        icon="checkbox-outline"
-                        title="Moodle Assignments"
-                        text="Never miss an assignment again"
-                    />
-
-                    <SellingPoint
-                        icon="restaurant"
-                        title="Favorite Food (coming soon)"
-                        text="Get notified when Café Mac serves your favorite foods"
-                    />
-
-                    <SellingPoint
-                        icon="star"
-                        title="New Features"
-                        text="Occasional notifications when major features are added to 75grand"
-                    />
-                </View>
+                <NotificationSellingPoints/>
 
                 <View style={tw('gap-2 w-full')}>
                     <Button text="Enable Notifications" loading={loading} size="mega" onPress={promptNotifications}/>
@@ -72,18 +49,5 @@ export default function ApproveNotifications() {
                 </View>
             </View>
         </>
-    );
-}
-
-function SellingPoint({ icon, title, text }: { icon: keyof typeof Ionicons.glyphMap, title: string, text: string }) {
-    return (
-        <View style={tw('flex flex-row gap-6 items-center')}>
-            <Ionicons style={tw('text-3xl text-accent')} name={icon}/>
-
-            <View style={tw('shrink')}>
-                <Text style={tw('text-base font-semibold')}>{title}</Text>
-                <Text style={tw('text-base text-gray-500 leading-tight')}>{text}</Text>
-            </View>
-        </View>
     );
 }
