@@ -4,7 +4,7 @@ import tw from '../../lib/tailwind';
 
 export default function NotificationSellingPoints() {
     return (
-        <ScrollView style={tw('w-full')} bounces={false}>
+        <ScrollView style={tw('w-full grow-0')} bounces={false}>
             <View style={tw('gap-6')}>
                 <SellingPoint
                     icon="calendar"
