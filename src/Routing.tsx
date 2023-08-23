@@ -33,13 +33,6 @@ const Tabs = createBottomTabNavigator();
 export default function Routing() {
     const user = useStore($user);
 
-    // FOR TESTING...REMOVE LATER
-    return (
-        <Stack.Navigator initialRouteName="Onboarding">
-            <Stack.Screen name="Onboarding" component={OnboardingRouting} options={{ headerShown: false, animation: 'flip' }}/>
-        </Stack.Navigator>
-    );
-
     let initialRoute = 'Tabs';
     if(user === null) initialRoute = 'Login';
     else if(user.position === null) initialRoute = 'Onboarding';
@@ -48,7 +41,7 @@ export default function Routing() {
         <Stack.Navigator initialRouteName={initialRoute}>
             <Stack.Screen name="Login" component={LoginWall.default} options={LoginWall.screenOptions}/>
             <Stack.Screen name="ScanMacPass" component={ScanMacPass.default} options={ScanMacPass.screenOptions}/>
-            <Stack.Screen name="Onboarding" component={OnboardingRouting} options={{ animation: 'flip' }}/>
+            <Stack.Screen name="Onboarding" component={OnboardingRouting} options={{ headerShown: false, animation: 'flip' }}/>
             <Stack.Screen name="Tabs" component={TabRouting} options={{ headerShown: false }}/>
         </Stack.Navigator>
     );
@@ -56,7 +49,7 @@ export default function Routing() {
 
 function OnboardingRouting() {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: false, gestureEnabled: false }}>
+        <Stack.Navigator initialRouteName="UserInfo" screenOptions={{ headerShown: false, gestureEnabled: false }}>
             <Stack.Screen name="UserInfo" component={UserInfo}/>
             <Stack.Screen name="PhoneNumber" component={PhoneNumber}/>
             <Stack.Screen name="MacPassAndMailbox" component={MacPassAndMailbox}/>
