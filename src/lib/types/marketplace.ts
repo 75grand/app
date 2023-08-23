@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { OtherUser } from './user';
-import { stringToDateTime } from './utils';
+import { zDateTime } from './utils';
 
 export type Listing = z.infer<typeof Listing>;
 export const Listing = z.object({
@@ -12,7 +12,7 @@ export const Listing = z.object({
     available: z.coerce.boolean(),
     miles_from_campus: z.coerce.number(),
     user: OtherUser,
-    created_at: stringToDateTime
+    created_at: zDateTime
 });
 
 export type NewListingFields = z.infer<typeof NewListingFields>;

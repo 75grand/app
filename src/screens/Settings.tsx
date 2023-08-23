@@ -25,6 +25,7 @@ import { User } from '../lib/types/user';
 import { $localSettings } from '../lib/user/settings-store';
 import { $user } from '../lib/user/user-store';
 import * as StoreReview from 'expo-store-review';
+import { zMacPass } from '../lib/types/utils';
 
 export const screenOptions: NativeStackNavigationOptions = {
     presentation: 'modal',
@@ -46,7 +47,7 @@ export default function Settings() {
     const { fields, isValid, formData } = useForm(
         z.object({
             phone: User.shape.phone.optional().default(user.phone),
-            macPass: z.string().length(9, 'Must be a valid MacPass number').regex(/^\d*$/).optional().or(z.literal('')).default(settings.macPass),
+            macPass: zMacPass.default(settings.macPass),
             mailboxNumber: z.string().optional().default(settings.mailboxNumber),
             mailboxCombination: z.string().regex(/^[0-4][0-9][0-4][0-9][0-4][0-9]$/, 'Must be valid').optional().or(z.literal('')).default(settings.mailboxCombination)
         })
