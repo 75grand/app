@@ -10,6 +10,10 @@ export const zMacPass =
     z.string().length(9, 'Must be a valid MacPass number')
     .regex(/^\d*$/).optional().or(z.literal(''));
 
+export const zMailboxCombination =
+    z.string().regex(/^[0-4][0-9][0-4][0-9][0-4][0-9]$/, 'Must be valid')
+    .optional().or(z.literal(''));
+
 /**
  * Transform ISO 8601 date strings into DateTime objects
  */

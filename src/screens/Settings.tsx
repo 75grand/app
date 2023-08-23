@@ -25,7 +25,7 @@ import { User } from '../lib/types/user';
 import { $localSettings } from '../lib/user/settings-store';
 import { $user } from '../lib/user/user-store';
 import * as StoreReview from 'expo-store-review';
-import { zMacPass } from '../lib/types/utils';
+import { zMacPass, zMailboxCombination } from '../lib/types/utils';
 
 export const screenOptions: NativeStackNavigationOptions = {
     presentation: 'modal',
@@ -49,7 +49,7 @@ export default function Settings() {
             phone: User.shape.phone.optional().default(user.phone),
             macPass: zMacPass.default(settings.macPass),
             mailboxNumber: z.string().optional().default(settings.mailboxNumber),
-            mailboxCombination: z.string().regex(/^[0-4][0-9][0-4][0-9][0-4][0-9]$/, 'Must be valid').optional().or(z.literal('')).default(settings.mailboxCombination)
+            mailboxCombination: zMailboxCombination.default(settings.mailboxCombination)
         })
     );
 
