@@ -66,6 +66,7 @@ export default function PhoneNumber() {
                         placeholder="(651) 696-6000"
                         maxLength={14}
                         inputMode="numeric"
+                        returnKeyType="done"
                     />
                 </InputLabel>
             </Card>
