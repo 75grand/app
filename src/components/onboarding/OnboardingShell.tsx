@@ -1,6 +1,6 @@
 import { useStore } from '@nanostores/react';
 import { StatusBar } from 'expo-status-bar';
-import { KeyboardAvoidingView, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import tw from '../../lib/tailwind';
 import { $user } from '../../lib/user/user-store';
 import Button from '../Button';
@@ -42,7 +42,7 @@ export default function OnboardingShell({
             <StatusBar animated style="dark"/>
 
             <SafeAreaView style={tw('h-full bg-white')}>
-                <KeyboardAvoidingView behavior="padding">
+                <KeyboardAvoidingView behavior={Platform.select({ ios: 'padding', android: 'height' })}>
                     <View style={tw('p-6 bg-white h-full justify-between')}>
                         <View style={tw('gap-6 items-center shrink')}>
                             <Logo/>
