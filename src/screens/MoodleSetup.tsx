@@ -28,7 +28,7 @@ const MOODLE_PAGE_URL = 'https://moodle.macalester.edu/calendar/export.php';
 
 export default function MoodleSetup() {
     const navigation = useNavigation();
-    const { onSetupEnd } = useRoute().params as any;
+    const params = useRoute().params as any;
 
     const [isLoading, setIsLoading] = useState(true);
 
@@ -83,7 +83,7 @@ export default function MoodleSetup() {
         setIsLoading(false);
 
         navigation.goBack();
-        if(onSetupEnd) onSetupEnd();
+        if(params?.onSetupEnd) params.onSetupEnd();
     }
 
     return (
