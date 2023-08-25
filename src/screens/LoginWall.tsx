@@ -4,7 +4,6 @@ import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { Alert, SafeAreaView, View } from 'react-native';
 import Button from '../components/Button';
-import AnimatedLogoIcon from '../components/login/AnimatedLogoIcon';
 import { login } from '../lib/api/login';
 import tw from '../lib/tailwind';
 import { StackActions, useNavigation } from '@react-navigation/native';
