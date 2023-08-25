@@ -29,6 +29,7 @@ function getRedirectUrl() {
  */
 export async function getLoginUrl(options?: StringRecord) {
     const responseType = z.object({ redirect_url: z.string() });
+
     const response = await request(responseType, {
         url: 'authentication',
         params: {
@@ -41,17 +42,17 @@ export async function getLoginUrl(options?: StringRecord) {
     return response.redirect_url;
 }
 
+type LoginResult = { success: true, created: boolean } | { success: false };
+
 /**
  * @returns Whether the user's account was just created
  */
-export async function login(referralCode: string = '') {
+export async function login(referralCode: string = ''): Promise<LoginResult> {
     // Fetch Google OAuth URL from server
     const loginUrl = await getLoginUrl({ referral_code: referralCode });
     const result = await WebBrowser.openAuthSessionAsync(loginUrl, getRedirectUrl());
 
-    console.log(JSON.stringify(result));
-
-    if(result?.type === 'success') {
+    if(result.type === 'success') {
         // Retrieve and store authentication token
         const url = Linking.parse(result.url);
         $token.set(url.queryParams?.token as string);
@@ -59,10 +60,13 @@ export async function login(referralCode: string = '') {
         // Fetch and store user profile
         $user.set(await fetchUser());
 
-        // WebBrowser.dismissAuthSession();
-
-        return Boolean(url.queryParams?.created);
+        return {
+            created: Boolean(url.queryParams?.created),
+            success: true
+        }
     }
 
-    return false;
+    return {
+        success: false
+    }
 }
