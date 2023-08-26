@@ -30,7 +30,7 @@ export default function ListingDetail() {
 
     if(!listingId) return <EmptyState title="Listing not found" icon="pricetag"/>;
 
-    const { data: listing } = useQuery<Listing>({
+    const { data: listing, isLoading } = useQuery<Listing>({
         queryKey: ['listings', listingId],
         queryFn: () => fetchListing(listingId),
         initialData: params.listing
@@ -52,7 +52,8 @@ export default function ListingDetail() {
         });
     }, [listing, user]);
 
-    if(!listing) return;
+    if(!listing && isLoading) return;
+    if(!listing) return <EmptyState title="Listing not found" icon="pricetag"/>;
 
     const priceText = listing.price === 0
         ? 'Free'

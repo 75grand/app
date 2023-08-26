@@ -26,9 +26,39 @@ import MacPassAndMailbox from './screens/onboarding/MacPassAndMailbox';
 import BegForNotifications from './screens/onboarding/BegForNotifications';
 import ConfigureMoodle from './screens/onboarding/ConfigureMoodle';
 import PhoneNumber from './screens/onboarding/PhoneNumber';
+import { LinkingOptions } from '@react-navigation/native';
+import * as Linking from 'expo-linking';
+import * as Notifications from 'expo-notifications';
+import { SITE } from './lib/constants';
+import { isLoggedIn } from './lib/api/login';
 
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
+
+const deepLinkRouting: LinkingOptions<any>['config']['screens'] = {
+    Tabs: {
+        screens: {
+            MarketplaceTab: {
+                initialRouteName: 'Marketplace',
+                screens: {
+                    ListingDetail: {
+                        path: 'marketplace/:listingId',
+                        parse: { listingId: Number }
+                    }
+                }
+            },
+            CalendarTab: {
+                initialRouteName: 'Calendar',
+                screens: {
+                    CalendarDetail: {
+                        path: 'calendar/:eventId',
+                        parse: { listingId: Number }
+                    }
+                }
+            }
+        }
+    }
+}
 
 export default function Routing() {
     const user = useStore($user);
@@ -168,4 +198,48 @@ function HoursRouting() {
             <Stack.Screen name="Feedback" component={Feedback.default} options={Feedback.screenOptions}/>
         </Stack.Navigator>
     );
+}
+
+/**
+ * Handle navigation for notifications and deep links
+ * @see https://docs.expo.dev/versions/latest/sdk/notifications/#handle-push-notifications-with-navigation
+ */
+export const navigationLinking: LinkingOptions<any> = {
+    prefixes: [
+        Linking.createURL('/'),
+        SITE
+    ],
+    config: {
+        screens: deepLinkRouting
+    },
+    async getInitialURL() {
+        // Check if app was opened from a deep link
+        const url = await Linking.getInitialURL();
+        if(url !== null) return url;
+
+        // Handle URL from push notification
+        const response = await Notifications.getLastNotificationResponseAsync();
+        return response?.notification.request.content.data.url;
+    },
+    subscribe(listener) {
+        if(!isLoggedIn()) return;
+
+        const onReceiveURL = ({ url }) => listener(url);
+
+        // Listen to incoming links from deep linking
+        const eventListenerSubscription = Linking.addEventListener('url', onReceiveURL);
+
+        // Listen to push notifications
+        const subscription = Notifications.addNotificationResponseReceivedListener(response => {
+            listener(
+                response.notification.request.content.data.url
+            );
+        });
+
+        // Clean up event listeners
+        return () => {
+            eventListenerSubscription.remove();
+            subscription.remove();
+        }
+    }
 }

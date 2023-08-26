@@ -10,14 +10,13 @@ import { NavigationContainer, Theme } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
+import { useEffect, useState } from 'react';
 import 'react-native-url-polyfill/auto';
 import { HeaderButtonsProvider } from 'react-navigation-header-buttons';
-import Routing from './src/Routing';
+import Routing, { navigationLinking } from './src/Routing';
+import { boot } from './src/lib/boot';
 import { navigationRef } from './src/lib/navigation-ref';
 import { color } from './src/lib/tailwind';
-import { useEffect, useState } from 'react';
-import { boot } from './src/lib/boot';
-import { Text, View } from 'react-native';
 
 const theme: Theme = {
     dark: false,
@@ -53,7 +52,7 @@ export default Sentry.Native.wrap(() => {
             <StatusBar animated style="auto"/>
 
             <QueryClientProvider client={queryClient}>
-                <NavigationContainer ref={navigationRef} theme={theme}>
+                <NavigationContainer linking={navigationLinking} ref={navigationRef} theme={theme}>
                     <HeaderButtonsProvider stackType="native">
                         <Routing/>
                     </HeaderButtonsProvider>

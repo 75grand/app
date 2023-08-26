@@ -6,6 +6,8 @@ import { patchUser } from './api/api';
 import { color } from './tailwind';
 import { $user } from './user/user-store';
 import { isLoggedIn } from './api/login';
+import { LinkingOptions } from '@react-navigation/native';
+import * as ExpoLinking from 'expo-linking';
 
 /**
  * Set the notification handler

@@ -29,7 +29,7 @@ export function screenOptions({ route }): NativeStackNavigationOptions {
     return {
         headerTitle: () => <></>,
         headerBackTitle: 'Calendar',
-        title: route.params.event.title ?? 'Calendar Event'
+        title: route.params.event?.title ?? 'Calendar Event'
     }
 }
 
@@ -42,7 +42,7 @@ export default function CalendarDetail() {
 
     const queryClient = useQueryClient();
 
-    const { data: event } = useQuery<CalendarEvent>({
+    const { data: event, isLoading } = useQuery<CalendarEvent>({
         queryKey: ['events', eventId],
         queryFn: () => fetchEvent(eventId),
         initialData: params.event
@@ -97,6 +97,9 @@ export default function CalendarDetail() {
             )
         });
     }, [attending, event]);
+
+    if(!event && isLoading) return;
+    if(!event) return <EmptyState title="Event not found" subtitle="Let's take a rain check?" icon="rainy"/>;
 
     const startDateText = event.start_date.toLocaleString(DateTime.DATE_HUGE);
 
