@@ -13,10 +13,11 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import 'react-native-url-polyfill/auto';
 import { HeaderButtonsProvider } from 'react-navigation-header-buttons';
-import Routing, { navigationLinking } from './src/Routing';
+import Routing from './src/Routing';
 import { boot } from './src/lib/boot';
 import { navigationRef } from './src/lib/navigation-ref';
 import { color } from './src/lib/tailwind';
+import { navigationLinking } from './src/lib/deep-linking';
 
 const theme: Theme = {
     dark: false,

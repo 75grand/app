@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { ScrollView, View } from 'react-native';
 import AvatarButton from '../components/AvatarButton';
 import Logo from '../components/Logo';
+import TouchableScale from '../components/TouchableScale';
 import FeaturedListings from '../components/home/FeaturedListings';
 import HoursCard from '../components/home/HoursCard';
 import MoodleCard from '../components/home/MoodleCard';
@@ -10,7 +11,6 @@ import QuickAccess from '../components/home/QuickAccess';
 import RatingPrompt from '../components/home/RatingPrompt';
 import RedditCard from '../components/home/RedditCard';
 import tw from '../lib/tailwind';
-import TouchableScale from '../components/TouchableScale';
 
 export function screenOptions({ navigation }): NativeStackNavigationOptions {
     return {

@@ -1,41 +1,37 @@
 import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import { useStore } from '@nanostores/react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { LinkingOptions } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import tw from './lib/tailwind';
 import { $user } from './lib/user/user-store';
+import * as AboutTheApp from './screens/AboutTheApp';
 import * as ApproveNotifications from './screens/ApproveNotifications';
 import * as Calendar from './screens/Calendar';
 import * as CalendarDetail from './screens/CalendarDetail';
+import * as Feedback from './screens/Feedback';
 import * as Home from './screens/Home';
 import * as Hours from './screens/Hours';
 import * as LoginWall from './screens/LoginWall';
 import * as Menus from './screens/Menus';
+import * as MoodleSetup from './screens/MoodleSetup';
 import * as ScanMacPass from './screens/ScanMacPass';
 import * as Settings from './screens/Settings';
-import * as ShowMacPass from './screens/ShowMacPass';
 import * as ShowCombination from './screens/ShowCombination';
-import * as Marketplace from './screens/marketplace/Marketplace';
-import * as ListingDetail from './screens/marketplace/ListingDetail';
+import * as ShowMacPass from './screens/ShowMacPass';
 import * as EditListing from './screens/marketplace/EditListing';
-import * as Feedback from './screens/Feedback';
-import * as MoodleSetup from './screens/MoodleSetup';
-import * as AboutTheApp from './screens/AboutTheApp';
-import UserInfo from './screens/onboarding/UserInfo';
-import MacPassAndMailbox from './screens/onboarding/MacPassAndMailbox';
+import * as ListingDetail from './screens/marketplace/ListingDetail';
+import * as Marketplace from './screens/marketplace/Marketplace';
 import BegForNotifications from './screens/onboarding/BegForNotifications';
 import ConfigureMoodle from './screens/onboarding/ConfigureMoodle';
+import MacPassAndMailbox from './screens/onboarding/MacPassAndMailbox';
 import PhoneNumber from './screens/onboarding/PhoneNumber';
-import { LinkingOptions } from '@react-navigation/native';
-import * as Linking from 'expo-linking';
-import * as Notifications from 'expo-notifications';
-import { SITE } from './lib/constants';
-import { isLoggedIn } from './lib/api/login';
+import UserInfo from './screens/onboarding/UserInfo';
 
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
 
-const deepLinkRouting: LinkingOptions<any>['config']['screens'] = {
+export const deepLinkRouting: LinkingOptions<any>['config']['screens'] = {
     Tabs: {
         screens: {
             MarketplaceTab: {
@@ -198,48 +194,4 @@ function HoursRouting() {
             <Stack.Screen name="Feedback" component={Feedback.default} options={Feedback.screenOptions}/>
         </Stack.Navigator>
     );
-}
-
-/**
- * Handle navigation for notifications and deep links
- * @see https://docs.expo.dev/versions/latest/sdk/notifications/#handle-push-notifications-with-navigation
- */
-export const navigationLinking: LinkingOptions<any> = {
-    prefixes: [
-        Linking.createURL('/'),
-        SITE
-    ],
-    config: {
-        screens: deepLinkRouting
-    },
-    async getInitialURL() {
-        // Check if app was opened from a deep link
-        const url = await Linking.getInitialURL();
-        if(url !== null) return url;
-
-        // Handle URL from push notification
-        const response = await Notifications.getLastNotificationResponseAsync();
-        return response?.notification.request.content.data.url;
-    },
-    subscribe(listener) {
-        if(!isLoggedIn()) return;
-
-        const onReceiveURL = ({ url }) => listener(url);
-
-        // Listen to incoming links from deep linking
-        const eventListenerSubscription = Linking.addEventListener('url', onReceiveURL);
-
-        // Listen to push notifications
-        const subscription = Notifications.addNotificationResponseReceivedListener(response => {
-            listener(
-                response.notification.request.content.data.url
-            );
-        });
-
-        // Clean up event listeners
-        return () => {
-            eventListenerSubscription.remove();
-            subscription.remove();
-        }
-    }
 }
