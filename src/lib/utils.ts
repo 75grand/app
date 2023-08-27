@@ -6,14 +6,15 @@ import { navigateWithRef } from './navigation-ref';
 import { AnyZodObject, z } from 'zod';
 import { DateTime } from 'luxon';
 
-export async function openBrowser(url: string) {
+export async function openBrowser(url: string, options: Partial<WebBrowser.WebBrowserOpenOptions> = {}) {
     setStatusBarStyle('light');
 
     try {
         await WebBrowser.openBrowserAsync(url, {
             presentationStyle: WebBrowser.WebBrowserPresentationStyle.POPOVER,
             controlsColor: color('accent'),
-            dismissButtonStyle: 'close'
+            dismissButtonStyle: 'close',
+            ...options
         });
     } finally {
         setStatusBarStyle('auto');

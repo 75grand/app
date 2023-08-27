@@ -85,14 +85,14 @@ function NewsItems({ source }: { source: NewsSources }) {
 
     return (
         <Grid columns={1}>
-            {data.map(story => <NewsItem key={story.url} {...story}/>)}
+            {data.map(story => <NewsItem key={story.url} source={source} {...story}/>)}
         </Grid>
     );
 }
 
-function NewsItem({ title, date, image_url, url }: NewsStory) {
+function NewsItem({ title, date, image_url, url, source }: NewsStory & { source: NewsSources }) {
     return (
-        <TouchableOpacity onPress={() => openBrowser(url)}>
+        <TouchableOpacity onPress={() => openBrowser(url, { readerMode: source !== 'summit' })}>
             <View style={tw('gap-3 flex-row items-center')}>
                 <View style={tw('gap-1 w-full shrink')}>
                     <Text numberOfLines={3}  style={tw('text-base font-semibold leading-tight')}>
