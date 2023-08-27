@@ -12,36 +12,37 @@ import Grid from '../Grid';
 export default function RedditCard() {
     const { data = [] } = useQuery({
         queryFn: fetchRedditPosts,
-        queryKey: ['reddit']
+        queryKey: ['news', 'reddit']
     });
 
     if(data.length === 0) return;
 
     return (
-        <Card>
-            <Pressable onPress={() => Linking.openURL('https://www.reddit.com/r/macalester')}>
-                <CardHeader
-                    title="r/Macalester"
-                    // subtitle={(items[0]?.subreddit_subscribers?.toLocaleString() ?? '???') + ' members'}
-                    customIcon={props => <FontAwesome name="reddit" {...props}/>}
-                />
-            </Pressable>
+        <View style={tw('px-3')}>
+            <Card>
+                <Pressable onPress={() => Linking.openURL('https://www.reddit.com/r/macalester')}>
+                    <CardHeader
+                        title="r/Macalester"
+                        // subtitle={(items[0]?.subreddit_subscribers?.toLocaleString() ?? '???') + ' members'}
+                        customIcon={props => <FontAwesome name="reddit" {...props}/>}
+                    />
+                </Pressable>
 
-            <Grid columns={1}>
-                {data.map(post =>
-                    <RedditItem key={post.url} {...post}/>)}
-            </Grid>
-        </Card>
+                <Grid columns={1}>
+                    {data.map(post => <RedditItem key={post.url} {...post}/>)}
+                </Grid>
+            </Card>
+        </View>
     );
 }
 
-/* eslint-disable react/prop-types */
 function RedditItem({ title, url, stickied, author, score, comments }: RedditPost) {
     return (
         <TouchableOpacity onPress={() => openBrowser(url)}>
             <View style={tw('flex gap-1')}>
                 <Text numberOfLines={3}  style={tw('text-base font-semibold leading-tight')}>
                     {stickied && <MaterialIcons name="push-pin" style={tw('text-green')}/>}
+                    {stickied && ' '}
                     {title}
                 </Text>
 

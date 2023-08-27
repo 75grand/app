@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { zDateTime } from './utils';
 
-export type NewsSources = 'the-mac-weekly'|'macalester'|'the-hegemonocle'|'summit';
+export type NewsSources = 'the-mac-weekly'|'macalester'|'the-hegemonocle'|'summit'|'reddit';
 
 export type NewsStory = z.infer<typeof NewsStory>;
 export const NewsStory = z.object({

@@ -2,7 +2,7 @@ import { Text, View } from 'react-native';
 import tw, { color } from '../lib/tailwind';
 import { Ionicons } from '@expo/vector-icons';
 
-interface Props {
+export interface CardHeaderProps {
     title: string,
     subtitle?: string,
     icon?: keyof typeof Ionicons.glyphMap,
@@ -10,7 +10,7 @@ interface Props {
     light?: boolean
 }
 
-export default function CardHeader({ title, subtitle, icon, customIcon, light = false }: Props) {
+export default function CardHeader({ title, subtitle, icon, customIcon, light = false }: CardHeaderProps) {
     const iconProps = {
         size: 24,
         color: color(light ? 'white' : 'accent')
