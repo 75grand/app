@@ -1,10 +1,10 @@
 import { setStatusBarStyle } from 'expo-status-bar';
 import * as WebBrowser from 'expo-web-browser';
-import { Alert } from 'react-native';
-import { color } from './tailwind';
-import { navigateWithRef } from './navigation-ref';
-import { AnyZodObject, z } from 'zod';
 import { DateTime } from 'luxon';
+import { Alert } from 'react-native';
+import { AnyZodObject, ZodRawShape, z } from 'zod';
+import { navigateWithRef } from './navigation-ref';
+import { color } from './tailwind';
 
 export async function openBrowser(url: string, options: Partial<WebBrowser.WebBrowserOpenOptions> = {}) {
     setStatusBarStyle('light');
@@ -66,16 +66,20 @@ export function objectToFormData(object: object): FormData {
 
 /**
  * Given an existing Zod type, merge an object of defaults into it
- * @returns A new Zod type with the default values added as strings
+ * @returns A new Zod type with the default values
  */
 export function mergeDefaultsForInput<T extends AnyZodObject>(type: T, defaults: Partial<z.infer<T>>): T {
+    const shape: ZodRawShape = {};
+
     for(const key in type.shape) {
+        shape[key] = type.shape[key];
+
         if(key in defaults) {
-            type.shape[key] = type.shape[key].default(String(defaults[key]));
+            shape[key] = shape[key].default(`${defaults[key]}`);
         }
     }
 
-    return type;
+    return z.object(shape) as T;
 }
 
 /**
