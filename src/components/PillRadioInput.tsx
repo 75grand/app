@@ -7,11 +7,10 @@ interface Props {
     options: StringRecord|string[],
     value: string,
     setValue: (value: string) => void,
-    allowEmpty?: boolean,
-    scroll?: boolean
+    allowEmpty?: boolean
 }
 
-export default function PillRadioInput({ options, value, setValue, allowEmpty = false, scroll = false }: Props) {
+export default function PillRadioInput({ options, value, setValue, allowEmpty = false }: Props) {
     if(Array.isArray(options)) {
         const optionsObject = {};
         options.forEach(option => optionsObject[option] = option);
@@ -19,7 +18,7 @@ export default function PillRadioInput({ options, value, setValue, allowEmpty = 
     }
 
     return (
-        <ScrollView scrollEnabled={scroll} bounces={false} style={tw('-m-3')} horizontal showsHorizontalScrollIndicator={false}>
+        <ScrollView scrollEnabled bounces={false} style={tw('-m-3')} horizontal showsHorizontalScrollIndicator={false}>
             <View style={tw('flex-row gap-2 p-3')}>
                 {Object.entries(options).map(([thisValue, label]) => {
                     return (
