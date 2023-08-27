@@ -7,10 +7,11 @@ import TouchableScale from '../components/TouchableScale';
 import FeaturedListings from '../components/home/FeaturedListings';
 import HoursCard from '../components/home/HoursCard';
 import MoodleCard from '../components/home/MoodleCard';
+import NewsCard from '../components/home/NewsCard';
 import QuickAccess from '../components/home/QuickAccess';
 import RatingPrompt from '../components/home/RatingPrompt';
-import RedditCard from '../components/home/RedditCard';
 import tw from '../lib/tailwind';
+import RedditCard from '../components/home/RedditCard';
 
 export function screenOptions({ navigation }): NativeStackNavigationOptions {
     return {
@@ -32,18 +33,12 @@ export default function Home() {
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={tw('py-3 gap-3')}>
                     <QuickAccess/>
-
                     <RatingPrompt/>
-
                     <HoursCard/>
-
                     <FeaturedListings/>
-
                     <MoodleCard/>
-
-                    <View style={tw('px-3')}>
-                        <RedditCard/>
-                    </View>
+                    <NewsCard/>
+                    <RedditCard/>
                 </View>
             </ScrollView>
         </>
