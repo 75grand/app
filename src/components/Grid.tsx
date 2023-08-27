@@ -1,5 +1,5 @@
-import React, { Children } from 'react';
-import { View } from 'react-native';
+import React, { Children, useState } from 'react';
+import { LayoutChangeEvent, View } from 'react-native';
 import tw from '../lib/tailwind';
 
 export interface Props {
@@ -11,31 +11,26 @@ export interface Props {
 export default function Grid({ columns, gap = 3, children }: Props) {
     const items = Children.toArray(children);
 
-    const rows: (typeof items[0])[][] = [];
+    const [width, setWidth] = useState(0);
+    const gapSize = Number(tw(`gap-${gap}`).gap);
+    const totalGap = gapSize * (columns - 1);
 
-    for(let i = 0; i < items.length; i += columns) {
-        const row = items.slice(i, i + columns);
-
-        rows.push([
-            ...row,
-            ...Array(columns - row.length).map(index => <View key={index}/>)
-        ]);
+    function handleLayout({ nativeEvent }: LayoutChangeEvent) {
+        setWidth(nativeEvent.layout.width);
     }
 
     return (
-        <View style={tw(`gap-${gap}`)}>
-            {rows.map((row, index) => (
-                <View key={index} style={tw(`flex-row gap-${gap}`)}>
-                    {row.map(item => (
-                        <View
-                            // @ts-expect-error
-                            key={item?.key ?? null}
-                            style={tw('w-full shrink')}
-                            children={item}
-                        />
-                    ))}
-                </View>
-            ))}
+        <View onLayout={handleLayout} style={tw(`w-full flex-row flex-wrap gap-${gap}`)}>
+            {items.map(item => {
+                const itemWidth = (width - totalGap) / columns;
+
+                return (
+                    // @ts-expect-error
+                    <View style={{ width: itemWidth }} key={item?.key ?? null}>
+                        {item}
+                    </View>
+                );
+            })}
         </View>
     );
 }
