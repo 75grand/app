@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { MasonryFlashList } from '@shopify/flash-list';
 import { useQuery } from '@tanstack/react-query';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import EmptyState from '../../components/EmptyState';
 import FloatingCircleButton from '../../components/FloatingCircleButton';
 import ListingItem from '../../components/marketplace/ListingItem';
@@ -31,11 +31,6 @@ export default function Marketplace() {
 
     return (
         <>
-            <FloatingCircleButton
-                icon="add"
-                onPress={createListing}
-            />
-
             <MasonryFlashList
                 contentInsetAdjustmentBehavior="automatic"
                 contentContainerStyle={tw('p-1.5')}
@@ -55,6 +50,11 @@ export default function Marketplace() {
                     title="No Listings Found"
                     subtitle="Be the first to post one!"
                 />}
+            />
+
+            <FloatingCircleButton
+                icon="add"
+                onPress={createListing}
             />
         </>
     );
