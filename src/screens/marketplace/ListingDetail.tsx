@@ -11,7 +11,7 @@ import EmptyState from '../../components/EmptyState';
 import { fetchListing } from '../../lib/api/api';
 import { Listing } from '../../lib/types/marketplace';
 import tw from '../../lib/tailwind';
-import { formatPhoneNumber, pluralize, ucFirst } from '../../lib/text-utils';
+import { formatPhoneNumber, ucFirst } from '../../lib/text-utils';
 import { $user } from '../../lib/user/user-store';
 import { getCdnUrl, openBrowser } from '../../lib/utils';
 import { formatDistance } from '../../lib/marketplace-utils';
@@ -62,7 +62,7 @@ export default function ListingDetail() {
     return (
         <>
             <ScrollView style={tw('h-full bg-white')}>
-                <Pressable onLongPress={() => openBrowser(listing.image_url)}>
+                <Pressable onPress={() => openBrowser(listing.image_url)}>
                     <Image source={getCdnUrl(listing.image_url, 1000, 1000)}
                         style={tw('w-full border-b border-b-black/10', { aspectRatio: 1/1 })}/>
                 </Pressable>
