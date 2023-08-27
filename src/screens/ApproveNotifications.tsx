@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { Text, View } from 'react-native';
+import { Platform, Text, View } from 'react-native';
 import Button from '../components/Button';
 import { askForNotifPermission } from '../lib/notifications';
 import tw from '../lib/tailwind';
@@ -28,7 +28,7 @@ export default function ApproveNotifications() {
 
     return (
         <>
-            <StatusBar animated style="light"/>
+            {Platform.OS !== 'android' && <StatusBar animated style="light"/>}
 
             <View style={tw('items-center p-6 bg-white h-full justify-between')}>
                 <View/>

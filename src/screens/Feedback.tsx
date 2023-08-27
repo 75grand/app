@@ -4,7 +4,7 @@ import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { useMutation } from '@tanstack/react-query';
 import { StatusBar } from 'expo-status-bar';
 import { useLayoutEffect } from 'react';
-import { ActivityIndicator, Alert, Text, View } from 'react-native';
+import { ActivityIndicator, Alert, Platform, Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { z } from 'zod';
@@ -74,7 +74,7 @@ export default function Feedback() {
 
     return (
         <>
-            <StatusBar animated style="light"/>
+            {Platform.OS !== 'android' && <StatusBar animated style="light"/>}
 
             <KeyboardAwareScrollView>
                 <View style={tw('p-3')}>

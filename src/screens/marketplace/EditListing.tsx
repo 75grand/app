@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Image } from 'expo-image';
 import { StatusBar } from 'expo-status-bar';
 import { useLayoutEffect, useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Platform, Text, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Masks } from 'react-native-mask-input';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -115,7 +115,7 @@ export default function EditListing() {
 
     return (
         <>
-            <StatusBar animated style="light"/>
+            {Platform.OS !== 'android' && <StatusBar animated style="light"/>}
 
             <KeyboardAwareScrollView>
                 <View style={tw('p-3 gap-3')}>

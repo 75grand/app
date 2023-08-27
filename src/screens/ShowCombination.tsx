@@ -4,7 +4,7 @@ import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import { MotiText, MotiView } from 'moti';
 import { useCallback, useRef, useState } from 'react';
-import { SafeAreaView, Text, View } from 'react-native';
+import { Platform, SafeAreaView, Text, View } from 'react-native';
 import { Easing } from 'react-native-reanimated';
 import { Circle, G, Path, Svg, Text as SvgText } from 'react-native-svg';
 import Button from '../components/Button';
@@ -53,7 +53,7 @@ export default function ShowCombination() {
 
     return (
         <>
-            <StatusBar animated style="light"/>
+            {Platform.OS !== 'android' && <StatusBar animated style="light"/>}
 
             <SafeAreaView>
                 <View style={tw('p-8 h-full justify-between')}>

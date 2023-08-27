@@ -52,7 +52,7 @@ export default function LoginWall() {
 
     return (
         <>
-            <StatusBar animated style="light"/>
+            {Platform.OS !== 'android' && <StatusBar animated style="light"/>}
 
             <ImageBackground blurRadius={15} source={require('../../assets/weyerhaeuser.jpg')}>
                 <SafeAreaView style={tw('h-full')}>

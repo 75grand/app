@@ -1,7 +1,7 @@
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import * as StoreReview from 'expo-store-review';
-import { Text, View } from 'react-native';
+import { Platform, Text, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import AnimatedRing from '../components/AnimatedRing';
 import Link from '../components/Link';
@@ -31,7 +31,7 @@ export function screenOptions({ navigation }): NativeStackNavigationOptions {
 export default function AboutTheApp() {
     return (
         <>
-            <StatusBar animated style="light"/>
+            {Platform.OS !== 'android' && <StatusBar animated style="light"/>}
 
             <View style={tw('items-center p-8 gap-8 bg-white h-full')}>
                 <AnimatedRing text="Your Portal to Macalester" color="black">

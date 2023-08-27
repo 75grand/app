@@ -3,7 +3,7 @@ import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
-import { Alert, LogBox, View } from 'react-native';
+import { Alert, LogBox, Platform, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import tw from '../lib/tailwind';
 import { zMacPass } from '../lib/types/utils';
@@ -58,7 +58,7 @@ export default function ScanMacPass() {
 
     return (
         <>
-            <StatusBar animated style="light"/>
+            {Platform.OS !== 'android' && <StatusBar animated style="light"/>}
 
             <View>
                 <BarCodeScanner

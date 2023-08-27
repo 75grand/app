@@ -2,7 +2,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import { useRef, useState } from 'react';
-import { ActivityIndicator, Text, View } from 'react-native';
+import { ActivityIndicator, Platform, Text, View } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { WebViewMessageEvent, WebViewNavigationEvent } from 'react-native-webview/lib/WebViewTypes';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -88,7 +88,7 @@ export default function MoodleSetup() {
 
     return (
         <>
-            <StatusBar animated style="light"/>
+            {Platform.OS !== 'android' && <StatusBar animated style="light"/>}
 
             <View style={tw('h-full bg-gray-200 relative')}>
                 <WebView
