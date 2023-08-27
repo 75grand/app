@@ -87,11 +87,19 @@ export default function ListingDetail() {
 
             <View style={tw('p-3 bg-white pt-0')}>
                 {listing.available ? (
-                    <Button
-                        text={'Text ' + formatPhoneNumber(listing.user.phone)}
-                        size="mega"
-                        onPress={() => Linking.openURL(`sms:${listing.user.phone}`)}
-                    />
+                    listing.user.phone ? (
+                        <Button
+                            text={`Text ${formatPhoneNumber(listing.user.phone)}`}
+                            size="mega"
+                            onPress={() => Linking.openURL(`sms:${listing.user.phone}`)}
+                        />
+                    ) : (
+                        <Button
+                            text={`Email ${listing.user.email}`}
+                            size="mega"
+                            onPress={() => Linking.openURL(`mailto:${listing.user.email}`)}
+                        />
+                    )
                 ) : (
                     <Button
                         text="No Longer Available"
