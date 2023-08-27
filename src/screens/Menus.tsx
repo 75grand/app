@@ -68,8 +68,8 @@ export default function Menus() {
             />
 
             <SafeAreaView>
-                <ScrollView style={tw('h-full')} refreshControl={refreshControl}>
-                    <Grid columns={1} style={tw('p-3')}>
+                <ScrollView style={tw('h-full')} contentContainerStyle={tw('p-3')} refreshControl={refreshControl}>
+                    <Grid columns={1}>
                         {date.startOf('day') > DateTime.now().startOf('day') && <FutureMenuWarning/>}
                         {/* {showPromo && <FoodAlertsPromo onDismiss={() => setShowPromo(false)}/>} */}
                         {(isError || !menu) && <EmptyState title="No Menu Found" subtitle="Try another date" icon="fast-food"/>}
