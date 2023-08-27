@@ -48,12 +48,12 @@ export async function request<T extends ZodType>(type: T, options: AxiosRequestC
     } catch(error) {
         if(error.response.status !== HttpStatusCode.NotFound) {
             console.error(`Error with ${name} (${error.response.status})`);
-            
-            alertWithFeedback(
-                error.message || 'It’s not you, it’s us',
-                'If this issue persists, please submit feedback.',
-                `The server returned a ${error.response.status} error code for ${name} at ${requestDate}`
-            );
+
+            // alertWithFeedback(
+            //     error.message || 'It’s not you, it’s us',
+            //     'If this issue persists, please submit feedback.',
+            //     `The server returned a ${error.response.status} error code for ${name} at ${requestDate}`
+            // );
 
             throw error;
         }
