@@ -7,8 +7,8 @@ import { EditableUserFields, User } from '../types/user';
 import { request } from './http-client';
 import { z } from 'zod';
 import { objectToFormData } from '../utils';
-import { $user } from '../user/user-store';
 import { MoodleTask } from '../types/moodle';
+import { NewsSources, NewsStory, RedditPost } from '../types/news';
 
 type Id = string|number;
 
@@ -81,3 +81,14 @@ export const fetchMenu = async (date: DateTime) =>
 
 export const fetchMoodleTasks = async () =>
     await request(MoodleTask.array(), { url: 'moodle' });
+
+/**
+ * News
+ * @see https://www.notion.so/4d7b436cdfc6476693b7468d9d3278af
+ */
+
+export const fetchNews = async (source: NewsSources) =>
+    await request(NewsStory.array(), { url: `news/${source}` });
+
+export const fetchRedditPosts = async () =>
+    await request(RedditPost.array(), { url: 'news/reddit' });
