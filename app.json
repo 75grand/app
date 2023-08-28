@@ -40,6 +40,18 @@
           "color": "#0369A1"
         }
       ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos to add an image to your Marketplace listing."
+        },
+      ],
+      [
+        "expo-barcode-scanner",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera to scan the barcode on your MacPass."
+        }
+      ],
       "sentry-expo"
     ],
     "extra": {
