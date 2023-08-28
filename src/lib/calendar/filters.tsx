@@ -62,5 +62,11 @@ export const calendarFilters: CalendarFilter[] = [
         icon: 'person',
         tint: 'brown',
         filter: ({ calendar_name }) => calendar_name === 'Career'
+    },
+    {
+        name: 'Dev Garden',
+        icon: 'code-slash',
+        tint: 'indigo',
+        filter: ({ calendar_name }) => calendar_name === 'Dev Garden'
     }
 ];
