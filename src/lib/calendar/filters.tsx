@@ -64,9 +64,15 @@ export const calendarFilters: CalendarFilter[] = [
         filter: ({ calendar_name }) => calendar_name === 'Career'
     },
     {
-        name: 'Dev Garden',
+        name: 'Computer Science',
         icon: 'code-slash',
         tint: 'indigo',
-        filter: ({ calendar_name }) => calendar_name === 'Dev Garden'
+        filter: ({ calendar_name, description }) => {
+            if(calendar_name === 'Dev Garden') return true;
+            if(description === null) return false;
+            const keywords = ['coding', 'javascript', 'html', 'computer science', 'hackalester'];
+            description = description.toLowerCase();
+            return keywords.some(word => description.includes(word));
+        }
     }
 ];
