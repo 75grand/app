@@ -57,7 +57,7 @@
       [
         "expo-barcode-scanner",
         {
-          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera to scan the barcode on your MacPass."
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera to scan your MacPass’ barcode and add an image to your Marketplace listing."
         }
       ],
       "sentry-expo"
