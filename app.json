@@ -8,7 +8,7 @@
     "userInterfaceStyle": "light",
     "scheme": "grand",
     "updates": {
-      "useClassicUpdates": true
+      "url": "https://u.expo.dev/81bd5b0d-5aa1-457e-8059-362776c19a1b"
     },
     "splash": {
       "image": "./assets/splash.png",
@@ -23,14 +23,22 @@
       "config": {
         "usesNonExemptEncryption": false
       },
-      "bundleIdentifier": "zone.jero.grand"
+      "bundleIdentifier": "zone.jero.grand",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access your camera to scan the barcode on your MacPass.",
+        "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "monochromeImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0369A1"
       },
-      "package": "zone.jero.grand"
+      "package": "zone.jero.grand",
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.CAMERA"
+      ]
     },
     "plugins": [
       [
@@ -44,7 +52,7 @@
         "expo-image-picker",
         {
           "photosPermission": "Allow $(PRODUCT_NAME) to access your photos to add an image to your Marketplace listing."
-        },
+        }
       ],
       [
         "expo-barcode-scanner",
@@ -59,6 +67,9 @@
         "projectId": "81bd5b0d-5aa1-457e-8059-362776c19a1b"
       }
     },
-    "owner": "75grand"
+    "owner": "75grand",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    }
   }
 }
