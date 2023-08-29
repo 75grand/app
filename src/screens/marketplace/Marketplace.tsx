@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { MasonryFlashList } from '@shopify/flash-list';
 import { useQuery } from '@tanstack/react-query';
-import { View } from 'react-native';
+import { View, useWindowDimensions } from 'react-native';
 import EmptyState from '../../components/EmptyState';
 import FloatingCircleButton from '../../components/FloatingCircleButton';
 import ListingItem from '../../components/marketplace/ListingItem';
@@ -16,6 +16,7 @@ export const screenOptions: NativeStackNavigationOptions = {
 
 export default function Marketplace() {
     const navigation = useNavigation();
+    const { width } = useWindowDimensions();
 
     const { data: listings = [], isFetching, refetch } = useQuery({
         queryKey: ['listings'],
@@ -38,7 +39,7 @@ export default function Marketplace() {
                 refreshing={isRefetching}
                 data={[...listings]}
                 showsVerticalScrollIndicator={false}
-                numColumns={2}
+                numColumns={Math.max(Math.floor(width / 250), 2)}
                 estimatedItemSize={211}
                 renderItem={({ item }) => (
                     <View key={item.id} style={tw('p-1.5')}>
