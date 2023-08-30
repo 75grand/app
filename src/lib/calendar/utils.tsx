@@ -30,24 +30,6 @@ export function groupEvents(events: CalendarEvent[]): GroupedEvents {
     });
 }
 
-/**
- * Share an even with the iOS share sheet
- * @see https://reactnative.dev/docs/share
- */
-export async function shareEvent(event: CalendarEvent) {
-    const message = [
-        event.title,
-        event.start_date.toLocaleString(DateTime.DATETIME_MED),
-        event.location,
-        // 'More details at 75grand.net'
-    ].join('\n');
-
-    await Share.share({
-        url: event.url,
-        message: message
-    });
-}
-
 /** Format the start and end times of an event */
 export function formatDuration(event: CalendarEvent) {
     const startTime = event.start_date;

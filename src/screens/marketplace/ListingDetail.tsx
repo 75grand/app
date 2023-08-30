@@ -4,7 +4,7 @@ import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { useQuery } from '@tanstack/react-query';
 import { Image } from 'expo-image';
 import { useLayoutEffect } from 'react';
-import { Linking, Pressable, ScrollView, Text, View } from 'react-native';
+import { Linking, Pressable, ScrollView, Share, Text, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Button from '../../components/Button';
 import EmptyState from '../../components/EmptyState';
@@ -16,6 +16,8 @@ import { $user } from '../../lib/user/user-store';
 import { getCdnUrl, openBrowser } from '../../lib/utils';
 import { formatDistance } from '../../lib/marketplace-utils';
 import UserItem from '../../components/UserItem';
+import { SITE } from '../../lib/constants';
+import { Ionicons } from '@expo/vector-icons';
 
 export const screenOptions: NativeStackNavigationOptions = {
     headerTitle: () => <></>
@@ -36,6 +38,11 @@ export default function ListingDetail() {
         initialData: params.listing
     });
 
+    function handleShare() {
+        const url = `${SITE}/marketplace/${listing.id}`;
+        Share.share({ url });
+    }
+
     useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => (
@@ -47,6 +54,14 @@ export default function ListingDetail() {
                             navigation.navigate('EditListing', { listing });
                         }}
                     />}
+
+                    <Item
+                        title="Share Event"
+                        IconComponent={Ionicons}
+                        iconSize={25}
+                        iconName="share-outline"
+                        onPress={handleShare}
+                    />
                 </HeaderButtons>
             )
         });

@@ -6,20 +6,21 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Image } from 'expo-image';
 import { DateTime } from 'luxon';
 import { useLayoutEffect } from 'react';
-import { Linking, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Linking, Platform, ScrollView, Share, Text, TouchableOpacity, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Button from '../components/Button';
 import EmptyState from '../components/EmptyState';
 import AvatarStack from '../components/calendar/AvatarStack';
 import { fetchAttendees, fetchEvent, patchRsvp } from '../lib/api/api';
-import { formatDuration, formatLocation, shareEvent } from '../lib/calendar/utils';
+import { formatDuration, formatLocation } from '../lib/calendar/utils';
 import { areNotifsGranted } from '../lib/notifications';
 import tw, { color } from '../lib/tailwind';
 import { pluralize } from '../lib/text-utils';
 import { CalendarEvent, EventAttendee } from '../lib/types/calendar';
 import { $user } from '../lib/user/user-store';
 import { openBrowser } from '../lib/utils';
+import { SITE } from '../lib/constants';
 
 /**
  * Controls screen options dynamically
@@ -72,6 +73,11 @@ export default function CalendarDetail() {
         }
     }
 
+    function handleShare() {
+        const url = `${SITE}/calendar/${event.id}`;
+        Share.share({ url });
+    }
+
     const navigation = useNavigation();
 
     useLayoutEffect(() => {
@@ -91,7 +97,7 @@ export default function CalendarDetail() {
                         IconComponent={Ionicons}
                         iconSize={25}
                         iconName="share-outline"
-                        onPress={() => shareEvent(event)}
+                        onPress={handleShare}
                     />
                 </HeaderButtons>
             )
