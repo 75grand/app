@@ -11,7 +11,7 @@ export async function openBrowser(url: string, options: Partial<WebBrowser.WebBr
 
     try {
         await WebBrowser.openBrowserAsync(url, {
-            presentationStyle: WebBrowser.WebBrowserPresentationStyle.POPOVER,
+            presentationStyle: WebBrowser.WebBrowserPresentationStyle.AUTOMATIC,
             controlsColor: color('accent'),
             dismissButtonStyle: 'close',
             ...options
