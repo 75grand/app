@@ -35,7 +35,7 @@ export function formatDuration(event: CalendarEvent) {
     const startTime = event.start_date;
     const endTime = event.end_date;
 
-    const diff = Math.abs(startTime.diff(endTime).as('hours'));
+    const diff = endTime.diff(startTime).as('hours');
     if(diff === 24) return 'All Day';
 
     const startTimeString = startTime.toLocaleString(DateTime.TIME_SIMPLE);
