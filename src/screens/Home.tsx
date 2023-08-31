@@ -35,8 +35,8 @@ export default function Home() {
                     <QuickAccess/>
                     <RatingPrompt/>
                     <HoursCard/>
-                    <FeaturedListings/>
                     <MoodleCard/>
+                    <FeaturedListings/>
                     <NewsCard/>
                     <RedditCard/>
                 </View>
