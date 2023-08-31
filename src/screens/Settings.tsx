@@ -4,7 +4,7 @@ import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { useMutation } from '@tanstack/react-query';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useLayoutEffect } from 'react';
-import { ActivityIndicator, Platform, View } from 'react-native';
+import { ActivityIndicator, Platform, Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Masks } from 'react-native-mask-input';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -25,6 +25,7 @@ import { User } from '../lib/types/user';
 import { zMacPass, zMailboxCombination } from '../lib/types/utils';
 import { $localSettings } from '../lib/user/settings-store';
 import { $user } from '../lib/user/user-store';
+import Link from '../components/Link';
 
 export const screenOptions: NativeStackNavigationOptions = {
     presentation: 'modal',
@@ -106,9 +107,17 @@ export default function Settings() {
 
             <KeyboardAwareScrollView>
                 <View style={tw('gap-3 p-3')}>
-                    <Card>
-                        <Profile {...user}/>
-                    </Card>
+                    <View style={tw('gap-2')}>
+                        <Card>
+                            <Profile {...user}/>
+                        </Card>
+
+                        <Text style={tw('px-3 text-gray-500')}>
+                            To change your profile picture, {' '}
+                            <Link external href="https://myaccount.google.com/personal-info">update it on  Google</Link>
+                            {' '} then log out and log back in on 75grand.
+                        </Text>
+                    </View>
 
                     <Card>
                         <ReferralCode {...user}/>
