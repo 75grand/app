@@ -13,3 +13,7 @@ Your pocket-sized portal to [Macalester College](https://www.macalester.edu/).
 <a href="">
   <img height="50" src="https://github.com/75grand/app/assets/64276359/b7a8c1ee-7904-4035-9102-4051b62ad62c"/>
 </a>
+
+---
+
+**Note:** The source of 75grand is available, but it is not licensed for any commercial or non-commercial use or modification.
