@@ -48,9 +48,9 @@ export default function MacPassAndMailbox() {
         >
             <Text style={tw('text-base leading-tight px-2 text-center')}>
                 {user.position === 'student' ? (
-                    '75grand can remember your MacPass number, mailbox number, and mailbox combination for you. They’ll be stored securely and will never leave your device.'
+                    '75grand can remember your MacPass/ID number, mailbox number, and mailbox combination for you. They’ll be stored securely and will never leave your device.'
                 ) : (
-                    '75grand can remember your MacPass number for you. It will be stored securely and will never leave your device.'
+                    '75grand can remember your MacPass/ID number for you. It will be stored securely and will never leave your device.'
                 )}
             </Text>
     
