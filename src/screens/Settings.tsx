@@ -139,12 +139,14 @@ export default function Settings() {
                             <MacPassInput {...fields.macPass}/>
                         </InputLabel>
 
-                        <MailboxInput
-                            mailboxNumber={fields.mailboxNumber.value}
-                            setMailboxNumber={fields.mailboxNumber.setValue}
-                            mailboxCombination={fields.mailboxCombination.value}
-                            setMailboxCombination={fields.mailboxCombination.setValue}
-                        />
+                        {user.position === 'student' && (
+                            <MailboxInput
+                                mailboxNumber={fields.mailboxNumber.value}
+                                setMailboxNumber={fields.mailboxNumber.setValue}
+                                mailboxCombination={fields.mailboxCombination.value}
+                                setMailboxCombination={fields.mailboxCombination.setValue}
+                            />
+                        )}
                     </Card>
 
                     <Button

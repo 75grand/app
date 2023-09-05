@@ -8,10 +8,12 @@ import { $localSettings } from '../../lib/user/settings-store';
 import { openBrowser } from '../../lib/utils';
 import Pill from '../Pill';
 import { SITE } from '../../lib/constants';
+import { $user } from '../../lib/user/user-store';
 
 export default function QuickAccess() {
     const navigation = useNavigation();
     const { mostUsedActions } = useStore($localSettings);
+    const user = useStore($user);
 
     function showMacPass() {
         if($localSettings.get().macPass) {
@@ -41,13 +43,13 @@ export default function QuickAccess() {
 
     const items = useMemo(() => [
         ['MacPass', 'card', showMacPass],
-        ['Mailbox Code', 'lock-open', showCombination],
+        user.position === 'student' && ['Mailbox Code', 'lock-open', showCombination],
         ['Time Clock', 'time', () => openBrowser(`${SITE}/redirect/time-clock`)],
         ['Moodle', 'school', () => openBrowser(`${SITE}/redirect/moodle`)],
         ['Reserve Room', 'business', () => openBrowser(`${SITE}/redirect/reserve`)],
         ['Library Catalog', 'book', () => openBrowser(`${SITE}/redirect/library-catalog`)],
         ['Printing & Scanning', 'print', () => openBrowser(`${SITE}/redirect/print`)],
-    ].map(item => ({
+    ].filter(a => a).map(item => ({
         name: item[0] as string,
         icon: item[1] as any,
         action: item[2] as () => void
