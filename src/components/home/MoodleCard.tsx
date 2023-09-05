@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import * as Haptics from 'expo-haptics';
 import { DateTime } from 'luxon';
 import { useMemo } from 'react';
-import { LayoutAnimation, Platform, Pressable, Text, View } from 'react-native';
+import { Alert, LayoutAnimation, Platform, Pressable, Text, View } from 'react-native';
 import { fetchMoodleTasks } from '../../lib/api/api';
 import { useRerender } from '../../lib/hooks/use-rerender';
 import { completeTask, sortTasks } from '../../lib/moodle-utils';
@@ -113,12 +113,23 @@ function MoodleTasks() {
 function MoodleTaskItem(task: MoodleTask) {
     useRerender(1_000);
 
-    const { completedMoodleTasks } = useStore($localSettings);
+    const { completedMoodleTasks, warnedAboutMoodleTask } = useStore($localSettings);
     
     const isCompleted = completedMoodleTasks.includes(task.id);
     const isOverdue = !isCompleted && task.due < DateTime.now();
 
     function handlePress() {
+        if(!warnedAboutMoodleTask) {
+            Alert.alert(
+                'You still have to turn this in on Moodle',
+                'Marking an assignment as “done” on 75grand is only for you and doesn’t turn it in on Moodle.',
+                [{
+                    text: 'Got It',
+                    onPress: () => $localSettings.setKey('warnedAboutMoodleTask', true)
+                }]
+            );
+        }
+
         if(Platform.OS === 'ios') Haptics.selectionAsync();
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         completeTask(task);

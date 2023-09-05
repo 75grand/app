@@ -9,7 +9,8 @@ export const DEFAULT_SETTINGS = {
     favoriteHours: ['Café Mac', 'The Grille', 'Mailroom', 'Library', 'ITS Help Desk', 'Leonard Center'],
     hasLeftReviewOrFeedback: false,
     completedMoodleTasks: [],
-    dismissedMoodleSetup: false
+    dismissedMoodleSetup: false,
+    warnedAboutMoodleTask: false
 }
 
 export const $localSettings = map<typeof DEFAULT_SETTINGS>();
