@@ -7,19 +7,22 @@ import tw, { color, monospace } from '../../lib/tailwind';
 import { User } from '../../lib/types/user';
 import Button from '../Button';
 import InputLabel from '../InputLabel';
+import TouchableScale from '../TouchableScale';
 
 export default function ReferralCode({ referral_code, referrals_count, referrals_per_prize }: User) {
     async function shareReferral() {
         await Share.share({
-            // url: 'https://www.75grand.net',
-            message: `Download 75grand.net and use my referral code: ${referral_code}`
+            url: 'https://www.75grand.net/download',
+            message: `Download 75grand and use my referral code: ${referral_code}`
         });
     }
 
     return (
         <InputLabel text="Referrals">
             <View style={tw('flex-row gap-3')}>
-                <ProgressCircle value={referrals_count} max={referrals_per_prize}/>
+                <TouchableScale onPress={shareReferral}>
+                    <ProgressCircle value={referrals_count} max={referrals_per_prize}/>
+                </TouchableScale>
 
                 <View style={tw('shrink gap-3')}>
                     <TouchableOpacity onPress={shareReferral} style={tw('self-start -mb-1.5 -mt-0.5')}>
