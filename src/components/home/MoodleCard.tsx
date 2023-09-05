@@ -128,7 +128,7 @@ function MoodleTaskItem(task: MoodleTask) {
         <Pressable onPress={handlePress} style={tw('flex-row gap-3 items-center')}>
             <Checkbox checked={isCompleted} onPress={handlePress}/>
 
-            <View style={tw('gap-1', isCompleted && 'opacity-50')}>
+            <View style={tw('gap-1 shrink', isCompleted && 'opacity-50')}>
                 <Text
                     numberOfLines={1}
                     style={tw('text-base leading-none', isOverdue && 'text-red', { fontFamily: monospace })}
