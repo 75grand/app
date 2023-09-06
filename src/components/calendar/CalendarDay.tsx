@@ -23,16 +23,21 @@ export default function CalendarDay({ date, events, index }: Props) {
                 <CardHeader title={dateText}/>
 
                 <View style={tw('gap-3')}>
-                    {events.map(event => {
+                    {events.map((event, i) => {
                         function openEventDetails() {
                             // @ts-expect-error
                             navigation.navigate('CalendarDetail', { event });
                         }
 
                         return (
-                            <TouchableOpacity onPress={openEventDetails} key={event.id}>
-                                <CalendarEventItem {...event}/>
-                            </TouchableOpacity>
+                            <>
+                                <TouchableOpacity onPress={openEventDetails} key={event.id}>
+                                    <CalendarEventItem {...event}/>
+                                </TouchableOpacity>
+
+                                {i !== events.length-1 &&
+                                    <View style={tw('bg-black/10 h-[0.5px]')}/>}
+                            </>
                         );
                     })}
                 </View>
