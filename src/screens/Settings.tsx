@@ -114,7 +114,7 @@ export default function Settings() {
 
                         <Text style={tw('px-3 text-gray-500')}>
                             To change your profile picture, {' '}
-                            <Link external href="https://myaccount.google.com/personal-info">update it on  Google</Link>
+                            <Link external href={`https://myaccount.google.com/u/1/personal-info?authuser=${user.email}`}>update it on  Google</Link>
                             {' '} then log out and log back in on 75grand.
                         </Text>
                     </View>
