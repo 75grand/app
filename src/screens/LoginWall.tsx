@@ -54,7 +54,7 @@ export default function LoginWall() {
         <>
             {Platform.OS !== 'android' && <StatusBar animated style="light"/>}
 
-            <ImageBackground blurRadius={15} source={require('../../assets/weyerhaeuser.jpg')}>
+            <ImageBackground blurRadius={5} source={require('../../assets/75rock.jpg')}>
                 <SafeAreaView style={tw('h-full')}>
                     <KeyboardAvoidingView behavior={Platform.select({ ios: 'padding', android: 'height' })}>
                         <View style={tw('p-3 h-full justify-between')}>
@@ -64,6 +64,7 @@ export default function LoginWall() {
                                 <Logo version="icon"/>
                             </AnimatedRing>
 
+                            <View/>
                             <View/>
 
                             <View style={tw('gap-2 w-full')}>
