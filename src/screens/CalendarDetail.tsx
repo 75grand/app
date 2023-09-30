@@ -192,7 +192,7 @@ function EventLocation({ location, latitude, longitude }: CalendarEvent) {
                     {formatLocation(location)}
                 </Text>
 
-                {latitude && longitude && (
+                {Platform.OS === 'ios' && latitude && longitude && (
                     <MapView
                         style={tw('w-full h-48 rounded-md mt-2 border border-black/10')}
                         mapType="satellite"
