@@ -1,7 +1,8 @@
 import { DateTime } from 'luxon';
 import { MoodleTask } from './types/moodle';
 import { $localSettings } from './user/settings-store';
-import { patchMoodleTask, postMigrateMoodleTasks } from './api/api';
+import { patchMoodleTask, patchUser, postMigrateMoodleTasks } from './api/api';
+import { $user } from './user/user-store';
 
 export function sortTasks(a: MoodleTask, b: MoodleTask): number {
     // Sort by completion status
@@ -30,4 +31,13 @@ export async function migrateOldTasks() {
     if(tasks.length === 0) return;
     await postMigrateMoodleTasks(tasks);
     $localSettings.setKey('completedMoodleTasks', []);
+}
+
+export async function disableMoodle() {
+    const updatedUser = await patchUser({
+        moodle_user_id: null,
+        moodle_token: null
+    });
+
+    $user.set(updatedUser);
 }

@@ -5,8 +5,9 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import * as Haptics from 'expo-haptics';
 import { DateTime } from 'luxon';
 import { useMemo } from 'react';
-import { Alert, LayoutAnimation, Platform, Pressable, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, LayoutAnimation, Platform, Text, TouchableOpacity, View } from 'react-native';
 import { fetchMoodleTasks, patchMoodleTask } from '../../lib/api/api';
+import { toUsefulRelative } from '../../lib/date-utils';
 import { useRerender } from '../../lib/hooks/use-rerender';
 import { sortTasks } from '../../lib/moodle-utils';
 import tw, { monospace } from '../../lib/tailwind';
@@ -14,12 +15,12 @@ import { pluralize } from '../../lib/text-utils';
 import { MoodleTask } from '../../lib/types/moodle';
 import { $localSettings } from '../../lib/user/settings-store';
 import { $user } from '../../lib/user/user-store';
-import Button from '../Button';
 import Card from '../Card';
 import CardHeader from '../CardHeader';
 import EmptyState from '../EmptyState';
 import TouchableScale from '../TouchableScale';
-import { toUsefulRelative } from '../../lib/date-utils';
+import EnableMoodleCard from './EnableMoodleCard';
+import Button from '../Button';
 
 export default function MoodleCard() {
     const navigation = useNavigation();
@@ -40,36 +41,16 @@ export default function MoodleCard() {
 
     return (
         <View style={tw('px-3')}>
-            <Card>
-                {user.moodle_enabled ? (
+            {user.moodle_enabled ? (
+                <Card>
                     <MoodleTasks/>
-                ) : (
-                    <>
-                        <CardHeader
-                            title="Moodle"
-                            customIcon={props => <FontAwesome5 name="graduation-cap" {...props}/>}
-                        />
-
-                        <View style={tw('gap-3 -mt-1')}>
-                            <Text style={tw('text-base')}>
-                                75grand can display your Moodle assignments and
-                                remind you before they're due.
-                            </Text>
-
-                            <Button text="Set Up Automatically" onPress={handleSetUp} size="mega"/>
-                            <Button text="Not Now" onPress={handleDismiss} color="gray"/>
-
-                            <Text style={tw('text-xs text-gray-500')}>
-                                Notifications will be sent when the assignment is due
-                                and at 9:00 AM the day before.
-                                
-                                This feature does not store your login credentials
-                                and was not developed by Moodle or ITS.
-                            </Text>
-                        </View>
-                    </>
-                )}
-            </Card>
+                </Card>
+            ) : (
+                <EnableMoodleCard>
+                    <Button text="Set Up Automatically" onPress={handleSetUp} size="mega"/>
+                    <Button text="Not Now" onPress={handleDismiss} color="gray"/>
+                </EnableMoodleCard>
+            )}
         </View>
     );
 }
