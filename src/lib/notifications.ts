@@ -3,11 +3,8 @@ import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { Linking, Platform } from 'react-native';
 import { patchUser } from './api/api';
-import { color } from './tailwind';
-import { $user } from './user/user-store';
 import { isLoggedIn } from './api/login';
-import { LinkingOptions } from '@react-navigation/native';
-import * as ExpoLinking from 'expo-linking';
+import { color } from './tailwind';
 
 /**
  * Set the notification handler
