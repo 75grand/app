@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon';
 import { MoodleTask } from './types/moodle';
 import { $localSettings } from './user/settings-store';
-import { patchMoodleTask } from './api/api';
+import { patchMoodleTask, postMigrateMoodleTasks } from './api/api';
 
 export function sortTasks(a: MoodleTask, b: MoodleTask): number {
     // Sort by completion status
@@ -25,12 +25,9 @@ export function sortTasks(a: MoodleTask, b: MoodleTask): number {
     if(aName > bName) return 1;
 }
 
-// export function migrateOldTasks() {
-//     const tasks = $localSettings.get();
-
-//     if('completedMoodleTasks' in tasks && tasks.completedMoodleTasks instanceof Array) {
-//         for(const id of tasks.completedMoodleTasks) {
-//             patchMoodleTask(id, true);
-//         }
-//     }
-// }
+export async function migrateOldTasks() {
+    const tasks = $localSettings.get().completedMoodleTasks;
+    if(tasks.length === 0) return;
+    await postMigrateMoodleTasks(tasks);
+    $localSettings.setKey('completedMoodleTasks', []);
+}

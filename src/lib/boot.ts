@@ -6,6 +6,7 @@ import { loadSettingsFromDisk } from './user/settings-store';
 import { fetchUser } from './api/api';
 import { HttpStatusCode } from 'axios';
 import { isLoggedIn, logout } from './api/login';
+import { migrateOldTasks } from './moodle-utils';
 
 /**
  * Code that should run before the app loads. The splash screen will
@@ -20,6 +21,9 @@ export async function boot(): Promise<true> {
         try {
             const user = await fetchUser();
             $user.set(user);
+
+            // Migrate tasks to v1.1 system
+            await migrateOldTasks();
         } catch(error) {
             if(error.response?.status === HttpStatusCode.Unauthorized) {
                 logout();

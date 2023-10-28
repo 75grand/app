@@ -8,6 +8,7 @@ export const DEFAULT_SETTINGS = {
     mostUsedActions: {} as Record<string, number>,
     favoriteHours: ['Café Mac', 'The Grille', 'Mailroom', 'Library', 'ITS Help Desk', 'Leonard Center'],
     hasLeftReviewOrFeedback: false,
+    completedMoodleTasks: [],
     dismissedMoodleSetup: false,
     warnedAboutMoodleTask: false
 }

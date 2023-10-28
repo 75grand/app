@@ -83,6 +83,8 @@ export const fetchMoodleTasks = async () =>
     await request(MoodleTask.array(), { url: 'moodle' });
 export const patchMoodleTask = async (id: Id, completed: boolean) =>
     await request(MoodleTask.array(), { method: 'PATCH', url: `moodle/${id}`, data: { completed } });
+export const postMigrateMoodleTasks = async (ids: Id[]) =>
+    await request(z.void(), { method: 'POST', url: 'moodle/migrate', data: { ids } });
 
 /**
  * News
