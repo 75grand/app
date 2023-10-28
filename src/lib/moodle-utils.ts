@@ -1,15 +1,12 @@
 import { DateTime } from 'luxon';
 import { MoodleTask } from './types/moodle';
 import { $localSettings } from './user/settings-store';
+import { patchMoodleTask } from './api/api';
 
 export function sortTasks(a: MoodleTask, b: MoodleTask): number {
-    const { completedMoodleTasks } = $localSettings.get();
-
     // Sort by completion status
-    const aDone = completedMoodleTasks.includes(a.id);
-    const bDone = completedMoodleTasks.includes(b.id);
-    if(aDone && !bDone) return 1;
-    if(!aDone && bDone) return -1;
+    if(a.completed_at && !b.completed_at) return 1;
+    if(!a.completed_at && b.completed_at) return -1;
 
     // Sort by overdue status
     const aOverdue = a.due < DateTime.now();
@@ -28,18 +25,12 @@ export function sortTasks(a: MoodleTask, b: MoodleTask): number {
     if(aName > bName) return 1;
 }
 
-/**
- * Mark the given task as completed.
- */
-export function completeTask(task: MoodleTask) {
-    const { completedMoodleTasks } = $localSettings.get();
-    const set = new Set(completedMoodleTasks);
+// export function migrateOldTasks() {
+//     const tasks = $localSettings.get();
 
-    if(set.has(task.id)) {
-        set.delete(task.id);
-    } else {
-        set.add(task.id);
-    }
-
-    $localSettings.setKey('completedMoodleTasks', [...set]);
-}
+//     if('completedMoodleTasks' in tasks && tasks.completedMoodleTasks instanceof Array) {
+//         for(const id of tasks.completedMoodleTasks) {
+//             patchMoodleTask(id, true);
+//         }
+//     }
+// }

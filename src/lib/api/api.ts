@@ -81,6 +81,8 @@ export const fetchMenu = async (date: DateTime) =>
 
 export const fetchMoodleTasks = async () =>
     await request(MoodleTask.array(), { url: 'moodle' });
+export const patchMoodleTask = async (id: Id, completed: boolean) =>
+    await request(MoodleTask.array(), { method: 'PATCH', url: `moodle/${id}`, data: { completed } });
 
 /**
  * News
