@@ -4,7 +4,7 @@
     "slug": "75grand",
     "version": "1.1.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icons/default.png",
     "userInterfaceStyle": "light",
     "scheme": "grand",
     "updates": {
@@ -31,7 +31,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "monochromeImage": "./assets/adaptive-icon.png",
+        "monochromeImage": "./assets/icons/adaptive-icon.png",
         "backgroundColor": "#0369A1"
       },
       "package": "zone.jero.grand",
@@ -44,7 +44,7 @@
       [
         "expo-notifications",
         {
-          "icon": "./assets/notification-icon.png",
+          "icon": "./assets/icons/notification-icon.png",
           "color": "#0369A1"
         }
       ],
@@ -60,7 +60,40 @@
           "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera to scan your MacPass’ barcode and add an image to your Marketplace listing."
         }
       ],
-      "sentry-expo"
+      "sentry-expo",
+      [
+        "expo-dynamic-app-icon",
+        {
+          "default": {
+            "image": "./assets/icons/default.png",
+            "prerendered": true
+          },
+          "the-rock": {
+            "image": "./assets/icons/the-rock.png",
+            "prerendered": true
+          },
+          "albino-squirrel": {
+            "image": "./assets/icons/albino-squirrel.png",
+            "prerendered": true
+          },
+          "elon-musk": {
+            "image": "./assets/icons/elon-musk.png",
+            "prerendered": true
+          },
+          "scottie": {
+            "image": "./assets/icons/scottie.png",
+            "prerendered": true
+          },
+          "bell-tower": {
+            "image": "./assets/icons/bell-tower.png",
+            "prerendered": true
+          },
+          "wac": {
+            "image": "./assets/icons/wac.png",
+            "prerendered": true
+          }
+        }
+      ]
     ],
     "extra": {
       "eas": {

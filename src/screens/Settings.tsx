@@ -28,6 +28,7 @@ import { $user } from '../lib/user/user-store';
 import Link from '../components/Link';
 import EnableMoodleCard from '../components/home/EnableMoodleCard';
 import { disableMoodle } from '../lib/moodle-utils';
+import AlternativeIcons from '../components/settings/AlternativeIcons';
 
 export const screenOptions: NativeStackNavigationOptions = {
     presentation: 'modal',
@@ -151,6 +152,8 @@ export default function Settings() {
                                 />
                             )}
                         </Card>
+
+                        <AlternativeIcons/>
 
                         <EnableMoodleCard>
                             {user.moodle_enabled ? (
