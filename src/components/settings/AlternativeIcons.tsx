@@ -32,8 +32,8 @@ function Icon({ source, id, label }: { source: ImageSource, id: string, label: s
     }
 
     return (
-        <TouchableScale onPress={handlePress} style={tw('gap-1 w-22')}>
-            <Image source={source} style={tw('w-full aspect-square rounded-3xl border border-black/10')}/>
+        <TouchableScale onPress={handlePress} style={tw('gap-1 w-20')}>
+            <Image source={source} style={tw('w-full aspect-square rounded-2xl border border-black/10')}/>
             <Text numberOfLines={1} style={tw('text-center text-gray-500')}>{label}</Text>
         </TouchableScale>
     );
