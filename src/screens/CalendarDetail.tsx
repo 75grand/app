@@ -21,6 +21,8 @@ import { CalendarEvent, EventAttendee } from '../lib/types/calendar';
 import { $user } from '../lib/user/user-store';
 import { openBrowser } from '../lib/utils';
 import { SITE } from '../lib/constants';
+import { DetailRow } from './DetailRow';
+import { track } from '../lib/api/analytics';
 
 /**
  * Controls screen options dynamically
@@ -67,6 +69,13 @@ export default function CalendarDetail() {
     async function toggleNotifications() {
         rsvp.mutate();
 
+        // Backwards since component hasn't rerendered yet
+        if(attending) {
+            track('Unset event reminder', { eventId: event.id });
+        } else {
+            track('Set event reminder', { eventId: event.id });
+        }
+
         if(!attending && !(await areNotifsGranted())) {
             // @ts-expect-error
             navigation.navigate('ApproveNotifications');
@@ -74,6 +83,7 @@ export default function CalendarDetail() {
     }
 
     function handleShare() {
+        track('Shared calendar event', { eventId: event.id });
         const url = `${SITE}/calendar/${event.id}`;
         Share.share({ url });
     }
@@ -126,23 +136,23 @@ export default function CalendarDetail() {
                         {event.title}
                     </Text>
 
-                    <CalendarDetailRow label="When">
+                    <DetailRow label="When">
                         <Text style={tw('text-base font-medium')}>{formatDuration(event)}</Text>
                         <Text style={tw('text-base')}>{startDateText}</Text>
-                    </CalendarDetailRow>
+                    </DetailRow>
 
                     {event.location && <EventLocation {...event}/>}
 
-                    {attendees.length > 0 && <CalendarDetailRow label="Who">
+                    {attendees.length > 0 && <DetailRow label="Who">
                         <View style={tw('flex flex-row items-center gap-3')}>
                             <AvatarStack avatars={attendees.map(e => e.avatar)} count={event.attendee_count}/>
                             <Text style={tw('text-gray-500 mt-0.5')}>Saved by {attendees.length} {pluralize(attendees.length, 'person', 'people')}</Text>
                         </View>
-                    </CalendarDetailRow>}
+                    </DetailRow>}
 
-                    {event.description && <CalendarDetailRow label="What">
+                    {event.description && <DetailRow label="What">
                         <Text selectable={true} style={tw('text-base')}>“{event.description}”</Text>
-                    </CalendarDetailRow>}
+                    </DetailRow>}
 
                     {event.url && <EventUrl {...event}/>}
                 </View>
@@ -165,13 +175,13 @@ function EventUrl({ url }: CalendarEvent) {
     const formattedUrl = new URL(url).hostname.replace(/^www\./, '');
 
     return (
-        <CalendarDetailRow label="Web">
+        <DetailRow label="Web">
             <TouchableOpacity onPress={() => openBrowser(url)}>
                 <Text style={tw('text-base font-medium text-accent')} numberOfLines={1}>
                     {formattedUrl}
                 </Text>
             </TouchableOpacity>
-        </CalendarDetailRow>
+        </DetailRow>
     );
 }
 
@@ -186,7 +196,7 @@ function EventLocation({ location, latitude, longitude }: CalendarEvent) {
     }
 
     return (
-        <CalendarDetailRow label="Where">
+        <DetailRow label="Where">
             <TouchableOpacity onPress={handlePress} disabled={!latitude || !longitude}>
                 <Text style={tw('text-base', latitude && longitude && 'text-accent font-medium')}>
                     {formatLocation(location)}
@@ -212,19 +222,7 @@ function EventLocation({ location, latitude, longitude }: CalendarEvent) {
                     </MapView>
                 )}
             </TouchableOpacity>
-        </CalendarDetailRow>
-    );
-}
-
-function CalendarDetailRow({ label, children }: { label: string, children: React.ReactNode }) {
-    return (
-        <View style={tw('flex flex-row gap-4')}>
-            <Text style={tw('text-base text-gray-500 w-16 text-right')}>{label}</Text>
-
-            <View style={tw('shrink w-full')}>
-                {children}
-            </View>
-        </View>
+        </DetailRow>
     );
 }
 

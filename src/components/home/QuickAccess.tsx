@@ -9,6 +9,7 @@ import { openBrowser } from '../../lib/utils';
 import Pill from '../Pill';
 import { SITE } from '../../lib/constants';
 import { $user } from '../../lib/user/user-store';
+import { track } from '../../lib/api/analytics';
 
 export default function QuickAccess() {
     const navigation = useNavigation();
@@ -36,6 +37,8 @@ export default function QuickAccess() {
     }
 
     function handlePress({ name, action }: typeof items[0]) {
+        track('Used quick action', { action: name });
+
         mostUsedActions[name] = (mostUsedActions[name] ?? 0) + 1;
         $localSettings.setKey('mostUsedActions', {...mostUsedActions});
         action();

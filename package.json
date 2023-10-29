@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
+    "@june-so/analytics-node": "^8.0.0",
     "@kichiyaki/react-native-barcode-generator": "^0.6.7",
     "@nanostores/react": "^0.7.1",
     "@react-native-async-storage/async-storage": "1.18.2",
@@ -29,7 +30,9 @@
     "expo-barcode-scanner": "~12.5.3",
     "expo-brightness": "~11.4.0",
     "expo-constants": "~14.4.2",
+    "expo-dev-client": "~2.4.11",
     "expo-device": "~5.4.0",
+    "expo-dynamic-app-icon": "^1.2.0",
     "expo-haptics": "~12.4.0",
     "expo-image": "~1.3.2",
     "expo-image-manipulator": "~11.3.0",

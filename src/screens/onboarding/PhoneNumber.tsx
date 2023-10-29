@@ -11,6 +11,7 @@ import { patchUser } from '../../lib/api/api';
 import { useForm } from '../../lib/hooks/use-form';
 import { User } from '../../lib/types/user';
 import { $user } from '../../lib/user/user-store';
+import { track } from '../../lib/api/analytics';
 
 export default function PhoneNumber() {
     const navigation = useNavigation();
@@ -34,18 +35,24 @@ export default function PhoneNumber() {
     }
 
     function handleSkip() {
+        track('Onboarding: Tried to skip phone number');
+
         Alert.alert(
             'Are you sure?',
             'You’ll need to provide a phone number to use the marketplace and other functionality.',
             [
                 {
                     isPreferred: true,
-                    text: 'Add Number'
+                    text: 'Add Number',
+                    onPress: () => track('Onboarding: Reconsidered skipping phone number')
                 },
                 {
                     text: 'Continue Without',
-                    // @ts-expect-error
-                    onPress: () => navigation.navigate('MacPassAndMailbox')
+                    onPress: () => {
+                        track('Onboarding: Skipped phone number');
+                        // @ts-expect-error
+                        navigation.navigate('MacPassAndMailbox');
+                    }
                 }
             ]
         )
@@ -54,8 +61,11 @@ export default function PhoneNumber() {
     return (
         <OnboardingShell
             title="What’s your number?"
-            onPressPrimary={isValid ? handleNext : handleSkip}
+            isPrimaryValid={isValid}
+            onPressPrimary={handleNext}
             isPrimaryLoading={mutation.isLoading}
+            secondaryButtonText="Skip"
+            onPressSecondary={handleSkip}
         >
             <Card>
                 <InputLabel text="Phone Number">

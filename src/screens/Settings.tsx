@@ -4,7 +4,7 @@ import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { useMutation } from '@tanstack/react-query';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useLayoutEffect } from 'react';
-import { ActivityIndicator, Platform, Text, View } from 'react-native';
+import { ActivityIndicator, Platform, SafeAreaView, Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Masks } from 'react-native-mask-input';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -26,6 +26,10 @@ import { zMacPass, zMailboxCombination } from '../lib/types/utils';
 import { $localSettings } from '../lib/user/settings-store';
 import { $user } from '../lib/user/user-store';
 import Link from '../components/Link';
+import EnableMoodleCard from '../components/home/EnableMoodleCard';
+import { disableMoodle } from '../lib/moodle-utils';
+import AlternativeIcons from '../components/settings/AlternativeIcons';
+import { track } from '../lib/api/analytics';
 
 export const screenOptions: NativeStackNavigationOptions = {
     presentation: 'modal',
@@ -106,55 +110,71 @@ export default function Settings() {
             {Platform.OS !== 'android' && <StatusBar animated style="light"/>}
 
             <KeyboardAwareScrollView>
-                <View style={tw('gap-3 p-3')}>
-                    <View style={tw('gap-2')}>
+                <SafeAreaView>
+                    <View style={tw('gap-3 p-3')}>
+                        <View style={tw('gap-2')}>
+                            <Card>
+                                <Profile {...user}/>
+                            </Card>
+
+                            <Text style={tw('px-3 text-gray-500')}>
+                                To change your profile picture, {' '}
+                                <Link external href={`https://myaccount.google.com/u/1/personal-info?authuser=${user.email}`}>update it on  Google</Link>
+                                {' '} then log out and log back in on 75grand.
+                            </Text>
+                        </View>
+
                         <Card>
-                            <Profile {...user}/>
+                            <ReferralCode {...user}/>
                         </Card>
 
-                        <Text style={tw('px-3 text-gray-500')}>
-                            To change your profile picture, {' '}
-                            <Link external href={`https://myaccount.google.com/u/1/personal-info?authuser=${user.email}`}>update it on  Google</Link>
-                            {' '} then log out and log back in on 75grand.
-                        </Text>
+                        <Card style={tw('gap-4')}>
+                            <InputLabel text="Phone Number">
+                                <Input
+                                    {...fields.phone}
+                                    mask={Masks.USA_PHONE}
+                                    placeholder="(651) 696-6000"
+                                    maxLength={14}
+                                    inputMode="numeric"
+                                    returnKeyType="done"
+                                />
+                            </InputLabel>
+
+                            <InputLabel text="MacPass Number">
+                                <MacPassInput {...fields.macPass}/>
+                            </InputLabel>
+
+                            {user.position === 'student' && (
+                                <MailboxInput
+                                    mailboxNumber={fields.mailboxNumber.value}
+                                    setMailboxNumber={fields.mailboxNumber.setValue}
+                                    mailboxCombination={fields.mailboxCombination.value}
+                                    setMailboxCombination={fields.mailboxCombination.setValue}
+                                />
+                            )}
+                        </Card>
+
+                        <AlternativeIcons/>
+
+                        <EnableMoodleCard>
+                            {user.moodle_enabled ? (
+                                <Button text="Disable Integration" onPress={disableMoodle} color="faint-red" size="mega"/>
+                            ) : (
+                                <Button text="Set Up Automatically" onPress={() => {
+                                    track('Tapped configure Moodle');
+                                    // @ts-expect-error
+                                    navigation.navigate('MoodleSetup');
+                                }} size="mega"/>
+                            )}
+                        </EnableMoodleCard>
+
+                        <Button
+                            text="Log Out & Delete Local Data"
+                            color="faint-red"
+                            onPress={handleLogoutPress}
+                        />
                     </View>
-
-                    <Card>
-                        <ReferralCode {...user}/>
-                    </Card>
-
-                    <Card style={tw('gap-4')}>
-                        <InputLabel text="Phone Number">
-                            <Input
-                                {...fields.phone}
-                                mask={Masks.USA_PHONE}
-                                placeholder="(651) 696-6000"
-                                maxLength={14}
-                                inputMode="numeric"
-                                returnKeyType="done"
-                            />
-                        </InputLabel>
-
-                        <InputLabel text="MacPass Number">
-                            <MacPassInput {...fields.macPass}/>
-                        </InputLabel>
-
-                        {user.position === 'student' && (
-                            <MailboxInput
-                                mailboxNumber={fields.mailboxNumber.value}
-                                setMailboxNumber={fields.mailboxNumber.setValue}
-                                mailboxCombination={fields.mailboxCombination.value}
-                                setMailboxCombination={fields.mailboxCombination.setValue}
-                            />
-                        )}
-                    </Card>
-
-                    <Button
-                        text="Log Out & Delete Local Data"
-                        color="faint-red"
-                        onPress={handleLogoutPress}
-                    />
-                </View>
+                </SafeAreaView>
             </KeyboardAwareScrollView>
         </>
     );

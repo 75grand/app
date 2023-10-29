@@ -9,6 +9,7 @@ import ListingItem from '../../components/marketplace/ListingItem';
 import { fetchListings } from '../../lib/api/api';
 import { useTanStackRefresh } from '../../lib/hooks/use-tanstack-refresh';
 import tw from '../../lib/tailwind';
+import { track } from '../../lib/api/analytics';
 
 export const screenOptions: NativeStackNavigationOptions = {
     headerLargeTitle: true
@@ -26,6 +27,8 @@ export default function Marketplace() {
     const { fixedRefetch, isRefetching } = useTanStackRefresh(refetch);
 
     function createListing() {
+        track('Tapped listing plus button');
+
         // @ts-expect-error
         navigation.navigate('EditListing');
     }

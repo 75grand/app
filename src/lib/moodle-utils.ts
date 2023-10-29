@@ -1,15 +1,13 @@
 import { DateTime } from 'luxon';
 import { MoodleTask } from './types/moodle';
 import { $localSettings } from './user/settings-store';
+import { patchMoodleTask, patchUser, postMigrateMoodleTasks } from './api/api';
+import { $user } from './user/user-store';
 
 export function sortTasks(a: MoodleTask, b: MoodleTask): number {
-    const { completedMoodleTasks } = $localSettings.get();
-
     // Sort by completion status
-    const aDone = completedMoodleTasks.includes(a.id);
-    const bDone = completedMoodleTasks.includes(b.id);
-    if(aDone && !bDone) return 1;
-    if(!aDone && bDone) return -1;
+    if(a.completed_at && !b.completed_at) return 1;
+    if(!a.completed_at && b.completed_at) return -1;
 
     // Sort by overdue status
     const aOverdue = a.due < DateTime.now();
@@ -28,18 +26,18 @@ export function sortTasks(a: MoodleTask, b: MoodleTask): number {
     if(aName > bName) return 1;
 }
 
-/**
- * Mark the given task as completed.
- */
-export function completeTask(task: MoodleTask) {
-    const { completedMoodleTasks } = $localSettings.get();
-    const set = new Set(completedMoodleTasks);
+export async function migrateOldTasks() {
+    const tasks = $localSettings.get().completedMoodleTasks;
+    if(tasks.length === 0) return;
+    await postMigrateMoodleTasks(tasks);
+    $localSettings.setKey('completedMoodleTasks', []);
+}
 
-    if(set.has(task.id)) {
-        set.delete(task.id);
-    } else {
-        set.add(task.id);
-    }
+export async function disableMoodle() {
+    const updatedUser = await patchUser({
+        moodle_user_id: null,
+        moodle_token: null
+    });
 
-    $localSettings.setKey('completedMoodleTasks', [...set]);
+    $user.set(updatedUser);
 }

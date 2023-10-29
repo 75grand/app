@@ -20,7 +20,8 @@ export default function AvatarButton() {
             />
 
             <TouchableOpacity // @ts-expect-error
-                onPress={() => navigation.navigate('Settings')}>
+                onPress={() => navigation.navigate('Settings')}
+                accessibilityLabel="Settings">
                 <Image style={tw('w-8 h-8 rounded-lg bg-gray-100')} source={user.avatar}/>
             </TouchableOpacity>
         </View>

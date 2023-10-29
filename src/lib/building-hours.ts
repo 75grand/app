@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon';
 import { BuildingHoursEvent } from './types/building-hours';
+import { toUsefulRelative } from './date-utils';
 
 export type BuildingHoursStatus = {
     status: 'open'|'closed'|'error'|'closing-soon',
@@ -18,7 +19,7 @@ export function getStatus(events: BuildingHoursEvent[]): BuildingHoursStatus {
 
         // If the first event hasn't started yet, it's closed
         if(now < event.start_date) {
-            const time = toPreciseRelative(event.start_date);
+            const time = toUsefulRelative(event.start_date);
 
             return {
                 status: 'closed',
@@ -28,7 +29,7 @@ export function getStatus(events: BuildingHoursEvent[]): BuildingHoursStatus {
 
         // The event is happening now, so it's open
         if(now < event.end_date) {
-            const time = toPreciseRelative(event.end_date);
+            const time = toUsefulRelative(event.end_date);
             const isClosingSoon = event.end_date.diffNow().as('minutes') <= 15;
 
             return {
@@ -42,15 +43,4 @@ export function getStatus(events: BuildingHoursEvent[]): BuildingHoursStatus {
         status: 'error',
         message: 'Error'
     }
-}
-
-function toPreciseRelative(date: DateTime): string {
-    const minutes = date.diffNow().as('minutes');
-
-    if(minutes < 180 && minutes > 60) {
-        const { hours, minutes } = date.diffNow(['hours', 'minutes']);
-        return `in ${hours}h ${Math.floor(minutes)}m`;
-    }
-
-    return date.toRelative();
 }

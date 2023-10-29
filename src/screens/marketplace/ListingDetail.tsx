@@ -18,6 +18,7 @@ import { formatDistance } from '../../lib/marketplace-utils';
 import UserItem from '../../components/UserItem';
 import { SITE } from '../../lib/constants';
 import { Ionicons } from '@expo/vector-icons';
+import { track } from '../../lib/api/analytics';
 
 export const screenOptions: NativeStackNavigationOptions = {
     headerTitle: () => <></>
@@ -39,8 +40,14 @@ export default function ListingDetail() {
     });
 
     function handleShare() {
+        track('Shared listing', { listingId: listing.id });
         const url = `${SITE}/marketplace/${listing.id}`;
         Share.share({ url });
+    }
+
+    function handleImagePress() {
+        track('Tapped listing image');
+        openBrowser(listing.image_url);
     }
 
     useLayoutEffect(() => {
@@ -77,7 +84,7 @@ export default function ListingDetail() {
     return (
         <>
             <ScrollView style={tw('h-full bg-white')}>
-                <Pressable onPress={() => openBrowser(listing.image_url)}>
+                <Pressable onPress={handleImagePress}>
                     <Image source={getCdnUrl(listing.image_url, 1000, 1000)}
                         style={tw('w-full border-b border-b-black/10', { aspectRatio: 1/1 })}/>
                 </Pressable>

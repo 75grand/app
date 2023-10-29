@@ -11,6 +11,7 @@ import { BuildingHours } from '../lib/types/building-hours';
 import tw from '../lib/tailwind';
 import { $localSettings } from '../lib/user/settings-store';
 import { useTanStackRefresh } from '../lib/hooks/use-tanstack-refresh';
+import { track } from '../lib/api/analytics';
 
 export const screenOptions: NativeStackNavigationOptions = {
     title: 'Campus Hours',
@@ -61,6 +62,8 @@ export default function Hours() {
     });
 
     function handleStarPress(service: BuildingHours) {
+        track('Favorited hours', { name: service.name });
+
         const favoriteHoursSet = new Set(favoriteHours);
 
         if(favoriteHoursSet.has(service.name)) {

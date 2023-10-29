@@ -1,24 +1,27 @@
 import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import { useStore } from '@nanostores/react';
 import { useNavigation } from '@react-navigation/native';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import * as Haptics from 'expo-haptics';
 import { DateTime } from 'luxon';
 import { useMemo } from 'react';
-import { Alert, LayoutAnimation, Platform, Pressable, Text, View } from 'react-native';
-import { fetchMoodleTasks } from '../../lib/api/api';
+import { Alert, LayoutAnimation, Platform, Text, TouchableOpacity, View } from 'react-native';
+import { fetchMoodleTasks, patchMoodleTask } from '../../lib/api/api';
+import { toUsefulRelative } from '../../lib/date-utils';
 import { useRerender } from '../../lib/hooks/use-rerender';
-import { completeTask, sortTasks } from '../../lib/moodle-utils';
+import { sortTasks } from '../../lib/moodle-utils';
 import tw, { monospace } from '../../lib/tailwind';
 import { pluralize } from '../../lib/text-utils';
 import { MoodleTask } from '../../lib/types/moodle';
 import { $localSettings } from '../../lib/user/settings-store';
 import { $user } from '../../lib/user/user-store';
-import Button from '../Button';
 import Card from '../Card';
 import CardHeader from '../CardHeader';
 import EmptyState from '../EmptyState';
 import TouchableScale from '../TouchableScale';
+import EnableMoodleCard from './EnableMoodleCard';
+import Button from '../Button';
+import { track } from '../../lib/api/analytics';
 
 export default function MoodleCard() {
     const navigation = useNavigation();
@@ -29,46 +32,29 @@ export default function MoodleCard() {
     if(!user.moodle_enabled && (dismissedMoodleSetup || user.position !== 'student')) return null;
 
     function handleSetUp() {
+        track('Tapped configure Moodle');
+
         // @ts-expect-error
         navigation.navigate('MoodleSetup');
     }
 
     function handleDismiss() {
+        track('Dismissed Moodle');
         $localSettings.setKey('dismissedMoodleSetup', true);
     }
 
     return (
         <View style={tw('px-3')}>
-            <Card>
-                {user.moodle_enabled ? (
+            {user.moodle_enabled ? (
+                <Card>
                     <MoodleTasks/>
-                ) : (
-                    <>
-                        <CardHeader
-                            title="Moodle"
-                            customIcon={props => <FontAwesome5 name="graduation-cap" {...props}/>}
-                        />
-
-                        <View style={tw('gap-3 -mt-1')}>
-                            <Text style={tw('text-base')}>
-                                75grand can display your Moodle assignments and
-                                remind you before they're due.
-                            </Text>
-
-                            <Button text="Set Up Automatically" onPress={handleSetUp} size="mega"/>
-                            <Button text="Not Now" onPress={handleDismiss} color="gray"/>
-
-                            <Text style={tw('text-xs text-gray-500')}>
-                                Notifications will be sent when the assignment is due
-                                and at 9:00 AM the day before.
-                                
-                                This feature does not store your login credentials
-                                and was not developed by Moodle or ITS.
-                            </Text>
-                        </View>
-                    </>
-                )}
-            </Card>
+                </Card>
+            ) : (
+                <EnableMoodleCard>
+                    <Button text="Set Up Automatically" onPress={handleSetUp} size="mega"/>
+                    <Button text="Not Now" onPress={handleDismiss} color="gray"/>
+                </EnableMoodleCard>
+            )}
         </View>
     );
 }
@@ -80,9 +66,8 @@ function MoodleTasks() {
         refetchInterval: 30_000
     });
 
-    const { completedMoodleTasks } = useStore($localSettings);
-    const sortedTasks = useMemo(() => data.sort(sortTasks), [data, completedMoodleTasks]);
-    const numDueTasks = sortedTasks.filter(task => !completedMoodleTasks.includes(task.id)).length;
+    const sortedTasks = useMemo(() => data.sort(sortTasks), [data]);
+    const numDueTasks = sortedTasks.filter(task => !task.completed_at).length;
 
     if(sortedTasks.length === 0) {
         return (
@@ -113,12 +98,22 @@ function MoodleTasks() {
 function MoodleTaskItem(task: MoodleTask) {
     useRerender(1_000);
 
-    const { completedMoodleTasks, warnedAboutMoodleTask } = useStore($localSettings);
+    const navigation = useNavigation();
+    const queryClient = useQueryClient();
+    const { warnedAboutMoodleTask } = useStore($localSettings);
     
-    const isCompleted = completedMoodleTasks.includes(task.id);
+    const isCompleted = Boolean(task.completed_at);
     const isOverdue = !isCompleted && task.due < DateTime.now();
 
-    function handlePress() {
+    const mutation = useMutation({
+        mutationFn: (completed: boolean) => patchMoodleTask(task.id, completed),
+        onSuccess(newTasks) {
+            LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+            queryClient.setQueryData(['assignments'], newTasks);
+        }
+    });
+
+    function completeTask() {
         if(!warnedAboutMoodleTask) {
             Alert.alert(
                 'You still have to turn this in on Moodle',
@@ -130,16 +125,24 @@ function MoodleTaskItem(task: MoodleTask) {
             );
         }
 
+        if(!task.completed_at) track('Completed Moodle task', { isOverdue });
+
         if(Platform.OS === 'ios') Haptics.selectionAsync();
-        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        completeTask(task);
+        mutation.mutate(!task.completed_at);
+    }
+
+    function showInfo() {
+        track('Viewed Moodle task info', { isOverdue });
+
+        // @ts-expect-error
+        navigation.navigate('MoodleTaskDetail', { task });
     }
 
     return (
-        <Pressable onPress={handlePress} style={tw('flex-row gap-3 items-center')}>
-            <Checkbox checked={isCompleted} onPress={handlePress}/>
+        <View style={tw('flex-row gap-3 items-center')}>
+            <Checkbox checked={isCompleted} onPress={completeTask}/>
 
-            <View style={tw('gap-1 shrink', isCompleted && 'opacity-50')}>
+            <TouchableOpacity disabled={!task.description} onPress={showInfo} style={tw('gap-1 shrink', isCompleted && 'opacity-50')}>
                 <Text
                     numberOfLines={1}
                     style={tw('text-base leading-none', isOverdue && 'text-red', { fontFamily: monospace })}
@@ -148,11 +151,11 @@ function MoodleTaskItem(task: MoodleTask) {
 
                 {!isCompleted && (
                     <Text numberOfLines={1} style={tw('text-sm leading-none text-gray-500 tabular-nums', isOverdue && 'text-red')}>
-                        due {task.due.toRelativeCalendar()} • {task.class}
+                        due {toUsefulRelative(task.due)} • {task.class}
                     </Text>
                 )}
-            </View>
-        </Pressable>
+            </TouchableOpacity>
+        </View>
     );
 }
 

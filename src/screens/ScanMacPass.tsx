@@ -7,6 +7,7 @@ import { Alert, LogBox, Platform, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import tw from '../lib/tailwind';
 import { zMacPass } from '../lib/types/utils';
+import { track } from '../lib/api/analytics';
 
 LogBox.ignoreLogs([
     'Non-serializable values were found in the navigation state'
@@ -49,6 +50,7 @@ export default function ScanMacPass() {
 
     function handleScan({ data }) {
         if(zMacPass.safeParse(data).success) {
+            track('Scanned MacPass');
             setMacPass(data);
             navigation.goBack();
         }

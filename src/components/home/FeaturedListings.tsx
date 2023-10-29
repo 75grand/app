@@ -19,7 +19,7 @@ export default function FeaturedListings() {
                 {listings.map(listing => {
                     return (
                         <View key={listing.id} style={tw('w-48')}>
-                            <ListingItem titleLines={1} {...listing}/>
+                            <ListingItem isFeatured titleLines={1} {...listing}/>
                         </View>
                     );
                 })}

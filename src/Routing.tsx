@@ -15,6 +15,7 @@ import * as Hours from './screens/Hours';
 import * as LoginWall from './screens/LoginWall';
 import * as Menus from './screens/Menus';
 import * as MoodleSetup from './screens/MoodleSetup';
+import * as MoodleTaskDetail from './screens/MoodleTaskDetail';
 import * as ScanMacPass from './screens/ScanMacPass';
 import * as Settings from './screens/Settings';
 import * as ShowCombination from './screens/ShowCombination';
@@ -154,6 +155,7 @@ function HomeRouting() {
             <Stack.Screen name="ShowCombination" component={ShowCombination.default} options={ShowCombination.screenOptions}/>
             <Stack.Screen name="Feedback" component={Feedback.default} options={Feedback.screenOptions}/>
             <Stack.Screen name="MoodleSetup" component={MoodleSetup.default} options={MoodleSetup.screenOptions}/>
+            <Stack.Screen name="MoodleTaskDetail" component={MoodleTaskDetail.default} options={MoodleTaskDetail.screenOptions}/>
             <Stack.Screen name="AboutTheApp" component={AboutTheApp.default} options={AboutTheApp.screenOptions}/>
         </Stack.Navigator>
     );

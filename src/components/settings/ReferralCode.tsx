@@ -8,9 +8,12 @@ import { User } from '../../lib/types/user';
 import Button from '../Button';
 import InputLabel from '../InputLabel';
 import TouchableScale from '../TouchableScale';
+import { track } from '../../lib/api/analytics';
 
 export default function ReferralCode({ referral_code, referrals_count, referrals_per_prize }: User) {
     async function shareReferral() {
+        track('Shared referral code');
+
         await Share.share({
             url: 'https://www.75grand.net/download',
             message: `Download 75grand and use my referral code: ${referral_code}`

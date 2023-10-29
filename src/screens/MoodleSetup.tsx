@@ -9,6 +9,7 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { patchUser } from '../lib/api/api';
 import tw from '../lib/tailwind';
 import { $user } from '../lib/user/user-store';
+import { track } from '../lib/api/analytics';
 
 export function screenOptions({ navigation }): NativeStackNavigationOptions {
     return {
@@ -82,6 +83,7 @@ export default function MoodleSetup() {
 
         setIsLoading(false);
 
+        track('Set up Moodle');
         navigation.goBack();
         if(params?.onSetupEnd) params.onSetupEnd();
     }
