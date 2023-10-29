@@ -40,8 +40,8 @@ export function toUsefulRelative(date: DateTime): string {
     if(date < DateTime.now()) {
         formatted = formattedAbsoluteDate(date);
     } else if(hours < 1) {
-        const { minutes, seconds } = date.diffNow(['hours', 'minutes']);
-        formatted = `in ${Math.floor(minutes)}m ${seconds}s`;
+        const { minutes } = date.diffNow(['hours', 'minutes']);
+        formatted = `in ${Math.floor(minutes)}m`;
     } else if(hours <= 8) {
         const { hours, minutes } = date.diffNow(['hours', 'minutes']);
         formatted = `in ${hours}h ${Math.floor(minutes)}m`;
