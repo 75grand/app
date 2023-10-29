@@ -5,6 +5,7 @@ import tw from '../../lib/tailwind';
 import { useState } from 'react';
 import { askForNotifPermission } from '../../lib/notifications';
 import { StackActions, useNavigation } from '@react-navigation/native';
+import { track } from '../../lib/api/analytics';
 
 export default function BegForNotifications() {
     const navigation = useNavigation();
@@ -18,6 +19,9 @@ export default function BegForNotifications() {
     }
 
     function handleSkip() {
+        track('Onboarding: Maybe later’d notifications');
+        track('Completed onboarding');
+
         navigation.dispatch(
             StackActions.replace('Tabs')
         );

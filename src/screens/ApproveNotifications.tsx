@@ -8,6 +8,7 @@ import Button from '../components/Button';
 import { askForNotifPermission } from '../lib/notifications';
 import tw from '../lib/tailwind';
 import NotificationSellingPoints from '../components/onboarding/NotificationSellingPoints';
+import { track } from '../lib/api/analytics';
 
 export const screenOptions: NativeStackNavigationOptions = {
     presentation: 'modal',
@@ -19,10 +20,15 @@ export default function ApproveNotifications() {
     const navigation = useNavigation();
     const [loading, setLoading] = useState(false);
 
-    async function promptNotifications() {
+    async function handleApprovePress() {
         setLoading(true);
         await askForNotifPermission();
         setLoading(false);
+        navigation.goBack();
+    }
+
+    function handleDeclinePress() {
+        track('Maybe later’d notifications');
         navigation.goBack();
     }
 
@@ -44,8 +50,8 @@ export default function ApproveNotifications() {
                 <NotificationSellingPoints/>
 
                 <View style={tw('gap-2 w-full')}>
-                    <Button text="Enable Notifications" loading={loading} size="mega" onPress={promptNotifications}/>
-                    <Button text="Maybe Later" color="light" onPress={navigation.goBack}/>
+                    <Button text="Enable Notifications" loading={loading} size="mega" onPress={handleApprovePress}/>
+                    <Button text="Maybe Later" color="light" onPress={handleDeclinePress}/>
                 </View>
             </View>
         </>

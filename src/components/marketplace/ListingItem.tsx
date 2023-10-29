@@ -5,8 +5,9 @@ import tw from '../../lib/tailwind';
 import { Listing } from '../../lib/types/marketplace';
 import { getCdnUrl } from '../../lib/utils';
 import Card from '../Card';
+import { track } from '../../lib/api/analytics';
 
-export default function ListingItem(listing: Listing & { titleLines?: number }) {
+export default function ListingItem(listing: Listing & { titleLines?: number, isFeatured?: boolean }) {
     const { id, title, image_url, available, price, miles_from_campus } = listing;
     const navigation = useNavigation();
 
@@ -14,6 +15,8 @@ export default function ListingItem(listing: Listing & { titleLines?: number }) 
     if(miles_from_campus > 0) metaText += ' (Off Campus)';
 
     function handlePress() {
+        track('Viewed listing', { source: listing.isFeatured ? 'home' : 'marketplace' });
+
         // @ts-expect-error
         navigation.navigate('MarketplaceTab');
 

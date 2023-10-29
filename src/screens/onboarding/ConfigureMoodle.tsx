@@ -3,16 +3,19 @@ import { Image } from 'expo-image';
 import { Text } from 'react-native';
 import OnboardingShell from '../../components/onboarding/OnboardingShell';
 import tw from '../../lib/tailwind';
+import { track } from '../../lib/api/analytics';
 
 export default function ConfigureMoodle() {
     const navigation = useNavigation();
 
     function handleSetup() {
+        track('Onboarding: Tapped configure Moodle');
         // @ts-expect-error
         navigation.navigate('MoodleSetup', { onSetupEnd: handleNext });
     }
 
     function handleNext() {
+        track('Onboarding: Skipped configure Moodle');
         // @ts-expect-error
         navigation.navigate('BegForNotifications');
     }
@@ -22,7 +25,7 @@ export default function ConfigureMoodle() {
             title="Moodle...on a phone?"
             primaryButtonText="Set Up Moodle"
             onPressPrimary={handleSetup}
-            secondaryButtonText="Maybe Later"
+            secondaryButtonText="Skip"
             onPressSecondary={handleNext}
         >
             <Text style={tw('text-base leading-tight px-2 text-center')}>

@@ -21,6 +21,7 @@ import EmptyState from '../EmptyState';
 import TouchableScale from '../TouchableScale';
 import EnableMoodleCard from './EnableMoodleCard';
 import Button from '../Button';
+import { track } from '../../lib/api/analytics';
 
 export default function MoodleCard() {
     const navigation = useNavigation();
@@ -31,11 +32,14 @@ export default function MoodleCard() {
     if(!user.moodle_enabled && (dismissedMoodleSetup || user.position !== 'student')) return null;
 
     function handleSetUp() {
+        track('Tapped configure Moodle');
+
         // @ts-expect-error
         navigation.navigate('MoodleSetup');
     }
 
     function handleDismiss() {
+        track('Dismissed Moodle');
         $localSettings.setKey('dismissedMoodleSetup', true);
     }
 
@@ -121,11 +125,15 @@ function MoodleTaskItem(task: MoodleTask) {
             );
         }
 
+        if(!task.completed_at) track('Completed Moodle task', { isOverdue });
+
         if(Platform.OS === 'ios') Haptics.selectionAsync();
         mutation.mutate(!task.completed_at);
     }
 
     function showInfo() {
+        track('Viewed Moodle task info', { isOverdue });
+
         // @ts-expect-error
         navigation.navigate('MoodleTaskDetail', { task });
     }

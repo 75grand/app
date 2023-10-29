@@ -12,6 +12,7 @@ import { groupEvents } from '../lib/calendar/utils';
 import { useTanStackRefresh } from '../lib/hooks/use-tanstack-refresh';
 import tw from '../lib/tailwind';
 import { CalendarEvent } from '../lib/types/calendar';
+import { track } from '../lib/api/analytics';
 
 /**
  * @see https://github.com/react-navigation/react-navigation/issues/11375#issuecomment-1588592971
@@ -44,7 +45,10 @@ export default function Calendar() {
                 <CalendarFilters
                     filters={calendarFilters}
                     activeFilter={filter}
-                    setActiveFilter={setFilter}
+                    setActiveFilter={filter => {
+                        track('Filtered events', { filter });
+                        setFilter(filter);
+                    }}
                 />
             </SafeAreaView>
 

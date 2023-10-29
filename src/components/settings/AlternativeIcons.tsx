@@ -5,6 +5,7 @@ import CardHeader from '../CardHeader';
 import { Image, ImageSource } from 'expo-image';
 import TouchableScale from '../TouchableScale';
 import { setAppIcon } from 'expo-dynamic-app-icon';
+import { track } from '../../lib/api/analytics';
 
 export default function AlternativeIcons() {
     return (
@@ -28,6 +29,7 @@ export default function AlternativeIcons() {
 
 function Icon({ source, id, label }: { source: ImageSource, id: string, label: string }) {
     function handlePress() {
+        track('Changed icon', { icon: id });
         setAppIcon(id);
     }
 

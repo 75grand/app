@@ -12,11 +12,15 @@ import QuickAccess from '../components/home/QuickAccess';
 import RatingPrompt from '../components/home/RatingPrompt';
 import tw from '../lib/tailwind';
 import RedditCard from '../components/home/RedditCard';
+import { track } from '../lib/api/analytics';
 
 export function screenOptions({ navigation }): NativeStackNavigationOptions {
     return {
         headerLeft: () => (
-            <TouchableScale onPress={() => navigation.navigate('AboutTheApp')}>
+            <TouchableScale onPress={() => {
+                track('Learned about the app');
+                navigation.navigate('AboutTheApp');
+            }}>
                 <Logo/>
             </TouchableScale>
         ),

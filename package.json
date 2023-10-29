@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
+    "@june-so/analytics-node": "^8.0.0",
     "@kichiyaki/react-native-barcode-generator": "^0.6.7",
     "@nanostores/react": "^0.7.1",
     "@react-native-async-storage/async-storage": "1.18.2",

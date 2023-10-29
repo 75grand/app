@@ -22,6 +22,7 @@ import { $user } from '../lib/user/user-store';
 import { openBrowser } from '../lib/utils';
 import { SITE } from '../lib/constants';
 import { DetailRow } from './DetailRow';
+import { track } from '../lib/api/analytics';
 
 /**
  * Controls screen options dynamically
@@ -68,6 +69,13 @@ export default function CalendarDetail() {
     async function toggleNotifications() {
         rsvp.mutate();
 
+        // Backwards since component hasn't rerendered yet
+        if(attending) {
+            track('Unset event reminder', { eventId: event.id });
+        } else {
+            track('Set event reminder', { eventId: event.id });
+        }
+
         if(!attending && !(await areNotifsGranted())) {
             // @ts-expect-error
             navigation.navigate('ApproveNotifications');
@@ -75,6 +83,7 @@ export default function CalendarDetail() {
     }
 
     function handleShare() {
+        track('Shared calendar event', { eventId: event.id });
         const url = `${SITE}/calendar/${event.id}`;
         Share.share({ url });
     }

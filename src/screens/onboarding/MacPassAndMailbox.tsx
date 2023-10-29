@@ -12,6 +12,7 @@ import tw from '../../lib/tailwind';
 import { zMacPass, zMailboxCombination } from '../../lib/types/utils';
 import { $localSettings } from '../../lib/user/settings-store';
 import { $user } from '../../lib/user/user-store';
+import { track } from '../../lib/api/analytics';
 
 export default function MacPassAndMailbox() {
     const navigation = useNavigation();
@@ -44,7 +45,12 @@ export default function MacPassAndMailbox() {
         <OnboardingShell
             onPressPrimary={handleNext}
             isPrimaryValid={isValid}
-            onPressSecondary={navigation.goBack}
+            isSecondaryValid={isValid}
+            secondaryButtonText="Skip"
+            onPressSecondary={() => {
+                track('Onboarding: Skipped MacPass & mailbox');
+                handleNext();
+            }}
         >
             <Text style={tw('text-base leading-tight px-2 text-center')}>
                 {user.position === 'student' ? (

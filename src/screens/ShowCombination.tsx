@@ -10,6 +10,7 @@ import { Circle, G, Path, Svg, Text as SvgText } from 'react-native-svg';
 import Button from '../components/Button';
 import tw, { color } from '../lib/tailwind';
 import { $localSettings } from '../lib/user/settings-store';
+import { track } from '../lib/api/analytics';
 
 export const screenOptions: NativeStackNavigationOptions = {
     presentation: 'modal',
@@ -51,6 +52,11 @@ export default function ShowCombination() {
     const duration = Math.min(Math.max(Math.abs(prevRotation.current - rotation) * 5, 1000), 5000);
     prevRotation.current = rotation;
 
+    function handleGoBack() {
+        track('Finished combiantion');
+        navigation.goBack();
+    }
+
     return (
         <>
             {Platform.OS !== 'android' && <StatusBar animated style="light"/>}
@@ -91,7 +97,7 @@ export default function ShowCombination() {
                     <View/>
 
                     {step < stepCount-1 && <Button text="Next" size="mega" onPress={() => setStep(step + 1)}/>}
-                    {step === stepCount-1 && <Button text="Done" size="mega" onPress={navigation.goBack}/>}
+                    {step === stepCount-1 && <Button text="Done" size="mega" onPress={handleGoBack}/>}
                 </View>
             </SafeAreaView>
         </>

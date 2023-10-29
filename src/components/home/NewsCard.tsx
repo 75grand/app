@@ -12,6 +12,7 @@ import CardHeader from '../CardHeader';
 import Grid from '../Grid';
 import PillRadioInput from '../PillRadioInput';
 import TouchableScale from '../TouchableScale';
+import { track } from '../../lib/api/analytics';
 
 const sources = {
     'summit': 'Summit',
@@ -52,6 +53,7 @@ export default function NewsCard() {
                             if(newSource === source) {
                                 openBrowser(sourceUrls[source]);
                             } else {
+                                track('Switched news sources', { source: newSource });
                                 setSource(newSource);
                             }
                         }}

@@ -29,6 +29,7 @@ import Link from '../components/Link';
 import EnableMoodleCard from '../components/home/EnableMoodleCard';
 import { disableMoodle } from '../lib/moodle-utils';
 import AlternativeIcons from '../components/settings/AlternativeIcons';
+import { track } from '../lib/api/analytics';
 
 export const screenOptions: NativeStackNavigationOptions = {
     presentation: 'modal',
@@ -160,6 +161,7 @@ export default function Settings() {
                                 <Button text="Disable Integration" onPress={disableMoodle} color="faint-red" size="mega"/>
                             ) : (
                                 <Button text="Set Up Automatically" onPress={() => {
+                                    track('Tapped configure Moodle');
                                     // @ts-expect-error
                                     navigation.navigate('MoodleSetup');
                                 }} size="mega"/>

@@ -8,8 +8,11 @@ import { fetchUser } from './api';
 import { StringRecord } from '../types/utils';
 import { request } from './http-client';
 import { z } from 'zod';
+import { track } from './analytics';
 
 export function logout() {
+    track('Logged out');
+
     $token.set(null);
     $user.set(null);
     $localSettings.set(DEFAULT_SETTINGS);
@@ -59,6 +62,8 @@ export async function login(referralCode: string = ''): Promise<LoginResult> {
 
         // Fetch and store user profile
         $user.set(await fetchUser());
+
+        track('Logged in');
 
         return {
             created: Boolean(url.queryParams?.created),

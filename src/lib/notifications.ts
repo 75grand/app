@@ -5,6 +5,7 @@ import { Linking, Platform } from 'react-native';
 import { patchUser } from './api/api';
 import { isLoggedIn } from './api/login';
 import { color } from './tailwind';
+import { track } from './api/analytics';
 
 /**
  * Set the notification handler
@@ -86,8 +87,11 @@ export async function askForNotifPermission() {
         const { status } = await Notifications.requestPermissionsAsync();
 
         if(status === 'granted') {
+            track('Approved notifications');
             syncNotifToken();
             registerAndroidNotifChannel();
+        } else {
+            track('Declined notifications');
         }
     } else if(currentStatus === 'denied') {
         // Open system settings for app

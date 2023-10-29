@@ -13,6 +13,7 @@ import { fetchMenu } from '../lib/api/api';
 import { useTanStackRefresh } from '../lib/hooks/use-tanstack-refresh';
 import tw, { color } from '../lib/tailwind';
 import { Menu } from '../lib/types/menu';
+import { track } from '../lib/api/analytics';
 
 export default function Menus() {
     const navigation = useNavigation();
@@ -47,6 +48,9 @@ export default function Menus() {
     }, [date]);
 
     function handleConfirmDate(newDate: Date) {
+        const diff = DateTime.fromJSDate(newDate).diffNow().as('days');
+        track('Changed calendar date', { date: newDate, diff });
+
         setDate(DateTime.fromJSDate(newDate));
         setShowPicker(false);
     }
