@@ -23,8 +23,8 @@ export default function EnableMoodleCard({ children }: { children: React.ReactNo
 
                 <Text style={tw('text-xs text-gray-500')}>
                     Notifications will be sent when the assignment is due
-                    and at 9:00 AM the day before.
-                    
+                    and at 8:30 AM the day before.
+
                     This feature does not store your login credentials
                     and was not developed by Moodle or ITS.
                 </Text>
