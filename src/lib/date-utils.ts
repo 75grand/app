@@ -45,6 +45,7 @@ export function toUsefulRelative(date: DateTime): string {
     } else if(hours <= 8) {
         const { hours, minutes } = date.diffNow(['hours', 'minutes']);
         formatted = `in ${hours}h ${Math.floor(minutes)}m`;
+        if(Math.floor(minutes) === 0) formatted = `in ${hours}h`;
     } else if(isSameDay(date, DateTime.now())) {
         formatted = 'at ' + formattedHours(date);
     } else if(days < 7) {
