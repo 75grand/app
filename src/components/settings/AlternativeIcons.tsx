@@ -20,9 +20,9 @@ export default function AlternativeIcons() {
             source: require('../../../assets/icons/default.png')
         },
         {
-            id: 'albino-squirrel',
+            id: 'albino_squirrel',
             label: 'Albino',
-            source: require('../../../assets/icons/albino-squirrel.png')
+            source: require('../../../assets/icons/albino_squirrel.png')
         },
         {
             id: 'scottie',
@@ -30,9 +30,9 @@ export default function AlternativeIcons() {
             source: require('../../../assets/icons/scottie.png')
         },
         {
-            id: 'the-rock',
+            id: 'the_rock',
             label: '75rock',
-            source: require('../../../assets/icons/the-rock.png')
+            source: require('../../../assets/icons/the_rock.png')
         },
         {
             id: 'wac',
@@ -40,14 +40,14 @@ export default function AlternativeIcons() {
             source: require('../../../assets/icons/wac.png')
         },
         {
-            id: 'elon-musk',
+            id: 'elon_musk',
             label: 'Elon Musk',
-            source: require('../../../assets/icons/elon-musk.png')
+            source: require('../../../assets/icons/elon_musk.png')
         },
         {
-            id: 'bell-tower',
+            id: 'bell_tower',
             label: 'Sex Bell',
-            source: require('../../../assets/icons/bell-tower.png')
+            source: require('../../../assets/icons/bell_tower.png')
         }
     ]
 

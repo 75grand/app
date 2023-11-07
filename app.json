@@ -68,24 +68,24 @@
             "image": "./assets/icons/default.png",
             "prerendered": true
           },
-          "the-rock": {
-            "image": "./assets/icons/the-rock.png",
+          "the_rock": {
+            "image": "./assets/icons/the_rock.png",
             "prerendered": true
           },
-          "albino-squirrel": {
-            "image": "./assets/icons/albino-squirrel.png",
+          "albino_squirrel": {
+            "image": "./assets/icons/albino_squirrel.png",
             "prerendered": true
           },
-          "elon-musk": {
-            "image": "./assets/icons/elon-musk.png",
+          "elon_musk": {
+            "image": "./assets/icons/elon_musk.png",
             "prerendered": true
           },
           "scottie": {
             "image": "./assets/icons/scottie.png",
             "prerendered": true
           },
-          "bell-tower": {
-            "image": "./assets/icons/bell-tower.png",
+          "bell_tower": {
+            "image": "./assets/icons/bell_tower.png",
             "prerendered": true
           },
           "wac": {
