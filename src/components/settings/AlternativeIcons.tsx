@@ -11,13 +11,13 @@ import * as Haptics from 'expo-haptics';
 import { MotiView } from 'moti';
 
 export default function AlternativeIcons() {
-    const [selectedIcon, setSelectedIcon] = useState(getAppIcon() || 'default');
+    const [selectedIcon, setSelectedIcon] = useState(getAppIcon() || 'default_icon');
 
     const icons = [
         {
-            id: 'default',
+            id: 'default_icon',
             label: 'Default',
-            source: require('../../../assets/icons/default.png')
+            source: require('../../../assets/icons/default_icon.png')
         },
         {
             id: 'albino_squirrel',

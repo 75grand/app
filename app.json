@@ -4,7 +4,7 @@
     "slug": "75grand",
     "version": "1.1.1",
     "orientation": "portrait",
-    "icon": "./assets/icons/default.png",
+    "icon": "./assets/icons/default_icon.png",
     "userInterfaceStyle": "light",
     "scheme": "grand",
     "updates": {
@@ -64,8 +64,8 @@
       [
         "expo-dynamic-app-icon",
         {
-          "default": {
-            "image": "./assets/icons/default.png",
+          "default_icon": {
+            "image": "./assets/icons/default_icon.png",
             "prerendered": true
           },
           "the_rock": {
